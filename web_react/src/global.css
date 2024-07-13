@@ -1,0 +1,18 @@
+:root {
+    --background-color: #18191A;
+    --accent-color: #E3B849;
+    --font-color: #FFFFFF;
+    --link-active: #FFBA09;
+}
+
+body {
+    background-color: var(--background-color);
+    accent-color: var(--accent-color);
+    color: var(--font-color);
+    margin: 0.25rem 1.5rem;
+  }
+
+button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}

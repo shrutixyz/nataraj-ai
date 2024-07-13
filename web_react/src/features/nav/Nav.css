@@ -1,0 +1,52 @@
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    text-align: center;
+}
+
+.logo-container img {
+    scale: 0.5;
+}
+
+.logo-container p {
+    align-self: center;
+    font-size: 1.25rem;
+}
+
+.navlinks-container {
+    width: 40%;
+    max-width: 840px;
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+}
+
+.nav-link {
+    margin-right: 0.25rem;
+    font-size: 1.25rem;
+    text-decoration: none;
+}
+
+.active {
+    font-weight: 500;
+    color: var(--link-active);
+}
+
+.inactive {
+    color: var(--font-color);
+}
+
+.sign-up-container button {
+    padding: 0.5rem 1.5rem;
+    background-color: transparent;
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 0.25rem;
+}
