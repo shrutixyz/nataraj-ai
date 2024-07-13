@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:nataraj/controllers/firebase/firebase_messaging_bg_controller.dart';
 import 'package:nataraj/utils/colors.dart';
 import 'package:nataraj/utils/constants.dart';
 import 'package:nataraj/utils/routes.dart';
@@ -17,9 +18,10 @@ Future<void> main() async {
       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
       return true;
     };
+    await initFirebaseMessaging();
     runApp(const Nataraj());
-
 }
+
 class Nataraj extends StatelessWidget {
   const Nataraj({super.key});
 
