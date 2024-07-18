@@ -22,6 +22,7 @@ class HelperEnglish{
 class AssetSrcs{
   static const logofull = "assets/images/logofull.png";
   static const logo = "assets/images/logo.png";
+  static const exclaimation = "assets/images/exclaimation.png";
   static const socialLoginImg = {
     "Login with Google": "assets/images/google.png",
     "Login with GitHub": "assets/images/github.png"
