@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nataraj/controllers/auth/auth_controller.dart';
 import 'package:nataraj/utils/colors.dart';
 import 'package:nataraj/utils/constants.dart';
@@ -13,6 +14,7 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authController = Provider.of<AuthController>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
       if (authController.user != null) {
         Navigator.pushReplacementNamed(context, RoutesString.homePageRoute);
       }

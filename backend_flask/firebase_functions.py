@@ -10,9 +10,6 @@ firebase_admin.initialize_app(cred)
 # Initialize Firestore
 db = firestore.client()
 
-datamodel = {
-
-}
 
 def push_data(user):
     data = {
@@ -37,6 +34,7 @@ def check_document_exists(collection_name, document_id):
     else:
         print(f'Document with ID {document_id} does not exist.')
         return False
+
 
 def check_user_exists(uid):
     try:

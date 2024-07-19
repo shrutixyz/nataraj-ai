@@ -45,7 +45,7 @@ class AuthController with ChangeNotifier {
     try {
       final result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      print(result);
+      log(result.toString());
       return result.user;
     } catch (e) {
       log(e.toString());

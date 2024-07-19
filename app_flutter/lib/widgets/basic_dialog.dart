@@ -14,7 +14,7 @@ class BasicDialog extends StatelessWidget {
               shadowColor: AppColors.background,
               surfaceTintColor: AppColors.black,
               child: SizedBox(
-                height: 200,
+                height: 240,
                 width: 350,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -31,7 +31,7 @@ class BasicDialog extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Text(
                         subtitle,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                     const  SizedBox(

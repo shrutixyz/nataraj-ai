@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nataraj/utils/colors.dart';
+import 'package:nataraj/utils/constants.dart';
 import 'package:nataraj/widgets/custom_gradient_border_button.dart';
 
 class ProjectTile extends StatelessWidget {
@@ -35,8 +36,10 @@ class ProjectTile extends StatelessWidget {
                     ],
                   ),
                   CustomGradientBorderButton(
-                    title: "PRACTICE IT",
-                    onPressed: () {},
+                    title: "Practice it",
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(context, RoutesString.configurationPageRoute, (route) => false);
+                    },
                     width: 150,
                     height: 30,
                     bg: AppColors.secondaryBg,

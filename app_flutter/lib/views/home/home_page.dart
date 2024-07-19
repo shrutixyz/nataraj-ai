@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nataraj/controllers/auth/auth_controller.dart';
 import 'package:nataraj/controllers/home/projects_controller.dart';
 import 'package:nataraj/utils/colors.dart';
@@ -16,6 +17,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authController = Provider.of<AuthController>(context);
     final projectsController = Provider.of<ProjectsController>(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    });
     //     WidgetsBinding.instance.addPostFrameCallback((_) {
     //   if (authController.user != null) {
     //     Navigator.pushReplacementNamed(context, RoutesString.welcomePageRoute);
@@ -29,7 +33,7 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -80,7 +84,7 @@ class HomePage extends StatelessWidget {
                     Expanded(child: ListView.builder(
                     itemCount: projectsController.length,
                       itemBuilder: ((context, index) {
-                      return ProjectTile();
+                      return const ProjectTile();
                     }))),
                     GradientBorderButton(title: "VIEW PAST PRACTICE REPORTS", onPressed: (){
                       Navigator.pushNamed(context, RoutesString.allReportsPageRoute);

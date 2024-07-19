@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nataraj/controllers/auth/auth_controller.dart';
 import 'package:nataraj/utils/colors.dart';
 import 'package:nataraj/utils/constants.dart';
@@ -12,12 +13,13 @@ class EmailLoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authController = Provider.of<AuthController>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
       if (authController.user != null) {
         Navigator.pushReplacementNamed(context, RoutesString.homePageRoute);
       }
     });
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -50,7 +52,7 @@ class EmailLoginPage extends StatelessWidget {
                       border: Border.all(width: 1, color: AppColors.yellow2)),
                   width: 350,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: TextField(
                       onChanged: (value) {
                         authController.updateEmail(value);
@@ -69,7 +71,7 @@ class EmailLoginPage extends StatelessWidget {
                       border: Border.all(width: 1, color: AppColors.yellow2)),
                   width: 350,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: TextField(
                       onChanged: (value) {
                         authController.updatePassword(value);
