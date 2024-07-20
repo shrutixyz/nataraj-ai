@@ -6,6 +6,7 @@ import './global.css';
 import About from './pages/About/About';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Tutorials from './pages/Tutorials/Tutorials';
+import ConditionalAccess from './pages/ConditionalAccess/ConditionalAccess';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/about" element={<About/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/tutorials" element={<Tutorials/>} />
+        <Route path="/ca" element={<ConditionalAccess/>} />
         {/* <Route path="/counter" element={<Counter/>} /> */}
       </Routes>
     </BrowserRouter>

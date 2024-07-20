@@ -7,7 +7,7 @@ const Footer = () =>{
             <div className={Styles.footerleft}>
                 <h1>GET IN TOUCH</h1>
                 <input type="text" className={Styles.input} placeholder="EMAIL ADDRESS"/>
-                <textarea name="" id="" cols="30" rows="5" className={Styles.inputbig} placeholder="TYPE HERE..."></textarea>
+                <textarea name="" id="" cols={30} rows={5} className={Styles.inputbig} placeholder="TYPE HERE..."></textarea>
                 <GradientButton title="SUBMIT" height="4" width="20"/>
             </div>
 
