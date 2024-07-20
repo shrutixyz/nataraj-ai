@@ -1,7 +1,9 @@
 .hero-section {
+    height: calc(100vh - 8rem);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* background-color: pink; */
 }
 
 .hero-section h1 {
@@ -20,7 +22,28 @@
     letter-spacing: 0.1rem;
 }
 
-.hero-section button {
+.hero-section2{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.hero-section3{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+/* 
+.hero-section2 p {
+    font-size: 1.25rem;
+    letter-spacing: 0.1rem;
+} */
+
+/* .hero-section button {
     width: 80%;
     padding: 0.5rem 3.5rem;
     background-color: transparent;
@@ -29,10 +52,181 @@
     color: var(--accent-color);
     border-radius: 0.25rem;
     font-size: 1.25rem;
-}
+} */
 
 #instructions{
-    font-size: 0.75rem;
+    font-size: 1rem;
     letter-spacing: normal;
     opacity: 0.6;
 }
+.blob {
+    width: 200px;
+    height: 200px;
+    background-color: #ff6347;
+    border-radius: 30% 70% 70% 30%;
+    animation: morph 8s infinite;
+}
+
+@keyframes morph {
+    0% {
+        border-radius: 30% 70% 70% 30%;
+        transform: translate(0, 0);
+    }
+    25% {
+        border-radius: 60% 40% 40% 60%;
+        transform: translate(30px, -20px);
+    }
+    50% {
+        border-radius: 70% 30% 30% 70%;
+        transform: translate(-20px, 30px);
+    }
+    75% {
+        border-radius: 40% 60% 60% 40%;
+        transform: translate(20px, 20px);
+    }
+    100% {
+        border-radius: 30% 70% 70% 30%;
+        transform: translate(0, 0);
+    }
+}
+
+
+.svgblob{
+    height: 40rem;
+    width: 40rem;
+}
+
+
+.subtitlehero2{
+    font-size: 2rem;
+    margin-top: -0.2rem;
+    margin-bottom: -0.2rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+}
+
+.subtitledivhero2{
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+
+.doneimg{
+    width: 6rem;
+    margin-top: -0.3rem;
+    margin-bottom: -0.3rem;
+}
+
+
+.donebox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.svganimation{
+    height: 60vh;
+    width: 70vw;
+    background-color: gray;
+}
+
+.herosection2title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.android-app-section{
+    height: 40vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.googleplayimg{
+    width: 20rem;
+    height: 6rem;
+    /* height: 3rem; */
+}
+
+.downloadapp{
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.android-app-top{
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.android-app-bottom{
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.geminiimg{
+    height: 2rem;
+}
+
+.features{
+    height: 80vh;
+    width: 64vw;
+    background-image: url("../../assets/featuresback.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.featureslist{
+    width: 60vw;
+    height: 70vh;
+    background-color: var(--background-color);
+    box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.left, .right {
+    opacity: 0; 
+    transition: opacity 1s ease-in-out; 
+  }
+  
+  .left {
+    animation-name: slide-left; 
+    animation-duration: 1s; 
+    animation-fill-mode: forwards; 
+  }
+  
+  .right {
+    animation-name: slide-right; 
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes slide-left {
+    from { transform: translateX(-100%); opacity: 0; } 
+    to { transform: translateX(0); opacity: 1; } 
+  }
+  
+  @keyframes slide-right {
+    from { transform: translateX(100%); opacity: 0;} 
+    to { transform: translateX(0); opacity: 1;} 
+  }
+
+

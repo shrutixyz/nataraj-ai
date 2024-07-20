@@ -2,6 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 }
 
 .logo-container {
@@ -11,9 +13,15 @@
     text-align: center;
 }
 
-.logo-container img {
-    scale: 0.5;
+.logo-container img{
+    margin-left: 0.5rem;
+    margin-top: 1rem;
+    width: 10rem;
 }
+
+/* .logo-container img {
+    scale: 0.7;
+} */
 
 .logo-container p {
     align-self: center;
@@ -43,10 +51,104 @@
     color: var(--font-color);
 }
 
-.sign-up-container button {
+/* .sign-up-container button {
     padding: 0.5rem 1.5rem;
     background-color: transparent;
     border-color: var(--accent-color);
     color: var(--accent-color);
     border-radius: 0.25rem;
+} */
+
+
+.animated-underline {
+    position: relative;
+    display: inline-block;
+    /* color: var(--accent-color); */
+    text-decoration: none;
 }
+
+.animated-underline::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    top: 2rem;
+    background-color: var(--link-active);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.animated-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+
+
+
+
+
+
+
+.button{
+    margin: auto;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    border: none;
+    background: #111111;
+    color: white;
+    box-shadow: 4px 4px 20px rgba(0,0,0,0.3);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .button span{
+    position: relative;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    z-index: 1;
+  }
+  
+  .button:focus{
+    outline:none;
+  }
+  
+  
+  .button::after, .button::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+  }
+  
+  .button::after{
+    background: #FFC300;
+    clip-path: circle(0% at 0% 100%);
+    transition: clip-path 0.4s ease-out 0s;
+  }
+  
+  .button::before{
+    background: #FD0;
+    clip-path: circle(0% at 0% 0%);
+    transition: clip-path 0.4s ease-out 0.1s;
+  }
+  
+  .button:hover::before, .button:hover::after{
+    clip-path: circle(100% at 50% 50%);
+  }
+  
+  .button:hover::before{
+    transition: clip-path 0.4s ease-out 0s;
+  }
+  
+  .button:hover::after{
+    transition: clip-path 0.4s ease-out 0.1s; 
+  }
+  
+  

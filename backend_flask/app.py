@@ -1,10 +1,20 @@
 from flask import Flask, jsonify, request
 from read_files import read_md_files
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from firebase_functions import push_data, check_document_exists, check_user_exists
 
 app = Flask(__name__)
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["30 per minute"],
+    strategy="fixed-window", # or "moving-window"
+   #  error code is 429
+)
 
 @app.route('/')
+@limiter.limit("1 per second")
 def hello_world():
     return jsonify("Hi there, you've stumbled across the backend API of Nataraj AI")
 
@@ -31,6 +41,12 @@ def create_user_data(uid):
   else:
      response_model["message"] = "Data already exists"
   return jsonify(response_model)
+
+
+@limiter.limit("1 per hour")
+@app.route('/contactus', methods=["GET"])
+def contactus(uid):
+  return jsonify({"dummydata"}), 403
 
 
 if __name__ == '__main__':
