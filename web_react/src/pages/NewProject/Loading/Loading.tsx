@@ -1,7 +1,19 @@
+import { useEffect } from "react";
 import Nav from "../../../features/nav/Nav"
 import Styles from "./Loading.module.css"
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Loading = () => {
+    const navigate = useNavigate()
+    const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
+    // const dispatch = useDispatch();
+  
+    useEffect(()=>{
+      if(!isLoggedIn){
+        navigate('/ca')
+      }
+    }, [])
     return (
         <>
             <Nav/>

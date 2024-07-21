@@ -3,9 +3,19 @@ import ButtonCustom from "../../../features/buttoncustom/ButtonCustom";
 import GradientButton from "../../../features/gradientbutton/GradientButton";
 import Nav from "../../../features/nav/Nav";
 import Styles from "./SelectDanceform.module.css"
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const SelectDanceform = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+  const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
+  // const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(!isLoggedIn){
+      navigate('/ca')
+    }
+  }, [])
     return (
         <>
         <Nav/>

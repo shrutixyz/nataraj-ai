@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logofull from "../../assets/logofull.svg";
 import "../nav/Nav.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import GradientButton from "../gradientbutton/GradientButton";
+import { useSelector } from "react-redux";
+import auth from "../../utils/firebase";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/store";
 
 const Nav = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
+
+  const signOut = async() =>{
+    await auth.signOut();
+    dispatch(logout());
+  }
+  useEffect(() => {
+    console.log("nav", isLoggedIn);
+  }, []);
+
   return (
     <div className="nav-container">
-      <div className="logo-container" onClick={()=>navigate('/')}>
+      <div className="logo-container" onClick={() => navigate("/")}>
         <img src={logofull} alt="nataraj-ai logo" />
       </div>
       <div className="navlinks-container">
@@ -51,12 +66,33 @@ const Nav = () => {
           }
         >
           <p className="animated-underline">Blogs</p>
-          
         </NavLink>
       </div>
-      <div className="sign-up-container">
-        <GradientButton title="SIGN UP NOW" onClick={()=>navigate('/signup')} height="3" width="15"/>
-      </div>
+      {isLoggedIn ? (
+        <div className="sign-up-container">
+          <GradientButton
+            title="SIGN OUT"
+            onClick={() => {signOut()}}
+            height="3"
+            width="10"
+          />
+          <GradientButton
+            title="YOUR PROFILE"
+            onClick={() => navigate("/profile")}
+            height="3"
+            width="10"
+          />
+        </div>
+      ) : (
+        <div className="sign-up-container">
+          <GradientButton
+            title="SIGN UP NOW"
+            onClick={() => navigate("/signup")}
+            height="3"
+            width="15"
+          />
+        </div>
+      )}
     </div>
   );
 };

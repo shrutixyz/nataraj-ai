@@ -2,9 +2,20 @@ import Styles from "./ConditonalAccess.module.css";
 import logofull from "../../assets/logofull.svg";
 import GradientButton from "../../features/gradientbutton/GradientButton";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const ConditionalAccess = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
+  // const dispatch = useDispatch();
+
+  useEffect(()=>{
+    console.log(isLoggedIn)
+    if(isLoggedIn){
+      navigate('/')
+    }
+  }, [])
   return (
     <>
       <div className={Styles.logo}>

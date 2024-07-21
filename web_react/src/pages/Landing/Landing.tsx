@@ -9,13 +9,13 @@ import delight from "../../assets/delight.svg";
 import Footer from "../../features/footer/Footer";
 import googleplay from "../../assets/googleplay.png";
 import gemini from "../../assets/gemini.png";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
+  const navigate = useNavigate()
   return (
     <>
       <Nav />
-
-
 
       <section className="hero-section">
         <div className="left">
@@ -26,6 +26,7 @@ const Landing = () => {
             width="50"
             height="4"
             fontsize="1.25"
+            onClick={()=>navigate('/login')}
           />
           <br />
           <br />

@@ -1,8 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import ButtonCustom from "../../features/buttoncustom/ButtonCustom";
 import Nav from "../../features/nav/Nav";
 import Styles from "./Profile.module.css";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Profile = () => {
+    const navigate = useNavigate()
+    const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
+    // const dispatch = useDispatch();
+  
+    useEffect(()=>{
+      if(!isLoggedIn){
+        navigate('/ca')
+      }
+    }, [])
   return (
     <>
       <Nav />

@@ -3,8 +3,10 @@ from read_files import read_md_files
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from firebase_functions import push_user_data, check_document_exists, check_user_exists, push_data_contact_us
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
 limiter = Limiter(
     get_remote_address,
     app=app,
@@ -46,11 +48,11 @@ def create_user_data(uid):
 @app.route('/contactus', methods=["POST"])
 @limiter.limit("1 per 60 minute")
 def contactus():
-  email = request.form["email"]
-  text = request.form["text"]
+  email = request.json["email"]
+  text = request.json["text"]
   push_data_contact_us(email, text)
   return jsonify({"success": True}), 200
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+   app.run(host='0.0.0.0', port=5000, debug=True)

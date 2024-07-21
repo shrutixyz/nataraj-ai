@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Nav from '../../features/nav/Nav'
 import GradientButton from '../../features/gradientbutton/GradientButton'
 import { useNavigate } from 'react-router-dom'
 import Styles from "./Dashboard.module.css"
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const Dashboard = () => {
   const navigate = useNavigate()
+  const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
+  // const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(!isLoggedIn){
+      navigate('/ca')
+    }
+  }, [])
   return (
     <>
     <Nav/>

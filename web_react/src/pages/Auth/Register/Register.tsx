@@ -1,10 +1,22 @@
+import { useEffect } from "react";
 import Footer from "../../../features/footer/Footer";
 import GradientButton from "../../../features/gradientbutton/GradientButton";
 import Nav from "../../../features/nav/Nav";
 import SocialButton from "../../../features/socialbutton/SocialButton";
 import Styles from "./Register.module.css"
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Register = () =>{
+    const navigate = useNavigate()
+    const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
+    // const dispatch = useDispatch();
+  
+    useEffect(()=>{
+      if(isLoggedIn){
+        navigate('/dashboard')
+      }
+    }, [])
     return (
         <>
         <Nav/>

@@ -3,9 +3,19 @@ import GradientButton from "../../../features/gradientbutton/GradientButton";
 import Nav from "../../../features/nav/Nav";
 import Styles from "./SelectAudio.module.css"
 import ButtonCustom from "../../../features/buttoncustom/ButtonCustom";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const SelectAudio = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+  const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
+  // const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(!isLoggedIn){
+      navigate('/ca')
+    }
+  }, [])
     return (
         <>
         <Nav/>

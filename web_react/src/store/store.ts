@@ -1,13 +1,52 @@
-import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from '../features/counter/counterSlice'
+// store.js
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+import firebase from 'firebase/app';
+import auth from '../utils/firebase';
 
-export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
+// Create a slice of the state
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: {
+    isLoggedIn: false,
   },
-})
+  reducers: {
+    login: (state) => {
+      state.isLoggedIn = true;
+    },
+    logout: (state) => {
+      state.isLoggedIn = false;
+    },
+  },
+});
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    store.dispatch(login()); 
+  }
+  else{
+    store.dispatch(logout());
+  }
+});
+
+const backendSlice = createSlice({
+  name: 'backend',
+  initialState: {
+    endpoint: "http://127.0.0.1:5000",
+  },
+  reducers: {
+  },
+});
+
+// Export actions
+export const { login, logout } = authSlice.actions;
+export const { } = authSlice.actions;
+
+// Configure the store
+const store = configureStore({
+  reducer: {
+    auth: authSlice.reducer,
+    backend: backendSlice.reducer
+  },
+});
+
+export default store;

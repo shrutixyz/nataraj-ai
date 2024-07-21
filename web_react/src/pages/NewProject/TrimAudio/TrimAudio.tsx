@@ -4,9 +4,19 @@ import Nav from "../../../features/nav/Nav";
 import Styles from "./TrimAudio.module.css"
 import ButtonCustom from "../../../features/buttoncustom/ButtonCustom";
 import SocialButton from "../../../features/socialbutton/SocialButton";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const TrimAudio = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+  const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
+  // const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(!isLoggedIn){
+      navigate('/ca')
+    }
+  }, [])
     return (
         <>
         <Nav/>
