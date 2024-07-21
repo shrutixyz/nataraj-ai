@@ -1,0 +1,54 @@
+.title{
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.mainbody{
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: start;
+    gap: 3rem;
+}
+
+.savedavatarstext{
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 60vh;
+}
+
+.pfpparent{
+    height: 30rem;
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.pfp{
+    height: 20rem;
+    width: 20rem;
+    background-color: rgb(255, 174, 0);
+    border-radius: 400rem;
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    height: 60vh;
+}
+
+.line{
+    width: 2px;
+    height: 50vh;
+    background-color: #ffffff30;
+}

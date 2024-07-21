@@ -14,6 +14,9 @@ const Landing = () => {
   return (
     <>
       <Nav />
+
+
+
       <section className="hero-section">
         <div className="left">
           <img src={createthebeat} alt="" />
@@ -66,7 +69,6 @@ const Landing = () => {
           </div>
         </div>
       </section>
-
       <section className="android-app-section">
         <div className="android-app-top">
           <p className="downloadapp">

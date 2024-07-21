@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from read_files import read_md_files
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from firebase_functions import push_data, check_document_exists, check_user_exists
+from firebase_functions import push_user_data, check_document_exists, check_user_exists, push_data_contact_us
 
 app = Flask(__name__)
 limiter = Limiter(
@@ -34,7 +34,7 @@ def create_user_data(uid):
      user = check_user_exists(uid)
      response_model["success"] = True
      if user!=None:
-        push_data(user)
+        push_user_data(user)
         response_model["message"] = "Data Added Successfully!"
      else:
         response_model["message"] = "User with such UID doesn't exist"
@@ -43,10 +43,13 @@ def create_user_data(uid):
   return jsonify(response_model)
 
 
-@limiter.limit("1 per hour")
-@app.route('/contactus', methods=["GET"])
-def contactus(uid):
-  return jsonify({"dummydata"}), 403
+@app.route('/contactus', methods=["POST"])
+@limiter.limit("1 per 60 minute")
+def contactus():
+  email = request.form["email"]
+  text = request.form["text"]
+  push_data_contact_us(email, text)
+  return jsonify({"success": True}), 200
 
 
 if __name__ == '__main__':

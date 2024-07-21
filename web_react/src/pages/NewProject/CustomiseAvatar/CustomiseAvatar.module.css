@@ -1,0 +1,40 @@
+.title{
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.subtitle{
+    font-size: 2rem;
+    margin-top: -2rem;
+}
+
+.noprojectscontainer{
+    width: 100%;
+    height: 60vh;
+    background-color: #2B2C2D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.noprojectstext{
+    font-size: 1.5rem;
+}
+
+.step{
+    font-weight: 700;
+    font-size: 1.7rem;
+    color: #FFBA09;
+}
+
+.subheading{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+
+.navbuttons{
+    display: flex;
+    gap: 2rem;
+}

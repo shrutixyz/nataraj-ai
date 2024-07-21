@@ -1,5 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
+import datetime
 
 # Path to the service account key file
 cred = credentials.Certificate('nataraj-admin-key.json')
@@ -11,7 +12,7 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 
-def push_data(user):
+def push_user_data(user):
     data = {
         "name": user.display_name,
         "email": user.email,
@@ -44,3 +45,15 @@ def check_user_exists(uid):
     except auth.UserNotFoundError:
         print(f'User with UID {uid} does not exist.')
         return None
+    
+
+def push_data_contact_us(email, text):
+    now = datetime.datetime.now()  # Get current date and time
+    timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
+    data = {
+        "email": email,
+        "text": text,
+        "timestamp": timestamp
+    }
+    doc_ref = db.collection("contactus").document(timestamp.replace(" ", "-")).set(data)
+    print(f'Document added, {doc_ref}')

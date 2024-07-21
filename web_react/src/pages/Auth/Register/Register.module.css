@@ -1,0 +1,46 @@
+
+.title{
+    font-size: 8rem;
+    font-weight: 900;
+    margin-bottom: -0.01rem;
+}
+
+.subtitleref{
+    font-size: 1.5rem;
+    margin-top: 5rem;
+    width: 50vw;
+    text-decoration: none;
+    color: white;
+}
+
+.sociallogins{
+    margin-top: 2rem;
+    margin-bottom: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 2rem;
+}
+
+.options{
+    font-weight: 600;
+    margin-top: 4rem;
+}
+
+input{
+    width: 36rem;
+    height: 3rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    font-size: 1.2rem;
+    background-color: #D9D9D920;
+    border: none;
+    margin-top: 2rem;
+    margin-right: 2rem;
+    color: white;
+}
+
+
+.mainbody{
+    margin-bottom: 7rem;
+}

@@ -1,13 +1,14 @@
 import React from "react";
 import logofull from "../../assets/logofull.svg";
 import "../nav/Nav.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import GradientButton from "../gradientbutton/GradientButton";
 
 const Nav = () => {
+  const navigate = useNavigate()
   return (
     <div className="nav-container">
-      <div className="logo-container">
+      <div className="logo-container" onClick={()=>navigate('/')}>
         <img src={logofull} alt="nataraj-ai logo" />
       </div>
       <div className="navlinks-container">
@@ -54,7 +55,7 @@ const Nav = () => {
         </NavLink>
       </div>
       <div className="sign-up-container">
-        <GradientButton title="SIGN UP NOW" onClick={()=>console.log("check")} height="3" width="15"/>
+        <GradientButton title="SIGN UP NOW" onClick={()=>navigate('/signup')} height="3" width="15"/>
       </div>
     </div>
   );
