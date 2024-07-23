@@ -5,22 +5,19 @@ import Nav from "../../../features/nav/Nav";
 import SocialButton from "../../../features/socialbutton/SocialButton";
 import Styles from "./Login.module.css"
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import auth from "../../../utils/firebase";
-import {
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GithubAuthProvider
-} from "firebase/auth";
+import { useEffect, useState } from "react";
+import {handleEmailSignIn, handleGithubSignIn, handleGoogleSignIn} from "../../../utils/firebase_functions.js";
 import { useDispatch } from "react-redux";
 import { login } from "../../../store/store";
 
 
 const Login = () =>{
+  const dispatch = useDispatch();
     const navigate = useNavigate()
     const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
-    const dispatch = useDispatch();
+    const endpoint = useSelector((state: any) => state.backend.endpoint);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
   
     useEffect(()=>{
       console.log(isLoggedIn)
@@ -29,30 +26,39 @@ const Login = () =>{
       }
     }, [])
 
-    const handleGoogleSignIn = async () => {
-      const provider = new GoogleAuthProvider();
-      try {
-        const result = await signInWithPopup(auth, 
-          provider);
-        console.log('User signed in:', result.user);
-        dispatch(login());
-        navigate('/dashboard')
-      } catch (error) {
-        console.error('Error during sign in:', error);
-      }
-    };
+   const googleSignin = async () =>{
+    const res = await handleGoogleSignIn(endpoint);
+    if(res!==null){
+      dispatch(login());
+      navigate('/dashboard')
+    }
+    else{
+      console.log("error")
+    }
+   }
 
-    const handleGithubSignIn = async () => {
-      const provider = new GithubAuthProvider();
-      try {
-        const result = await signInWithPopup(auth, provider);
-        console.log('User signed in with GitHub:', result.user);
+
+   const githubSignin = async () =>{
+    const res = await handleGithubSignIn(endpoint);
+    if(res!==null){
+      dispatch(login());
+      navigate('/dashboard')
+    }
+    else{
+      console.log("error")
+    }
+   }
+
+   const emailSignIn = async (email: String, password:String) =>{
+      const res = await handleEmailSignIn(email, password, endpoint);
+      if(res!==null){
         dispatch(login());
         navigate('/dashboard')
-      } catch (error) {
-        console.error('Error during sign in:', error);
       }
-    };
+      else{
+        console.log("error")
+      }
+   }
     return (
         <>
         <Nav/>
@@ -61,15 +67,15 @@ const Login = () =>{
             <a href="/signup" className={Styles.subtitleref}>TRYING FOR FIRST TIME? SIGNUP</a>
             <p className={Styles.options}>LOGIN OPTIONS</p>
             <div className={Styles.sociallogins}>
-                <SocialButton title="Login with Google" width="25" height="4" service="google" onClick={handleGoogleSignIn}/>
-                <SocialButton title="Login with GitHub" width="25" height="4" service="github" onClick={handleGithubSignIn}/>
+                <SocialButton title="Login with Google" width="25" height="4" service="google" onClick={googleSignin}/>
+                <SocialButton title="Login with GitHub" width="25" height="4" service="github" onClick={githubSignin}/>
             </div>
             <p className={Styles.options}>EMAIL LOGIN</p>
-            <input type="text" placeholder="EMAIL ADDRESS" />
+            <input type="text" placeholder="EMAIL ADDRESS" onChange={(evt)=>setEmail(evt.target.value)} />
             <br />
-            <input type="password" placeholder="PASSWORD" />
+            <input type="password" placeholder="PASSWORD" onChange={(evt)=>setPassword(evt.target.value)} />
             <br /><br /><br />
-            <GradientButton title="SIGNUP" height="4" width="25"/>
+            <GradientButton title="SIGNUP" height="4" width="25" onClick={()=>emailSignIn(email, password)}/>
         </div>
         <Footer/>
         </>

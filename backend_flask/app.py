@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from read_files import read_md_files
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from firebase_functions import push_user_data, check_document_exists, check_user_exists, push_data_contact_us
+from firebase_functions import *
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -53,6 +53,18 @@ def contactus():
   push_data_contact_us(email, text)
   return jsonify({"success": True}), 200
 
+
+@app.route('/deleteaccount/<uid>', methods=['GET'])
+def delete_account(uid):
+    try:
+        delete_account(uid)
+        return jsonify({'message': 'Account deleted successfully'}), 200
+
+    except Exception as e:
+        print(f"Error deleting account: {e}")
+        return jsonify({'error': str(e)}), 400
+    
+    
 
 if __name__ == '__main__':
    app.run(host='0.0.0.0', port=5000, debug=True)

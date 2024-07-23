@@ -1,13 +1,17 @@
 // store.js
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import firebase from 'firebase/app';
-import auth from '../utils/firebase';
+import {auth} from '../utils/firebase';
 
 // Create a slice of the state
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isLoggedIn: false,
+    signupName: "",
+    signupEmail: "",
+    signupPassword: "",
+    musicUrl: "",
   },
   reducers: {
     login: (state) => {
@@ -16,6 +20,18 @@ const authSlice = createSlice({
     logout: (state) => {
       state.isLoggedIn = false;
     },
+    updateSignupName: (state, name) =>{
+      state.signupName = name.payload
+    },
+    updateSignupPassword: (state, password) =>{
+      state.signupPassword = password.payload
+    },
+    updateSignupEmail: (state, email) =>{
+      state.signupEmail = email.payload
+    },
+    updateMusicUrl: (state, url) =>{
+      state.musicUrl = url.payload
+    }
   },
 });
 
@@ -38,7 +54,7 @@ const backendSlice = createSlice({
 });
 
 // Export actions
-export const { login, logout } = authSlice.actions;
+export const { login, logout, updateSignupName, updateSignupEmail, updateSignupPassword, updateMusicUrl } = authSlice.actions;
 export const { } = authSlice.actions;
 
 // Configure the store

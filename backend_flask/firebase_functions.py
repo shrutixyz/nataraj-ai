@@ -57,3 +57,7 @@ def push_data_contact_us(email, text):
     }
     doc_ref = db.collection("contactus").document(timestamp.replace(" ", "-")).set(data)
     print(f'Document added, {doc_ref}')
+
+
+def delete_account(user_id):
+    auth.delete_user(user_id)

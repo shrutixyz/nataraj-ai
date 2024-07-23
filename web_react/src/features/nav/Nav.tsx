@@ -4,7 +4,7 @@ import "../nav/Nav.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import GradientButton from "../gradientbutton/GradientButton";
 import { useSelector } from "react-redux";
-import auth from "../../utils/firebase";
+import {auth} from "../../utils/firebase";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/store";
 
