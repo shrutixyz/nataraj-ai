@@ -16,11 +16,11 @@ const ConditionalAccess = () => {
     if(isLoggedIn){
       navigate('/')
     }
-  }, [])
+  }, [isLoggedIn])
   return (
     <>
       <div className={Styles.logo}>
-        <img src={logofull} alt="" />
+        <img src={logofull} alt="" className={Styles.logoimg} />
       </div>
       <div className={Styles.content}>
         <h1 className={Styles.uhoh}>{"UH OH :("}</h1>

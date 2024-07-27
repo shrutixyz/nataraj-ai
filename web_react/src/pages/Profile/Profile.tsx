@@ -45,7 +45,7 @@ const Profile = () => {
     if (!isLoggedIn) {
       navigate("/ca");
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const deleteAccount = async () => {
     const confirmDelete = window.confirm(
@@ -57,6 +57,7 @@ const Profile = () => {
           `${endpoint}/deleteaccount/${auth.currentUser?.uid}`
         );
         console.log(response);
+        navigate('/')
       } catch (error) {
         console.log(error);
       }
@@ -72,7 +73,9 @@ const Profile = () => {
         <div>
           <div className={Styles.left}>
             <div className={Styles.pfpparent}>
-              <div className={Styles.pfp}></div>
+              <div className={Styles.pfp}>
+                <img src={auth.currentUser?.photoURL??"sss"} height={100} width={100} alt="" />
+              </div>
               <input type="file" onChange={handleFileChange} placeholder="hehe"/>
               <p>EDIT PROFILE PICTURE</p>
             </div>

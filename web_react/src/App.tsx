@@ -13,12 +13,13 @@ import Register from './pages/Auth/Register/Register';
 import Login from './pages/Auth/Login/Login';
 import Onboarding from './pages/Auth/Register/Onboarding';
 import SelectAudio from './pages/NewProject/SelectAudio/SelectAudio';
-import TrimAudio from './pages/NewProject/TrimAudio/TrimAudio';
+// import TrimAudio from './pages/NewProject/TrimAudio/TrimAudio';
 import SelectDanceform from './pages/NewProject/SelectDanceform/SelectDanceform';
 import CustomiseAvatar from './pages/NewProject/CustomiseAvatar/CustomiseAvatar';
 import Loading from './pages/NewProject/Loading/Loading';
 import Project from './pages/Project/Project';
 import Profile from './pages/Profile/Profile';
+import AudioRND from './pages/RND/AudioRND';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
         <Route path="/about" element={<About/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/selectaudio" element={<SelectAudio/>} />
-        <Route path="/trimaudio" element={<TrimAudio/>} />
+        {/* <Route path="/trimaudio" element={<TrimAudio/>} /> */}
         <Route path="/selectdanceform" element={<SelectDanceform/>} />
         <Route path="/customiseavatar" element={<CustomiseAvatar/>} />
         <Route path="/loading" element={<Loading/>} />
@@ -40,6 +41,7 @@ function App() {
         <Route path="/onboarding" element={<Onboarding/>} />
         <Route path="/blogs" element={<Blogs/>} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/rnd" element={<AudioRND />} />
         <Route path="*" element={<NotFound />} />
         {/* <Route path="/counter" element={<Counter/>} /> */}
       </Routes>

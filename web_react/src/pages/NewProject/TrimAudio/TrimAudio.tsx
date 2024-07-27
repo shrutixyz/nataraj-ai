@@ -5,18 +5,30 @@ import Styles from "./TrimAudio.module.css"
 import ButtonCustom from "../../../features/buttoncustom/ButtonCustom";
 import SocialButton from "../../../features/socialbutton/SocialButton";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Mirt from 'react-mirt';
+import 'react-mirt/dist/css/react-mirt.css';
 
 const TrimAudio = () => {
   const navigate = useNavigate()
   const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
   // const dispatch = useDispatch();
+  const [audioUrl, setAudioURL] = useState("")
 
   useEffect(()=>{
     if(!isLoggedIn){
       navigate('/ca')
     }
+  }, [isLoggedIn])
+
+  useEffect(()=>{
+    const url = window.location.href;
+    const blobCode = url.split('blob=')[1];
+    const newUrl = `http://localhost:3000/${blobCode}`;
+    setAudioURL(newUrl);
   }, [])
+
+
     return (
         <>
         <Nav/>
@@ -28,6 +40,7 @@ const TrimAudio = () => {
 
           
           <br /><br />
+          {/* <Mirt file={audioUrl} style={{"width": "30rem"}} end={end*1000} start={start*1000} /> */}
           <div className={Styles.navbuttons}>
           <ButtonCustom title="BACK" color="red" width="25" height="3" onClick={()=>navigate('/selectaudio')} />
           <GradientButton title="NEXT" width="25" height="3" onClick={()=>navigate('/selectdanceform')} />

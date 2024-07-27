@@ -58,3 +58,14 @@
     height: 20rem;
     background-color: #2B2C2D;
 }
+
+.mirtdiv{
+    width: 150rem;
+}
+
+.selected{
+    width: 10rem;
+    height: 3rem;
+    /* background-color: pink; */
+    background-color: #2B2C2D;
+}

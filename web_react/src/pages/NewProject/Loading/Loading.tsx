@@ -13,7 +13,7 @@ const Loading = () => {
       if(!isLoggedIn){
         navigate('/ca')
       }
-    }, [])
+    }, [isLoggedIn])
     return (
         <>
             <Nav/>

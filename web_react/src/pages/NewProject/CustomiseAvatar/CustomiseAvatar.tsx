@@ -4,18 +4,40 @@ import GradientButton from "../../../features/gradientbutton/GradientButton";
 import Nav from "../../../features/nav/Nav";
 import Styles from "./CustomiseAvatar.module.css"
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const CustomiseAvatar = () => {
   const navigate = useNavigate()
   const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
+  const projectID = useSelector((state: any) => state.project.id);
+  const endpoint  = useSelector((state:any) => state.backend.endpoint);
+  const [isLoading, setisLoading] = useState(false);
   // const dispatch = useDispatch();
 
   useEffect(()=>{
     if(!isLoggedIn){
       navigate('/ca')
     }
-  }, [])
+  }, [isLoggedIn])
+
+  const handleSubmit = async () =>{
+      // set avatar => later 
+      try{
+        setisLoading(true)
+      const response = await axios.post(`${endpoint}/generatedance`);
+      setisLoading(false);
+
+      // get timestamp based lyrics on backend, save that in project,
+      // generate prompt, and add a loading state in backend with a listener on react
+      // if response is returned, then show project to user
+      navigate(`/project?id=${projectID}`)
+      }
+      catch(error){
+        alert(error)
+      }
+  }
+
     return (
         <>
         <Nav/>
@@ -28,7 +50,7 @@ const CustomiseAvatar = () => {
           <div className={Styles.navbuttons}>
           <ButtonCustom title="BACK" color="red" width="25" height="3" onClick={()=>navigate('/selectdanceform')} />
           <ButtonCustom title="SAVE AVATAR IN PREFERENCES" color="green" width="25" height="3" onClick={()=>console.log("hello")} />
-          <GradientButton title="NEXT" width="25" height="3" onClick={()=>navigate('/loading')} />
+          <GradientButton title="NEXT" width="25" height="3" onClick={()=>handleSubmit()} />
           </div>
         </div>
         </>

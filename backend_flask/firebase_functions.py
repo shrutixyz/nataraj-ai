@@ -1,16 +1,18 @@
 import firebase_admin
-from firebase_admin import credentials, firestore, auth
+from firebase_admin import credentials, firestore, auth, db
 import datetime
+from google.cloud import storage
+
 
 # Path to the service account key file
 cred = credentials.Certificate('nataraj-admin-key.json')
 
 # Initialize the app with a service account, granting admin privileges
-firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred, {'databaseURL': 'https://nataraj-ai-default-rtdb.firebaseio.com/'})
 
 # Initialize Firestore
-db = firestore.client()
-
+firestore_db = firestore.client()
+storage_client = storage.Client.from_service_account_json('nataraj-admin-key.json')
 
 def push_user_data(user):
     data = {
@@ -22,12 +24,12 @@ def push_user_data(user):
         "profilepicture":"https://i.ibb.co/nQhcZSc/pfp.png",
         "projects": []
     }
-    doc_ref = db.collection("users").document(user.uid).set(data)
+    doc_ref = firestore_db.collection("users").document(user.uid).set(data)
     print(f'Document added, {doc_ref}')
 
 
 def check_document_exists(collection_name, document_id):
-    doc_ref = db.collection(collection_name).document(document_id)
+    doc_ref = firestore_db.collection(collection_name).document(document_id)
     doc = doc_ref.get()
     if doc.exists:
         print(f'Document with ID {document_id} exists.')
@@ -55,9 +57,60 @@ def push_data_contact_us(email, text):
         "text": text,
         "timestamp": timestamp
     }
-    doc_ref = db.collection("contactus").document(timestamp.replace(" ", "-")).set(data)
+    doc_ref = firestore_db.collection("contactus").document(timestamp.replace(" ", "-")).set(data)
     print(f'Document added, {doc_ref}')
 
 
-def delete_account(user_id):
+def delete_user_account(user_id):
     auth.delete_user(user_id)
+    # deleting user data 
+    doc_ref = firestore_db.collection('users').document(user_id)
+    doc_ref.delete()
+
+
+
+def create_document_rtdb(doc_id, data):
+    # Get a reference to the database
+    ref = db.reference('projects')
+    # Set the data at the specified document ID
+    ref.child(doc_id).set(data)
+    print(f'Document created with ID: {doc_id}')
+
+
+
+def upload_music(uid, file):
+    print("uploaded")
+
+
+def update_document_rtdb(doc_id, data):
+    # Get a reference to the database
+    ref = db.reference('projects/'+str(doc_id))
+    # Update the data at the specified document ID
+    ref.update(data)
+    print(f'Document with ID {doc_id} updated successfully.')
+
+
+def append_to_firestore(uid, projectID):
+    get_projects = firestore_db.collection("users").document(uid).get().to_dict()["projects"]
+    get_projects.append(projectID)
+    doc_ref = firestore_db.collection("users").document(uid).update({"projects": get_projects})
+
+
+
+def upload_blob(source_file_name, destname):
+    bucket_name="nataraj-ai.appspot.com"
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(f'uploads/{destname}')
+    blob.upload_from_filename(source_file_name)
+    blob.make_public()
+    url = blob.public_url
+    print(f'File {source_file_name} uploaded to {destname}.')
+    return url
+
+
+def get_url_from_projectid(projectID):
+    ref = db.reference('projects/'+str(projectID))
+    # Update the data at the specified document ID
+    url = ref.get('song')
+    return url
+

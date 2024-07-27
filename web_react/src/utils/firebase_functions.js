@@ -4,7 +4,8 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GithubAuthProvider,
-  updateProfile
+  updateProfile,
+  createUserWithEmailAndPassword
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../store/store";
@@ -50,9 +51,30 @@ export  const handleGithubSignIn = async (endpoint) => {
   };
 
 
-export  const handleEmailSignIn = async (email, password, endpoint) => {
+export  const handleEmailSignUp = async (email, password, endpoint) => {
     try {
-      const result = await signInWithEmailAndPassword(email, password);
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('User signed in with GitHub:', result.user);
+      try{
+        const res = axios.get(`${endpoint}/createuserdata/${result.user.uid}`, {timeout: 10000});
+      }
+      catch(err){
+        console.log("error while pushing data")
+      }
+      
+      return result.user;
+    //   navigate('/dashboard')
+    
+    } catch (error) {
+      console.error('Error during sign in:', error);
+    }
+    return null
+  };
+
+
+  export  const handleEmailSignIn = async (email, password, endpoint) => {
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
       console.log('User signed in with GitHub:', result.user);
       try{
         const res = axios.get(`${endpoint}/createuserdata/${result.user.uid}`, {timeout: 10000});

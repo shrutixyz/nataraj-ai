@@ -15,7 +15,7 @@ const Dashboard = () => {
     if(!isLoggedIn){
       navigate('/ca')
     }
-  }, [])
+  }, [isLoggedIn])
   return (
     <>
     <Nav/>

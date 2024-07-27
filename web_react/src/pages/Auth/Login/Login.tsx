@@ -24,7 +24,7 @@ const Login = () =>{
       if(isLoggedIn){
         navigate('/dashboard')
       }
-    }, [])
+    }, [isLoggedIn])
 
    const googleSignin = async () =>{
     const res = await handleGoogleSignIn(endpoint);

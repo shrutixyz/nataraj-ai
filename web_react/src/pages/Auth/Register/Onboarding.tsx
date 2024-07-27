@@ -6,7 +6,7 @@ import Styles from "./Register.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  handleEmailSignIn,
+  handleEmailSignUp,
   updateUserProfileDisplayName,
 } from "../../../utils/firebase_functions";
 
@@ -15,6 +15,7 @@ const Onboarding = () => {
   const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
   const email = useSelector((state: any) => state.auth.signupEmail);
   const password = useSelector((state: any) => state.auth.signupPassword);
+  const endpoint = useSelector((state: any) => state.backend.endpoint);
   // const dispatch = useDispatch();
   const [name, setName] = useState("");
 
@@ -22,11 +23,12 @@ const Onboarding = () => {
     if (isLoggedIn) {
       navigate("/dashboard");
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const completeSignup = async () => {
     try {
-      const user = await handleEmailSignIn(email, password);
+      console.log("logging in with ", email, password)
+      const user = await handleEmailSignUp(email, password, endpoint);
       await updateUserProfileDisplayName(user, name);
       navigate('/dashboard')
     } catch (error) {

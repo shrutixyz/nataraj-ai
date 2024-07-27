@@ -53,15 +53,34 @@ const backendSlice = createSlice({
   },
 });
 
+
+const projectSlice = createSlice({
+  name: 'project',
+  initialState: {
+    checkpoint: 0,
+    projectID: 0,
+  },
+  reducers: {
+    updateCheckpoint: (state, checkpoint) => {
+      state.checkpoint = checkpoint.payload
+    },
+    setProjectID: (state, id) => {
+      state.projectID = id.payload
+    },
+  },
+});
+
 // Export actions
 export const { login, logout, updateSignupName, updateSignupEmail, updateSignupPassword, updateMusicUrl } = authSlice.actions;
 export const { } = authSlice.actions;
+export const { updateCheckpoint, setProjectID } = projectSlice.actions;
 
 // Configure the store
 const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
-    backend: backendSlice.reducer
+    backend: backendSlice.reducer,
+    project: projectSlice.reducer
   },
 });
 
