@@ -3,6 +3,7 @@ import GradientButton from "../gradientbutton/GradientButton";
 import Styles from "./Footer.module.css";
 import axios from "axios";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const Footer = () => {
   const endpoint = useSelector((state: any) => state.backend.endpoint);
@@ -51,7 +52,12 @@ const Footer = () => {
 
   const handleSubmit = async () => {
     if (!isValidEmail(email) || text.length === 0) {
-      alert("Please fill the email and text correctly");
+      // alert("Please fill the email and text correctly");
+      Swal.fire({
+        title: "Please fill the email and text correctly",
+        confirmButtonColor: "#FFBA09",
+        confirmButtonText: "okay",
+      });
     } else {
       await pushData();
     }
@@ -94,16 +100,16 @@ const Footer = () => {
 
       <div className={Styles.footerright}>
         <h1>QUICK LINKS</h1>
-        <a href="">PRIVACY POLICY</a>
-        <a href="">GEMINI AI APIS</a>
-        <a href="">ARCORE</a>
-        <a href="">REACT</a>
-        <a href="">FIREBASE</a>
-        <a href="">FLUTTER</a>
-        <a href="">PYTHON</a>
+        <a href="/privacy">PRIVACY POLICY</a>
+        <a href="https://ai.google.dev/">GEMINI AI APIS</a>
+        <a href="https://developers.google.com/ar">ARCORE</a>
+        <a href="https://react.dev/">REACT</a>
+        <a href="https://firebase.google.com/">FIREBASE</a>
+        <a href="https://flutter.dev/">FLUTTER</a>
+        <a href="https://www.python.org/">PYTHON</a>
         <h1>ABOUT DEVELOPERS</h1>
-        <a href="">SHRUTI GUPTA</a>
-        <a href="">AAKASH SHRIVASTAVA</a>
+        <a href="https://www.linkedin.com/in/shruti-gupta-b721b01b2/">SHRUTI GUPTA</a>
+        <a href="https://in.linkedin.com/in/aakzsh">AAKASH SHRIVASTAVA</a>
       </div>
     </div>
   );

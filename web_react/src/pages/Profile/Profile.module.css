@@ -21,6 +21,8 @@
     flex-direction: column;
     justify-content: space-between;
     height: 60vh;
+    align-items: center;
+    text-align: center;
 }
 
 .pfpparent{
@@ -36,15 +38,17 @@
 .pfp{
     height: 20rem;
     width: 20rem;
-    background-color: rgb(255, 174, 0);
     border-radius: 400rem;
 }
 
 .right{
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
+    align-items: center;
     height: 60vh;
+    width: 40vw;
+    
 }
 
 .line{
@@ -52,3 +56,12 @@
     height: 50vh;
     background-color: #ffffff30;
 }
+
+.locked{
+    height: 20rem;
+}
+
+/* .basicdetails{
+    font-size: 1.5rem;
+    line-height: -10rem;
+} */

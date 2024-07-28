@@ -29,6 +29,7 @@ def hello_world():
 
 
 @app.route('/blogs')
+@limiter.limit("1 per second")
 def get_blogs():
   """Returns a JSON response containing the content of all .md files in the static/blogs directory."""
   blog_data = read_md_files('static/blogs')

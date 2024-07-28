@@ -9,6 +9,7 @@ import {
   handleEmailSignUp,
   updateUserProfileDisplayName,
 } from "../../../utils/firebase_functions";
+import Swal from "sweetalert2";
 
 const Onboarding = () => {
   const navigate = useNavigate();
@@ -16,7 +17,6 @@ const Onboarding = () => {
   const email = useSelector((state: any) => state.auth.signupEmail);
   const password = useSelector((state: any) => state.auth.signupPassword);
   const endpoint = useSelector((state: any) => state.backend.endpoint);
-  // const dispatch = useDispatch();
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -33,6 +33,12 @@ const Onboarding = () => {
       navigate('/dashboard')
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        title: "Error!",
+        text: "Please fill correct details and then try again",
+        confirmButtonColor: "#18191A",
+        confirmButtonText: "okay",
+      });
     }
   };
 

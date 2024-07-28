@@ -10,6 +10,7 @@ import {
 import { useDispatch } from "react-redux";
 import { login } from "../store/store";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 
@@ -42,6 +43,7 @@ export  const handleGithubSignIn = async (endpoint) => {
       }
       catch(err){
         console.log("error while pushing data")
+        
       }
       return result.user;
     } catch (error) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Nav from "../../features/nav/Nav";
 import hero from "../../assets/mascot.svg";
 import "./Landing.css";
@@ -10,9 +10,40 @@ import Footer from "../../features/footer/Footer";
 import googleplay from "../../assets/googleplay.png";
 import gemini from "../../assets/gemini.png";
 import { useNavigate } from "react-router-dom";
+import feature1 from "../../assets/feature1.svg";
+import feature2 from "../../assets/feature2.svg";
+import feature3 from "../../assets/feature3.svg";
+import feature4 from "../../assets/feature4.svg";
+import feature5 from "../../assets/feature5.svg";
+import feature6 from "../../assets/feature6.svg";
 
 const Landing = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [isHovered1, setIsHovered1] = useState(false);
+  const [isHovered2, setIsHovered2] = useState(false);
+  const [isHovered3, setIsHovered3] = useState(false);
+  const [isHovered4, setIsHovered4] = useState(false);
+  const [isHovered5, setIsHovered5] = useState(false);
+  const [isHovered6, setIsHovered6] = useState(false);
+
+  const handleHover1 = () => {
+    setIsHovered1(!isHovered1);
+  };
+  const handleHover2 = () => {
+    setIsHovered2(!isHovered2);
+  };
+  const handleHover3 = () => {
+    setIsHovered3(!isHovered3);
+  };
+  const handleHover4 = () => {
+    setIsHovered4(!isHovered4);
+  };
+  const handleHover5 = () => {
+    setIsHovered5(!isHovered5);
+  };
+  const handleHover6 = () => {
+    setIsHovered6(!isHovered6);
+  };
   return (
     <>
       <Nav />
@@ -26,12 +57,15 @@ const Landing = () => {
             width="50"
             height="4"
             fontsize="1.25"
-            onClick={()=>navigate('/login')}
+            onClick={() => navigate("/login")}
           />
           <br />
           <br />
-          <p id="instructions">
-            * learn more about the fair use of Artificial Intelligence. <br />*
+          <p id="instructions" onClick={()=>window.location.href='https://hai.stanford.edu/news/reexamining-fair-use-age-ai'}>
+            * learn more about the fair use of Artificial Intelligence.
+          </p>
+          <p id="instructions" onClick={()=>navigate('/privacy')}>
+            *
             learn more about the privacy policy associated with the application.
           </p>
         </div>
@@ -53,7 +87,15 @@ const Landing = () => {
           </div>
         </div>
 
-        <div className="svganimation"></div>
+        <div className="svganimation">
+          <video autoPlay loop muted style={{ width: "100%", height: "100%" }}>
+            <source
+              src="https://firebasestorage.googleapis.com/v0/b/nataraj-ai.appspot.com/o/landing.mp4?alt=media&token=8d660569-593d-45d4-abc8-89d060a1eab6"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </section>
 
       <section className="hero-section3">
@@ -66,7 +108,77 @@ const Landing = () => {
         </div>
         <div className="features">
           <div className="featureslist">
-            <p>FEATURES</p>
+            <b><h3>FEATURES</h3></b>
+            <div className="row1">
+            <div
+              className="singlefeature"
+              onMouseEnter={handleHover1}
+              onMouseLeave={handleHover1}
+            >
+              <img src={feature1} className="featureimg" alt="" />
+              <p className="featuretext">AUTOMATIC CHOREOGRAPHY GENERATOR</p>
+              <div
+                className={`featureblob ${isHovered1 ? "hovered" : ""}`}
+              ></div>
+            </div>
+            <div
+              className="singlefeature"
+              onMouseEnter={handleHover2}
+              onMouseLeave={handleHover2}
+            >
+              <img src={feature2} className="featureimg" alt="" />
+              <p className="featuretext">VIEW CHOREOGRAPHY IN 3D</p>
+              <div
+                className={`featureblob ${isHovered2 ? "hovered" : ""}`}
+              ></div>
+            </div>
+            <div
+              className="singlefeature"
+              onMouseEnter={handleHover3}
+              onMouseLeave={handleHover3}
+            >
+              <img src={feature3} className="featureimg" alt="" />
+              <p className="featuretext">SAVE CHOREOGRAPHED MODEL IN YOUR ACCOUNT</p>
+              <div
+                className={`featureblob ${isHovered3 ? "hovered" : ""}`}
+              ></div>
+            </div>
+            </div>
+            <div className="row2">
+            <div
+              className="singlefeature"
+              onMouseEnter={handleHover4}
+              onMouseLeave={handleHover4}
+            >
+              <img src={feature4} className="featureimg" alt="" />
+              <p className="featuretext">PRACTICE THE CHOREOGRAPHY USING OUR MOBILE APP</p>
+              <div
+                className={`featureblob ${isHovered4 ? "hovered" : ""}`}
+              ></div>
+            </div>
+            <div
+              className="singlefeature"
+              onMouseEnter={handleHover5}
+              onMouseLeave={handleHover5}
+            >
+              <img src={feature5} className="featureimg" alt="" />
+              <p className="featuretext">GET MATCHING RATIO AND MAKE BETTER CORRECTIONS</p>
+              <div
+                className={`featureblob ${isHovered5 ? "hovered" : ""}`}
+              ></div>
+            </div>
+            <div
+              className="singlefeature"
+              onMouseEnter={handleHover6}
+              onMouseLeave={handleHover6}
+            >
+              <img src={feature6} className="featureimg" alt="" />
+              <p className="featuretext">DOWNLOAD REPORT AND GET SUGGESTIONS</p>
+              <div
+                className={`featureblob ${isHovered6 ? "hovered" : ""}`}
+              ></div>
+            </div>
+            </div>
           </div>
         </div>
       </section>
@@ -75,7 +187,7 @@ const Landing = () => {
           <p className="downloadapp">
             DOWNLOAD<br></br>ANDROID APP
           </p>
-          <img src={googleplay} alt="" className="googleplayimg" />
+          <img src={googleplay} alt="" onClick={()=>window.location.href='https://play.google.com/store/apps/details?id=co.zanie.nataraj'} className="googleplayimg" />
         </div>
         <div className="android-app-bottom">
           <h1>PROUDLY POWERED BY</h1>

@@ -24,3 +24,11 @@
     font-size: 1.2rem;
     font-weight: bold;
 }
+
+.videoss {
+    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Create two columns */
+    grid-gap: 5rem; /* Add spacing between items */
+    margin-bottom: 10rem;
+  }

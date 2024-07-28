@@ -20,6 +20,7 @@ import Loading from './pages/NewProject/Loading/Loading';
 import Project from './pages/Project/Project';
 import Profile from './pages/Profile/Profile';
 import AudioRND from './pages/RND/AudioRND';
+import Privacy from './pages/Privacy/Privacy';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/onboarding" element={<Onboarding/>} />
         <Route path="/blogs" element={<Blogs/>} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/rnd" element={<AudioRND />} />
         <Route path="*" element={<NotFound />} />
         {/* <Route path="/counter" element={<Counter/>} /> */}

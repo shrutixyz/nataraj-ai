@@ -6,6 +6,7 @@ import Styles from "./CustomiseAvatar.module.css"
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const CustomiseAvatar = () => {
   const navigate = useNavigate()
@@ -34,7 +35,20 @@ const CustomiseAvatar = () => {
       navigate(`/project?id=${projectID}`)
       }
       catch(error){
-        alert(error)
+       if(error instanceof Error){
+        Swal.fire({
+          title: error.toString(),
+          confirmButtonColor: "#FFBA09",
+          confirmButtonText: "okay",
+        });
+       }
+        else{
+          Swal.fire({
+            title: "Unexpected Exception",
+            confirmButtonColor: "#FFBA09",
+            confirmButtonText: "okay",
+          });
+        }
       }
   }
 
