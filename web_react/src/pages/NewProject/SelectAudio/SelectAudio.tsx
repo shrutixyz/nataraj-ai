@@ -21,8 +21,8 @@ const SelectAudio = () => {
   const [audioUrl, setAudioURL] = useState("");
   const [filename, setFilename] = useState("");
   const [blob, setBlob] = useState("");
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(0);
+  const [start, setStart] = useState(20);
+  const [end, setEnd] = useState(50);
   const [back, setBack] = useState(true);
   const [selected, changeSelected] = useState(0);
   const dispatch = useDispatch();

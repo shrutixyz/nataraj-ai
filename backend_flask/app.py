@@ -62,6 +62,27 @@ def contactus():
   return jsonify({"success": True}), 200
 
 
+@app.route('/fetchprojects/<uid>', methods=["GET"])
+@limiter.limit("60 per 60 minute")
+def fetch_projects(uid):
+  projects = get_project_ids_from_uid(uid)
+  return {"success": True, "projects":projects}
+
+
+@app.route('/changeprojectvisibility/<pid>/<visibility>', methods=["GET"])
+@limiter.limit("60 per 1 minute")
+def change_visibility(pid, visibility):
+  status = change_visibility_rtdb(pid, visibility)
+  return {"success": status}
+
+
+@app.route('/deleteproject/<pid>', methods=["GET"])
+@limiter.limit("60 per 1 minute")
+def delete_project(pid):
+  status = delete_project_rtdb(pid)
+  return {"success": status}
+
+
 @app.route('/deleteaccount/<uid>', methods=['GET'])
 def delete_account(uid):
     try:

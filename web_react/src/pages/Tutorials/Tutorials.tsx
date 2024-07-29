@@ -9,7 +9,7 @@ const Tutorials = () => {
       <Nav />
       <div className={Styles.info}>
         <h1 className={Styles.title}>
-        TUTORIALS
+        Tutorials
         </h1>
         <p className={Styles.subtitle}>
           LET'S LEARN HOW TO USE NATARAJ AI AND GET THE BEST OF OUT IT!

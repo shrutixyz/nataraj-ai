@@ -1,0 +1,28 @@
+.parentdiv{
+    background-color: #2B2C2D;
+    height: 20vw;
+    width: 30vw;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.bottomrow{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.text{
+    margin-left: 2rem;
+}
+
+.icons{
+    margin-right: 2rem;
+    display: flex;
+    gap: 1rem;
+    cursor: pointer;
+}

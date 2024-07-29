@@ -13,7 +13,7 @@ const About = () => {
 
 <div className={Styles.info}>
     <h1 className={Styles.title}>
-    ABOUT
+    About
     </h1>
     <p className={Styles.subtitle}>LEARN MORE ABOUT NATARAJ AI'S AMBITION, AND HOW WE'RE PLANNING TO MOVE AHEAD!</p>
 

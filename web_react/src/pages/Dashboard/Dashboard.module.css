@@ -21,3 +21,17 @@
 .noprojectstext{
     font-size: 1.5rem;
 }
+
+.gridcontainer{
+    display: grid;
+    gap: 3vw;
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px; */
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
