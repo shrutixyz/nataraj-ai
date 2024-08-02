@@ -110,8 +110,10 @@ def upload_blob(source_file_name, destname):
 
 def get_url_from_projectid(projectID):
     ref = db.reference('projects/'+str(projectID))
+    print(ref)
     # Update the data at the specified document ID
     url = ref.get('song')
+    print(url)
     return url
 
 

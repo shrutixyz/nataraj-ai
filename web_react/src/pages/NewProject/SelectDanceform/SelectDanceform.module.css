@@ -38,3 +38,44 @@
     display: flex;
     gap: 2rem;
 }
+
+.selected{
+    margin-top: 3rem;
+    width: 20rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    /* background-color: pink; */
+    background-color: #2B2C2D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    background-color: #FFBA09;
+    color: black;
+    cursor: pointer;
+    border: 2px solid #FFBA09;
+}
+
+
+.unselected{
+    margin-top: 3rem;
+    width: 20rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    /* background-color: pink; */
+    border: 2px solid #FFBA09;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    background-color: transparent;
+    color: #FFBA09;
+    cursor: pointer;
+}
+
+
+.danceoptions{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-bottom: 5rem;
+}

@@ -5,7 +5,7 @@
 
 .subtitle{
     font-size: 2rem;
-    margin-top: -2rem;
+    /* margin-top: -2rem; */
 }
 
 .noprojectscontainer{
@@ -50,7 +50,16 @@
 .selectedaudio{
     width: 20rem;
     height: 20rem;
-    background-color: #2B2C2D;
+    /* background-color: #2B2C2D; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.thumbnail{
+    height: 15rem;
+    width: 15rem;
 }
 
 .library{
@@ -60,12 +69,92 @@
 }
 
 .mirtdiv{
-    width: 150rem;
+    /* width: 100vw; */
+    /* --mirt-playhead-width: 100vw */
+    --mirt-height: 3rem;
+    --mirt-playhead-width: 0.35rem;
+    --mirt-button-width: 3rem;
+    --mirt-background-color: transparent;
+    /* --mirt-playhead-width: 2rem */
+    /* --mirt-handle-width: 0.3rem; */
+    --mirt-button-hover-color	: #FFBA09;
+    /* --mirt-width: 30rem */
 }
 
 .selected{
-    width: 10rem;
+    margin-top: 7rem;
+    width: 20rem;
     height: 3rem;
+    border-radius: 0.5rem;
     /* background-color: pink; */
     background-color: #2B2C2D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    background-color: #FFBA09;
+    color: black;
+    cursor: pointer;
+    border: 2px solid #FFBA09;
+}
+
+
+.unselected{
+    margin-top: 7rem;
+    width: 20rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    /* background-color: pink; */
+    border: 2px solid #FFBA09;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    background-color: transparent;
+    color: #FFBA09;
+    cursor: pointer;
+}
+
+.projectName{
+    display: flex;
+    margin-top: -2rem;
+    gap: 2rem;
+}
+
+.edit{
+    cursor: pointer;
+}
+
+.editinput{
+    margin-top: -0rem;
+}
+
+.timeoptions{
+    display: flex;
+    gap: 2rem;
+}
+
+/* 
+.trimaudio{
+    background-color: pink;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}  */
+
+/* .mainbody{
+    background-color: pink;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+} */
+
+
+.navbuttons{
+    position: fixed;
+    bottom: 3rem;
+    display: flex;
+    gap: 2rem;
 }

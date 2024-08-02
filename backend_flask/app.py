@@ -101,24 +101,28 @@ def create_project():
    file = request.files['file']
    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
    outputpath = os.path.join(UPLOAD_FOLDER, "modified-"+file.filename)
+   start = int(request.form.get("start"))/1000
+   end = int(request.form.get("end"))/1000
    # return {"start": request.form.get('start')}
    file.save(filepath)
-   trim_audio_soundfile(filepath, int(request.form.get("start")), int(request.form.get("end")), outputpath)
+   trim_audio_soundfile(filepath, start, end, outputpath)
    url = upload_blob(outputpath, "modified-"+file.filename)
-   # print("here")
+   length_of_randstring = 15 - len("nataraj-")
+   randstring = ''.join(random.choices(string.ascii_lowercase + string.digits, k=length_of_randstring))
+   
    data = {
       "owner": request.form.get("uid"),
       "visibility": "private",
       "title": request.form.get("title"),
       "song": url,
       "avatar": "",
-      "duration": int(request.form.get("end")) - int(request.form.get("start")),
+      "duration": end - start,
       "choreography": {},
       "state": 1,
       "loading": 0,
+      "projectID": randstring,
+      "projectName": request.form.get("projectName")
    }
-   length_of_randstring = 15 - len("nataraj-")
-   randstring = ''.join(random.choices(string.ascii_lowercase + string.digits, k=length_of_randstring))
    create_document_rtdb(f"nataraj-{randstring}", data)
    append_to_firestore(request.form.get("uid"), f"nataraj-{randstring}")
    return {"success": True, "projectID": f"nataraj-{randstring}"}, 200
@@ -140,10 +144,14 @@ def generate_dance():
    # get timestamp based lyrics on backend, save that in project,
    # generate prompt, and add a loading state in backend with a listener on react
    # if response is returned, then show project to user
+   print(projectid)
    print("here")
    url = get_url_from_projectid(projectid)[0]["song"]
+   print(f"URLLL IS {url}")
+   url = url.replace("https://storage.googleapis.com/nataraj-ai.appspot.com", "gs://nataraj-ai.appspot.com")
    dance_steps = generate_dance_with_lyrics(url)
-   return {"success": True, "url": url}
+   update_document_rtdb(projectid, {"choreography": dance_steps})
+   return {"success": True, "url": "url"}
     
 
 @app.route('/upload', methods=['POST'])

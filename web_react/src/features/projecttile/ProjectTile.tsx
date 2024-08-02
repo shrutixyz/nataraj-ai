@@ -42,7 +42,7 @@ const ProjectTile = (props: any) => {
         <div className={Styles.bottomrow}>
           <div className={Styles.text}>
             <p>
-              <b>{props.data.title}</b>
+              <b>{props.data.projectName}</b>
             </p>
             <p>{props.data.duration} seconds</p>
           </div>

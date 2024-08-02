@@ -1,0 +1,30 @@
+.maindiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 20%;
+
+}
+
+.maindiv:hover{
+    background-color: #00000050;
+    cursor: pointer;
+}
+
+.left{
+    display: flex;
+    gap: 2rem;
+    margin-left: 2rem;
+}
+
+.right{
+    margin-right: 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    
+}
+
+.icons{
+    height: 1.3rem;
+}

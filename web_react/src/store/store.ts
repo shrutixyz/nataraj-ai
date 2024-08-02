@@ -59,6 +59,7 @@ const projectSlice = createSlice({
   initialState: {
     checkpoint: 0,
     projectID: 0,
+    projectName: "",
   },
   reducers: {
     updateCheckpoint: (state, checkpoint) => {
@@ -67,13 +68,16 @@ const projectSlice = createSlice({
     setProjectID: (state, id) => {
       state.projectID = id.payload
     },
+    updateProjectName: (state, name) =>{
+      state.projectName = name.payload
+    }
   },
 });
 
 // Export actions
 export const { login, logout, updateSignupName, updateSignupEmail, updateSignupPassword, updateMusicUrl } = authSlice.actions;
 export const { } = authSlice.actions;
-export const { updateCheckpoint, setProjectID } = projectSlice.actions;
+export const { updateCheckpoint, setProjectID, updateProjectName } = projectSlice.actions;
 
 // Configure the store
 const store = configureStore({
