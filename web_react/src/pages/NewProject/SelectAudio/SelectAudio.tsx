@@ -11,6 +11,7 @@ import Mirt from "react-mirt";
 import { auth } from "../../../utils/firebase";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import loader from "../../../assets/loader.svg";
 import {
   setProjectID,
   updateCheckpoint,
@@ -42,6 +43,7 @@ const SelectAudio = () => {
   const [selected, changeSelected] = useState(0);
   const dispatch = useDispatch();
   const [projectName, setProjectName] = useState("");
+  const [isLoading, setisLoading] = useState(false);
   const [randThumbnail, setRandThumbnail] = useState<string | undefined>(
     undefined
   );
@@ -89,6 +91,7 @@ const SelectAudio = () => {
   };
 
   const handleFileUpload = (evt: any) => {
+    setisLoading(true)
     console.log(evt);
     const file = evt.target.files[0];
     setAudioFile(file);
@@ -106,6 +109,7 @@ const SelectAudio = () => {
     setRandThumbnail(thumbnail);
     const lastPart = audioUrl.substring(audioUrl.lastIndexOf("/") + 1);
     setBlob(lastPart);
+    setisLoading(false)
   };
 
   const handleSubmit = async () => {
@@ -214,7 +218,12 @@ const SelectAudio = () => {
       {back == true ? (
         <div>
           <Nav />
-          <div className={Styles.mainbody}>
+          {
+            isLoading?<div className={Styles.loading}>
+            <img src={loader} className={Styles.loader} alt="" />
+            <p>setting audio...</p>
+          </div> :
+            <div className={Styles.mainbody}>
             <p className={Styles.title}>DASHBOARD</p>
             {editing ? (
               <div className={Styles.projectName}>
@@ -303,6 +312,7 @@ const SelectAudio = () => {
             }}
             />
           </div>
+          }
         </div>
       ) : (
         <div className={Styles.trimaudio}>

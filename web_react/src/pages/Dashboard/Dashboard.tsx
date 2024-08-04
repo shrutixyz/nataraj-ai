@@ -25,10 +25,13 @@ const Dashboard = () => {
   const [isLoading, setisLoading] = useState(true);
   const uid = auth.currentUser?.uid;
   const fetchprojects = async () => {
+    
     try {
       const res = await axios.get(`${endpoint}/fetchprojects/${uid}`);
       setProjects(res.data["projects"])
+      setisLoading(false)
     } catch (error) {
+      // setisLoading(false)
       Swal.fire({
         title: "Error!",
         text: "Unespected error occurred!",
@@ -39,7 +42,7 @@ const Dashboard = () => {
   };
 
   const handleNewProject = () =>{
-    if(projects.length>10){
+    if(projects.length>3){
       Swal.fire({
         title: "Error!",
         text: "With free tier, you can have 3 projects at max! Please delete an existing project or contact us for revised quota",
@@ -60,7 +63,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchprojects();
-    setisLoading(false)
   }, []);
 
   return (

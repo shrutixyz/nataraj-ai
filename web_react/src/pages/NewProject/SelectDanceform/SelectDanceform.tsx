@@ -17,7 +17,9 @@ const SelectDanceform = () => {
   const [danceform, setDanceform] = useState("freestyle");
   const projectID = useSelector((state: any) => state.project.projectID);
   const endpoint = useSelector((state: any) => state.backend.endpoint);
+  const projectName = useSelector((state: any) => state.project.projectName);
   const danceForms = [
+
     "Hip Hop",
     "Freestyle",
     "Indian Classical",
@@ -114,7 +116,7 @@ const SelectDanceform = () => {
       <Nav />
       <div className={Styles.mainbody}>
         <p className={Styles.title}>DASHBOARD</p>
-        <p className={Styles.subtitle}>Untitled Project</p>
+        <p className={Styles.subtitle}>{projectName}</p>
         <br />
         <p className={Styles.step}>STEP 3: SELECT THE DANCE STYLE</p>
         <p>NOTE: YOU CAN SELECT MULTIPLE IF YOU WANT A FUN FUSION!</p>

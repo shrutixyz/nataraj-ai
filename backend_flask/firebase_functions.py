@@ -121,20 +121,21 @@ def get_project_ids_from_uid(uid):
     get_projects = firestore_db.collection("users").document(uid).get().to_dict()["projects"]
     projects = []
     print(get_projects)
-    for project in get_projects:
-        ref = db.reference('projects/'+str(project)).get()
-        projects.append(ref)
+    if get_projects!=None:
+        for project in get_projects:
+            ref = db.reference('projects/'+str(project)).get()
+            projects.append(ref)
     print(projects)
     return projects
 
 
 def change_visibility_rtdb(pid, visibility):
-    ref = db.reference('projects/'+str(pid)).update({"visibility": visibility})
+    ref = db.reference('projects/'+'nataraj-'+str(pid)).update({"visibility": visibility})
     return True
 
 def delete_project_rtdb(pid):
     owner = db.reference('projects/'+str(pid)).get()["owner"]
-    print(owner)
+    print("onwer iss " + owner)
     get_projects = firestore_db.collection("users").document(owner).get().to_dict()["projects"]
     get_projects.remove(pid)
     doc_ref = firestore_db.collection("users").document(owner).update({"projects": get_projects})

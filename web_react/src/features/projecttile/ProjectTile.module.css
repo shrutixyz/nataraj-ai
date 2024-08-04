@@ -26,3 +26,7 @@
     gap: 1rem;
     cursor: pointer;
 }
+
+.model{
+    height: 10rem;
+}

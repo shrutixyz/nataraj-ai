@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation | Nataraj AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #FFBA09 3px solid;
+        }
+        header a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header ul {
+            padding: 0;
+            list-style: none;
+        }
+        header li {
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+        .main {
+            padding: 20px;
+            background: #fff;
+            margin-top: 20px;
+        }
+        .route {
+            margin-bottom: 20px;
+        }
+        .route h2 {
+            color: #333;
+        }
+        .route p {
+            margin: 5px 0;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>API Documentation | Nataraj AI</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main">
+            <h2>Introduction</h2>
+            <p>This document provides an overview of the available API routes, their methods, and the expected input and output formats for Nataraj AI. If you were intended to use the application, please head to <a href="https://nataraj-ai.web.app">https://nataraj-ai.web.app</a>.</p>
+
+            <div class="route">
+                <h2>1. Get All Items</h2>
+                <p><strong>Route:</strong> <code>/api/items</code></p>
+                <p><strong>Method:</strong> GET</p>
+                <p><strong>Description:</strong> Fetches a list of all items.</p>
+                <p><strong>Response:</strong> A JSON array of item objects.</p>
+                <pre><code>
+Example Response:
+[
+    {
+        "id": 1,
+        "name": "Item 1",
+        "description": "Description for item 1"
+    },
+    {
+        "id": 2,
+        "name": "Item 2",
+        "description": "Description for item 2"
+    }
+]
+                </code></pre>
+            </div>
+
+            <div class="route">
+                <h2>2. Get Item by ID</h2>
+                <p><strong>Route:</strong> <code>/api/items/{id}</code></p>
+                <p><strong>Method:</strong> GET</p>
+                <p><strong>Description:</strong> Fetches a single item by its ID.</p>
+                <p><strong>URL Parameters:</strong> <code>id</code> (integer) - The ID of the item to fetch.</p>
+                <p><strong>Response:</strong> A JSON object of the item.</p>
+                <pre><code>
+Example Response:
+{
+    "id": 1,
+    "name": "Item 1",
+    "description": "Description for item 1"
+}
+                </code></pre>
+            </div>
+
+            <div class="route">
+                <h2>3. Create a New Item</h2>
+                <p><strong>Route:</strong> <code>/api/items</code></p>
+                <p><strong>Method:</strong> POST</p>
+                <p><strong>Description:</strong> Creates a new item.</p>
+                <p><strong>Request Body:</strong> A JSON object containing the new item's details.</p>
+                <pre><code>
+Example Request Body:
+{
+    "name": "New Item",
+    "description": "Description for new item"
+}
+                </code></pre>
+                <p><strong>Response:</strong> A JSON object of the created item.</p>
+                <pre><code>
+Example Response:
+{
+    "id": 3,
+    "name": "New Item",
+    "description": "Description for new item"
+}
+                </code></pre>
+            </div>
+
+            <div class="route">
+                <h2>4. Update an Item</h2>
+                <p><strong>Route:</strong> <code>/api/items/{id}</code></p>
+                <p><strong>Method:</strong> PUT</p>
+                <p><strong>Description:</strong> Updates an existing item by its ID.</p>
+                <p><strong>URL Parameters:</strong> <code>id</code> (integer) - The ID of the item to update.</p>
+                <p><strong>Request Body:</strong> A JSON object containing the updated item's details.</p>
+                <pre><code>
+Example Request Body:
+{
+    "name": "Updated Item",
+    "description": "Updated description for item"
+}
+                </code></pre>
+                <p><strong>Response:</strong> A JSON object of the updated item.</p>
+                <pre><code>
+Example Response:
+{
+    "id": 1,
+    "name": "Updated Item",
+    "description": "Updated description for item"
+}
+                </code></pre>
+            </div>
+
+            <div class="route">
+                <h2>5. Delete an Item</h2>
+                <p><strong>Route:</strong> <code>/api/items/{id}</code></p>
+                <p><strong>Method:</strong> DELETE</p>
+                <p><strong>Description:</strong> Deletes an item by its ID.</p>
+                <p><strong>URL Parameters:</strong> <code>id</code> (integer) - The ID of the item to delete.</p>
+                <p><strong>Response:</strong> A success message.</p>
+                <pre><code>
+Example Response:
+{
+    "message": "Item deleted successfully"
+}
+                </code></pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

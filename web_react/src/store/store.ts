@@ -47,6 +47,7 @@ auth.onAuthStateChanged((user) => {
 const backendSlice = createSlice({
   name: 'backend',
   initialState: {
+    // https://singular-node-429217-j4.uc.r.appspot.com/    deployed endpoint
     endpoint: "http://127.0.0.1:5000",
   },
   reducers: {

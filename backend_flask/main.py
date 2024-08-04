@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from read_files import read_md_files
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -11,6 +11,7 @@ from file_manipulation import *
 from gemini_api import *
 
 app = Flask(__name__)
+
 CORS(app)
 limiter = Limiter(
     get_remote_address,
@@ -25,7 +26,7 @@ UPLOAD_FOLDER = os.path.join(app.static_folder, 'musicfiles')
 @app.route('/')
 @limiter.limit("1 per second")
 def hello_world():
-    return jsonify("Hi there, you've stumbled across the backend API of Nataraj AI")
+    return render_template("index.html")
 
 
 @app.route('/blogs')
@@ -79,7 +80,7 @@ def change_visibility(pid, visibility):
 @app.route('/deleteproject/<pid>', methods=["GET"])
 @limiter.limit("60 per 1 minute")
 def delete_project(pid):
-  status = delete_project_rtdb(pid)
+  status = delete_project_rtdb("nataraj-"+pid)
   return {"success": status}
 
 
@@ -99,17 +100,18 @@ def create_project():
    if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 401
    file = request.files['file']
+   length_of_randstring = 15 - len("nataraj-")
+   randstring = ''.join(random.choices(string.ascii_lowercase + string.digits, k=length_of_randstring))
+   
    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
-   outputpath = os.path.join(UPLOAD_FOLDER, "modified-"+file.filename)
+   outputpath = os.path.join(UPLOAD_FOLDER, f"modified-{str(randstring)}.{str(file.filename.split('.')[-1])}")
    start = int(request.form.get("start"))/1000
    end = int(request.form.get("end"))/1000
    # return {"start": request.form.get('start')}
    file.save(filepath)
    trim_audio_soundfile(filepath, start, end, outputpath)
-   url = upload_blob(outputpath, "modified-"+file.filename)
-   length_of_randstring = 15 - len("nataraj-")
-   randstring = ''.join(random.choices(string.ascii_lowercase + string.digits, k=length_of_randstring))
-   
+   url = upload_blob(outputpath, f"modified-{str(randstring)}.{str(file.filename.split('.')[-1])}")
+
    data = {
       "owner": request.form.get("uid"),
       "visibility": "private",
@@ -129,7 +131,7 @@ def create_project():
 
 
 @app.route('/updatedanceform', methods=["POST"])
-@limiter.limit("1 per 1 minute")
+@limiter.limit("100 per 1 minute")
 def update_dance_form():
    projectid = request.json["projectID"]
    danceform = request.json["danceform"]
@@ -154,16 +156,16 @@ def generate_dance():
    return {"success": True, "url": "url"}
     
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
-   if 'file' not in request.files:
-        return jsonify({'error': 'No file part'})
-   file = request.files['file']
+# @app.route('/upload', methods=['POST'])
+# def upload_file():
+#    if 'file' not in request.files:
+#         return jsonify({'error': 'No file part'})
+#    file = request.files['file']
 
-   if file.filename == '':
-        return jsonify({'error': 'No selected file'})
+#    if file.filename == '':
+#         return jsonify({'error': 'No selected file'})
    
-   return {"hhe": file.filename}
+#    return {"hhe": file.filename}
 
 # if __name__ == '__main__':
 #    app.run(host='0.0.0.0', port=5000, debug=True)

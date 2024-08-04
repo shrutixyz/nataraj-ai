@@ -5,8 +5,11 @@ import eye from "../../assets/eye.svg";
 import eyeoff from "../../assets/eye-off.svg";
 import share from "../../assets/share.svg";
 import Swal from "sweetalert2";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ProjectTile = (props: any) => {
+  const endpoint = useSelector((state: any) => state.backend.endpoint);
   const shareFunc = () => {
     if(props.data.private){
         Swal.fire({
@@ -20,7 +23,7 @@ const ProjectTile = (props: any) => {
 
         Swal.fire({
             title: "Success!",
-            text: "Here's the link for your project: https://nataraj.web.app/project?id="+props.data.id,
+            text: "Here's the link for your project: https://nataraj.web.app/project?id="+props.data.projectID,
             confirmButtonColor: "#18191A",
             confirmButtonText: "okay",
           });
@@ -29,25 +32,68 @@ const ProjectTile = (props: any) => {
   };
 
   const changeVisibility =async()=>{
+    try {
+      const visibility = props.data.visibility;
+     const res = await axios.get(`${endpoint}/changeprojectvisibility/${props.data.projectID}/${visibility=="private"?"public":"private"}`)
+      console.log(res);
+      Swal.fire({
+        title: "Success!",
+        text: `The visibility of your project is toggled from ${visibility}! You may reload the page to see the latest property!`,
+        confirmButtonColor: "#18191A",
+        confirmButtonText: "okay",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "error",
+        confirmButtonColor: "#18191A",
+        confirmButtonText: "okay",
+      });
+    }
     // implement further code
   }
 
   const deleteProject =async()=>{
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Are you sure that you want to delete the project? It'll no longer be avaiable for use.",
+        confirmButtonColor: "#18191A",
+        confirmButtonText: "okay",
+        showCancelButton: true,
+        cancelButtonText: "cancel"
+      });
+     const res = await axios.get(`${endpoint}/deleteproject/${props.data.projectID}`)
+      console.log(res);
+      Swal.fire({
+        title: "Success!",
+        text: "The project is successfully deleted! You may reload the page to see the latest property!",
+        confirmButtonColor: "#18191A",
+        confirmButtonText: "okay",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Unable to delete project",
+        confirmButtonColor: "#18191A",
+        confirmButtonText: "okay",
+      });
+    }
     // implement further code
   }
   return (
     <>
       <div className={Styles.parentdiv}>
-        <img src={model} alt="" />
+        <img src={model} alt="" className={Styles.model}/>
         <div className={Styles.bottomrow}>
           <div className={Styles.text}>
             <p>
               <b>{props.data.projectName}</b>
             </p>
-            <p>{props.data.duration} seconds</p>
+            <p>{props.data.duration.toString().substring(0, 5)} seconds</p>
           </div>
           <div className={Styles.icons}>
-            {props.data.private ? (
+            {props.data.visibility=="private" ? (
               <img src={eye} alt="" onClick={changeVisibility} />
             ) : (
               <img src={eyeoff} alt="" onClick={changeVisibility}/>
