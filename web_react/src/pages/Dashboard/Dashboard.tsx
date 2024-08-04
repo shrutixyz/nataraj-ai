@@ -9,6 +9,7 @@ import axios from "axios";
 import { auth } from "../../utils/firebase";
 import Swal from "sweetalert2";
 import ProjectTile from "../../features/projecttile/ProjectTile";
+import loader from "../../assets/loader.svg";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Dashboard = () => {
     // { name: "Untitled Project1", private: true, duration: 30 },
     // { name: "Untitled Project1", private: true, duration: 30 },
   ]);
+  const [isLoading, setisLoading] = useState(true);
   const uid = auth.currentUser?.uid;
   const fetchprojects = async () => {
     try {
@@ -52,18 +54,24 @@ const Dashboard = () => {
   
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/ca");
+      navigate("/restricted");
     }
   }, [isLoggedIn]);
 
   useEffect(() => {
     fetchprojects();
+    setisLoading(false)
   }, []);
 
   return (
     <>
       <Nav />
-      <div className={Styles.mainbody}>
+      {
+        isLoading? <div className={Styles.loading}>
+        <img src={loader} className={Styles.loader} alt="" />
+        <p>loading your projects</p>
+      </div> :
+        <div className={Styles.mainbody}>
         <div className={Styles.header}>
           <div>
             <p className={Styles.title}>DASHBOARD</p>
@@ -91,6 +99,7 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+      }
     </>
   );
 };

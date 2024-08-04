@@ -87,10 +87,10 @@
     width: 100%;
 }
 
-.link{
+.link1{
     height: 20rem;
     width: 20rem;
-    border: 3px solid rgb(194, 194, 255);
+    border: 3px solid #8FB5FF;
     background-color: transparent;
     border-radius: 1rem;
     display: flex;
@@ -98,25 +98,60 @@
     justify-content: center;
     font-size: 1.2rem;
     text-align: center;
-    color: rgb(194, 194, 255);
+    color: #8FB5FF;
     transition: 0.5s ease;
     font-weight: bold;
     cursor: pointer;
 }
 
+.link1:hover{
+    background-color: #8FB5FF;
+    color: #18191A;
+}
 
 
-.link:hover{
+.link2{
     height: 20rem;
     width: 20rem;
-    border: 3px solid rgb(194, 194, 255);
-    background-color: rgb(194, 194, 255);
+    border: 3px solid #C08FFF;
+    background-color: transparent;
     border-radius: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
     text-align: center;
+    color: #C08FFF;
+    transition: 0.5s ease;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.link2:hover{
+    background-color: #C08FFF;
+    color: #18191A;
+}
+
+
+.link3{
+    height: 20rem;
+    width: 20rem;
+    border: 3px solid #FFBA09;
+    background-color: transparent;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #FFBA09;
+    transition: 0.5s ease;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.link3:hover{
+    background-color: #FFBA09;
     color: #18191A;
 }
 

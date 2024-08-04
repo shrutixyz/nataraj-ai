@@ -17,8 +17,10 @@ import {
   handleGoogleSignIn,
 } from "../../../utils/firebase_functions";
 import Swal from "sweetalert2";
+import loader from "../../../assets/loader.svg";
 
 const Register = () => {
+  const [isLoading, setisLoading] = useState(false);
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
   const endpoint = useSelector((state: any) => state.backend.endpoint);
@@ -34,7 +36,9 @@ const Register = () => {
   }, [isLoggedIn]);
 
   const googleSignin = async () => {
+    setisLoading(true)
     const res = await handleGoogleSignIn(endpoint);
+    setisLoading(false)
     if (res !== null) {
       dispatch(login());
       navigate("/dashboard");
@@ -50,7 +54,9 @@ const Register = () => {
   };
 
   const githubSignin = async () => {
+    setisLoading(true)
     const res = await handleGithubSignIn(endpoint);
+    setisLoading(false)
     if (res !== null) {
       dispatch(login());
       navigate("/dashboard");
@@ -68,7 +74,6 @@ const Register = () => {
 
   const proceedLogin = () => {
     if (confirmPass != password) {
-      // alert("Passwords don't match")
       Swal.fire({
         title: "Passwords don't match",
         confirmButtonColor: "#FFBA09",
@@ -83,62 +88,69 @@ const Register = () => {
   return (
     <>
       <Nav />
-      <div className={Styles.mainbody}>
-        <h1 className={Styles.title}>SIGN UP</h1>
-        <a href="/login" className={Styles.subtitleref}>
-          ALREADY A USER? LOGIN
-        </a>
-        <p className={Styles.options}>SIGNUP OPTIONS</p>
-        <div className={Styles.sociallogins}>
-          <SocialButton
-            title="Signup with Google"
-            width="25"
-            height="4"
-            service="google"
-            onClick={googleSignin}
+      {isLoading ? (
+        <div className={Styles.loading}>
+          <img src={loader} className={Styles.loader} alt="" />
+          <p>logging you in</p>
+        </div>
+      ) : (
+        <div className={Styles.mainbody}>
+          <h1 className={Styles.title}>SIGN UP</h1>
+          <a href="/login" className={Styles.subtitleref}>
+            ALREADY A USER? LOGIN
+          </a>
+          <p className={Styles.options}>SIGNUP OPTIONS</p>
+          <div className={Styles.sociallogins}>
+            <SocialButton
+              title="Signup with Google"
+              width="25"
+              height="4"
+              service="google"
+              onClick={googleSignin}
+            />
+            <SocialButton
+              title="Signup with GitHub"
+              width="25"
+              height="4"
+              service="github"
+              onClick={githubSignin}
+            />
+          </div>
+          <p className={Styles.options}>EMAIL SIGNUP</p>
+          <input
+            type="email"
+            placeholder="EMAIL ADDRESS"
+            onChange={(evt) => {
+              setEmail(evt.target.value);
+            }}
           />
-          <SocialButton
-            title="Signup with GitHub"
-            width="25"
+          <br />
+          <input
+            type="password"
+            placeholder="PASSWORD"
+            onChange={(evt) => {
+              setPassword(evt.target.value);
+            }}
+          />
+          <br />
+          <input
+            type="password"
+            placeholder="CONFIRM PASSWORD"
+            onChange={(evt) => {
+              setconfirmPass(evt.target.value);
+            }}
+          />
+          <br />
+          <br />
+          <br />
+          <GradientButton
+            title="SIGNUP"
             height="4"
-            service="github"
-            onClick={githubSignin}
+            width="25"
+            onClick={() => proceedLogin()}
           />
         </div>
-        <p className={Styles.options}>EMAIL SIGNUP</p>
-        <input
-          type="email"
-          placeholder="EMAIL ADDRESS"
-          onChange={(evt) => {
-            setEmail(evt.target.value);
-          }}
-        />
-        <br />
-        <input
-          type="password"
-          placeholder="PASSWORD"
-          onChange={(evt) => {
-            setPassword(evt.target.value);
-          }}
-        />
-        <br />
-        <input
-          type="password"
-          placeholder="CONFIRM PASSWORD"
-          onChange={(evt) => {
-            setconfirmPass(evt.target.value);
-          }}
-        />
-        <br />
-        <br />
-        <br />
-        <GradientButton
-          title="SIGNUP"
-          height="4"
-          width="25"
-          onClick={() => proceedLogin()}
-        />
-      </div>
+      )}
       <Footer />
     </>
   );

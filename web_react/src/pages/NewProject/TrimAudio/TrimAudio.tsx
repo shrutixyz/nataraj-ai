@@ -17,7 +17,7 @@ const TrimAudio = () => {
 
   useEffect(()=>{
     if(!isLoggedIn){
-      navigate('/ca')
+      navigate('/restricted')
     }
   }, [isLoggedIn])
 

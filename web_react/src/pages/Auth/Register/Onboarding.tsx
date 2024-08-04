@@ -10,8 +10,11 @@ import {
   updateUserProfileDisplayName,
 } from "../../../utils/firebase_functions";
 import Swal from "sweetalert2";
+import loader from "../../../assets/loader.svg";
+
 
 const Onboarding = () => {
+  const [isLoading, setisLoading] = useState(false);
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
   const email = useSelector((state: any) => state.auth.signupEmail);
@@ -27,11 +30,14 @@ const Onboarding = () => {
 
   const completeSignup = async () => {
     try {
-      console.log("logging in with ", email, password)
+      setisLoading(true)
+      console.log("logging in with ", email, password);
       const user = await handleEmailSignUp(email, password, endpoint);
       await updateUserProfileDisplayName(user, name);
-      navigate('/dashboard')
+      setisLoading(false)
+      navigate("/dashboard");
     } catch (error) {
+      setisLoading(false)
       console.log(error);
       Swal.fire({
         title: "Error!",
@@ -45,27 +51,34 @@ const Onboarding = () => {
   return (
     <>
       <Nav />
-      <div className={Styles.mainbody}>
-        <h1 className={Styles.title}>ONBOARDING</h1>
-        <p className={Styles.subtitlerefp}>JUST THE LAST STEP WE PROMISE</p>
-        <p className={Styles.options}>BASIC INFORMATION</p>
-        <input
-          type="text"
-          placeholder="NAME"
-          onChange={(evt) => {
-            setName(evt.target.value);
-          }}
-        />
-        <br />
-        <br />
-        <br />
-        <GradientButton
-          title="COMPLETE SIGNUP"
-          height="4"
-          width="25"
-          onClick={() => completeSignup()}
-        />
-      </div>
+      {isLoading ? (
+        <div className={Styles.loading}>
+          <img src={loader} className={Styles.loader} alt="" />
+          <p>logging you in</p>
+        </div>
+      ) : (
+        <div className={Styles.mainbody}>
+          <h1 className={Styles.title}>ONBOARDING</h1>
+          <p className={Styles.subtitlerefp}>JUST THE LAST STEP WE PROMISE</p>
+          <p className={Styles.options}>BASIC INFORMATION</p>
+          <input
+            type="text"
+            placeholder="NAME"
+            onChange={(evt) => {
+              setName(evt.target.value);
+            }}
+          />
+          <br />
+          <br />
+          <br />
+          <GradientButton
+            title="COMPLETE SIGNUP"
+            height="4"
+            width="25"
+            onClick={() => completeSignup()}
+          />
+        </div>
+      )}
       <Footer />
     </>
   );

@@ -16,14 +16,7 @@
     font-weight: 800;
 }
 
-.left{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 60vh;
-    align-items: center;
-    text-align: center;
-}
+
 
 .pfpparent{
     height: 30rem;
@@ -65,3 +58,40 @@
     font-size: 1.5rem;
     line-height: -10rem;
 } */
+
+
+
+.leftcopy{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 60vh;
+    align-items: center;
+    text-align: center;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 60vh;
+    align-items: center;
+    text-align: center;
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    /* background-color: blue; */
+    /* border-radius: 50%; */
+    animation: rotate 2s infinite linear;
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }

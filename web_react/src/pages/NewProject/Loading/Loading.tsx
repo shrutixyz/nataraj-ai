@@ -11,7 +11,7 @@ const Loading = () => {
   
     useEffect(()=>{
       if(!isLoggedIn){
-        navigate('/ca')
+        navigate('/restricted')
       }
     }, [isLoggedIn])
     return (

@@ -51,13 +51,13 @@ So, this is a gist of what Nataraj is able to do. There are many more small feat
     <p>HERE ARE SOME CONVINCING LINKS</p>
     </div>
     <div className={Styles.linkparent}>
-      <div className={Styles.link} onClick={()=>navigate('/dashboard')}>
+      <div className={Styles.link1} onClick={()=>navigate('/dashboard')}>
           <p>Create your First Project</p>
       </div>
-      <div className={Styles.link} onClick={()=>navigate('/tutorials')}>
+      <div className={Styles.link2} onClick={()=>navigate('/tutorials')}>
       <p>Nataraj AI in action</p>
       </div>
-      <div className={Styles.link} onClick={()=>navigate('/tutorials')}>
+      <div className={Styles.link3} onClick={()=>navigate('/tutorials')}>
       <p>Learn Tutorials</p>
       </div>
     </div>

@@ -30,15 +30,18 @@ const Footer = () => {
       if (response.status == 200) {
         setSuccess(true);
         setMessage("Thanks for contacting us. We'll reach out to you soon!");
-      } 
-      else if(response.status == 429){
+      } else if (response.status == 429) {
         setSuccess(false);
         setMessage("Request Failed: Please try again after 60 minutes");
-      }
-      else {
+      } else {
         setSuccess(false);
         setMessage("Request Failed: " + response.statusText);
       }
+      Swal.fire({
+        title: message,
+        confirmButtonColor: "#FFBA09",
+        confirmButtonText: "okay",
+      });
     } catch (error) {
       setSuccess(false);
       if (axios.isAxiosError(error) && error.code === "ECONNABORTED") {
@@ -47,6 +50,11 @@ const Footer = () => {
         console.error(error);
         setMessage("Request Failed: " + error);
       }
+      Swal.fire({
+        title: message,
+        confirmButtonColor: "#FFBA09",
+        confirmButtonText: "okay",
+      });
     }
   };
 
@@ -67,14 +75,6 @@ const Footer = () => {
     <div className={Styles.footer}>
       <div className={Styles.footerleft}>
         <h1>GET IN TOUCH</h1>
-        <p
-          className={Styles.message}
-          style={{
-            color: success ? "rgb(127, 255, 113)" : "rgb(255, 109, 101)",
-          }}
-        >
-          {message}
-        </p>
         <input
           type="text"
           className={Styles.input}
@@ -104,11 +104,15 @@ const Footer = () => {
         <a href="https://ai.google.dev/">GEMINI AI APIS</a>
         <a href="https://developers.google.com/ar">ARCORE</a>
         <a href="https://react.dev/">REACT</a>
+        <a href="https://unity.com//">UNITY</a>
+        <a href="https://www.mixamo.com/">MIXAMO</a>
         <a href="https://firebase.google.com/">FIREBASE</a>
         <a href="https://flutter.dev/">FLUTTER</a>
         <a href="https://www.python.org/">PYTHON</a>
         <h1>ABOUT DEVELOPERS</h1>
-        <a href="https://www.linkedin.com/in/shruti-gupta-b721b01b2/">SHRUTI GUPTA</a>
+        <a href="https://www.linkedin.com/in/shruti-gupta-b721b01b2/">
+          SHRUTI GUPTA
+        </a>
         <a href="https://in.linkedin.com/in/aakzsh">AAKASH SHRIVASTAVA</a>
       </div>
     </div>

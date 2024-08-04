@@ -16,6 +16,7 @@ import feature3 from "../../assets/feature3.svg";
 import feature4 from "../../assets/feature4.svg";
 import feature5 from "../../assets/feature5.svg";
 import feature6 from "../../assets/feature6.svg";
+import Threed_model from "../../features/fbxmodel/FBXModel";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ const Landing = () => {
   };
   return (
     <>
+    {/* <Threed_model/> */}
       <Nav />
 
       <section className="hero-section">
@@ -100,7 +102,7 @@ const Landing = () => {
 
       <section className="hero-section3">
         <div className="herosection2title">
-          <img src={delight} width={"500rem"} alt="" />
+          <img src={delight} width={"500rem"}  />
           <p>
             PACKED WITH FEATURES, NATARAJ AI IS SPECIAL BECAUSE IT OFFERS
             OPTIONS THAT NO ONE ELSE DOES
@@ -127,7 +129,7 @@ const Landing = () => {
               onMouseLeave={handleHover2}
             >
               <img src={feature2} className="featureimg" alt="" />
-              <p className="featuretext">VIEW CHOREOGRAPHY IN 3D</p>
+              <p className="featuretext">VIEW CHOREOGRAPHED PROJECT IN 3D</p>
               <div
                 className={`featureblob ${isHovered2 ? "hovered" : ""}`}
               ></div>

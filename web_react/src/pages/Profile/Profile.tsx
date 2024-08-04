@@ -10,9 +10,13 @@ import { updateUserProfilePhotoURL } from "../../utils/firebase_functions";
 import { auth, storage } from "../../utils/firebase";
 import Swal from "sweetalert2";
 import GradientButton from "../../features/gradientbutton/GradientButton";
-import locked from "../../assets/locked.png"
+import locked from "../../assets/locked.png";
+import loader from "../../assets/loader.svg";
 
 const Profile = () => {
+  const [isLoading, setisLoading] = useState(false);
+  const [pfp, setPfp] = useState("https://i.ibb.co/nQhcZSc/pfp.png");
+
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
   const endpoint = useSelector((state: any) => state.backend.endpoint);
@@ -20,6 +24,7 @@ const Profile = () => {
   const [file, setFile] = useState(null);
 
   const handleFileChange = async (event: any) => {
+    setisLoading(true);
     setFile(event.target.files[0]);
     if (!event.target.files[0]) {
       console.error("Please select a photo first.");
@@ -44,7 +49,11 @@ const Profile = () => {
         confirmButtonColor: "#18191A",
         confirmButtonText: "okay",
       });
+      setisLoading(false);
+      setPfp(auth.currentUser?.photoURL ?? pfp);
+      // navigate('/profile')
     } catch (error) {
+      setisLoading(false);
       console.error("Error uploading photo:", error);
       Swal.fire({
         title: "Error!",
@@ -59,8 +68,9 @@ const Profile = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/ca");
+      navigate("/restricted");
     }
+    setPfp(auth.currentUser?.photoURL ?? pfp);
   }, [isLoggedIn]);
 
   const deleteAccount = async () => {
@@ -91,41 +101,55 @@ const Profile = () => {
       <Nav />
       <p className={Styles.title}>YOUR PROFILE</p>
       <div className={Styles.mainbody}>
-        <div style={{"display": "flex", "alignItems": "center", "flexDirection": "column"}}>
-          <div className={Styles.left}>
-            <div className={Styles.pfpparent}>
-              <div className={Styles.pfp}>
-                <img
-                  src={
-                    auth.currentUser?.photoURL ??
-                    "https://i.ibb.co/nQhcZSc/pfp.png"
-                  }
-                  height="100%"
-                  width="100%"
-                  style={{ borderRadius: "50rem" }}
-                  alt=""
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          {isLoading ? (
+            <div className={Styles.leftcopy}>
+              <img src={loader} className={Styles.loader} alt="" />
+              <p>updating your profile picture</p>
+            </div>
+          ) : (
+            <div className={Styles.left}>
+              <div className={Styles.pfpparent}>
+                <div className={Styles.pfp}>
+                  <img
+                    src={pfp}
+                    height="100%"
+                    width="100%"
+                    style={{ borderRadius: "50rem" }}
+                    alt="Profile Photo"
+                  />
+                </div>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                  ref={inputref}
+                />
+                <GradientButton
+                  title="Edit Profile Picture"
+                  height="3"
+                  width="15"
+                  onClick={() => {
+                    handleClick();
+                  }}
                 />
               </div>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-                ref={inputref}
-              />
-              <GradientButton
-              title="Edit Profile Picture"
-              height="3"
-              width="15"
-                onClick={() => {
-                  handleClick()
-                }}
-              />
+              <p className={Styles.basicdetails}>
+                Name: {auth.currentUser?.displayName}
+              </p>
+              <p className={Styles.basicdetails}>
+                Email: {auth.currentUser?.email}
+              </p>
             </div>
-            <p className={Styles.basicdetails}>Name: {auth.currentUser?.displayName}</p>
-            <p className={Styles.basicdetails}>Email: {auth.currentUser?.email}</p>
-         
-          </div>
-          <br /><br />
+          )}
+          <br />
+          <br />
           <ButtonCustom
             title="DELETE ACCOUNT"
             width="25"
@@ -138,9 +162,7 @@ const Profile = () => {
         <div className={Styles.line}></div>
         <div className={Styles.right}>
           <div>
-
-          <img src={locked} className={Styles.locked} alt="" />
-
+            <img src={locked} className={Styles.locked} alt="" />
           </div>
         </div>
       </div>

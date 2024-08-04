@@ -38,7 +38,7 @@ const SelectDanceform = () => {
   const all = [select0, select1, select2, select3, select4, select5, select6, select7]
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/ca");
+      navigate("/restricted");
     }
   }, [isLoggedIn]);
 

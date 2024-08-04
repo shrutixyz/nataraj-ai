@@ -21,7 +21,7 @@ const CustomiseAvatar = () => {
 
   useEffect(()=>{
     if(!isLoggedIn){
-      navigate('/ca')
+      navigate('/restricted')
     }
   }, [isLoggedIn])
 

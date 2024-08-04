@@ -36,7 +36,7 @@ function App() {
         <Route path="/loading" element={<Loading/>} />
         <Route path="/project" element={<Project/>} />
         <Route path="/tutorials" element={<Tutorials/>} />
-        <Route path="/ca" element={<ConditionalAccess/>} />
+        <Route path="/restricted" element={<ConditionalAccess/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Register/>} />
         <Route path="/onboarding" element={<Onboarding/>} />
