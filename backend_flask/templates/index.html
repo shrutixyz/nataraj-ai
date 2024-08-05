@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,11 +12,13 @@
             padding: 0;
             background-color: #f4f4f4;
         }
+
         .container {
             width: 80%;
             margin: auto;
             overflow: hidden;
         }
+
         header {
             background: #333;
             color: #fff;
@@ -24,34 +26,42 @@
             min-height: 70px;
             border-bottom: #FFBA09 3px solid;
         }
+
         header a {
             color: #fff;
             text-decoration: none;
             text-transform: uppercase;
             font-size: 16px;
         }
+
         header ul {
             padding: 0;
             list-style: none;
         }
+
         header li {
             display: inline;
             padding: 0 20px 0 20px;
         }
+
         .main {
             padding: 20px;
             background: #fff;
             margin-top: 20px;
         }
+
         .route {
             margin-bottom: 20px;
         }
+
         .route h2 {
             color: #333;
         }
+
         .route p {
             margin: 5px 0;
         }
+
         code {
             background: #f4f4f4;
             padding: 2px 4px;
@@ -60,6 +70,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="container">
@@ -70,112 +81,209 @@
     <div class="container">
         <div class="main">
             <h2>Introduction</h2>
-            <p>This document provides an overview of the available API routes, their methods, and the expected input and output formats for Nataraj AI. If you were intended to use the application, please head to <a href="https://nataraj-ai.web.app">https://nataraj-ai.web.app</a>.</p>
+            <p>This document provides an overview of the available API routes, their methods, and the expected input and
+                output formats for Nataraj AI. If you were intended to use the application, please head to <a
+                    href="https://nataraj-ai.web.app">https://nataraj-ai.web.app</a>.</p>
 
             <div class="route">
-                <h2>1. Get All Items</h2>
-                <p><strong>Route:</strong> <code>/api/items</code></p>
+                <h2>1. Home</h2>
+                <p><strong>Route:</strong> <code>/</code></p>
                 <p><strong>Method:</strong> GET</p>
-                <p><strong>Description:</strong> Fetches a list of all items.</p>
-                <p><strong>Response:</strong> A JSON array of item objects.</p>
+                <p><strong>Description:</strong> Returns a simple HTML page with all the documentation of API.</p>
+                <p><strong>Response:</strong> HTML content of the homepage.</p>
+            </div>
+
+            <div class="route">
+                <h2>2. Get Blogs</h2>
+                <p><strong>Route:</strong> <code>/blogs</code></p>
+                <p><strong>Method:</strong> GET</p>
+                <p><strong>Description:</strong> Returns a JSON response containing the content of all .md files in the
+                    static/blogs directory.</p>
+                <p><strong>Response:</strong> A JSON array of blog content.</p>
                 <pre><code>
 Example Response:
 [
     {
-        "id": 1,
-        "name": "Item 1",
-        "description": "Description for item 1"
+        "title": "Blog 1",
+        "content": "Content of blog 1"
     },
     {
-        "id": 2,
-        "name": "Item 2",
-        "description": "Description for item 2"
+        "title": "Blog 2",
+        "content": "Content of blog 2"
     }
 ]
                 </code></pre>
             </div>
 
             <div class="route">
-                <h2>2. Get Item by ID</h2>
-                <p><strong>Route:</strong> <code>/api/items/{id}</code></p>
+                <h2>3. Create User Data</h2>
+                <p><strong>Route:</strong> <code>/createuserdata/{uid}</code></p>
                 <p><strong>Method:</strong> GET</p>
-                <p><strong>Description:</strong> Fetches a single item by its ID.</p>
-                <p><strong>URL Parameters:</strong> <code>id</code> (integer) - The ID of the item to fetch.</p>
-                <p><strong>Response:</strong> A JSON object of the item.</p>
+                <p><strong>Description:</strong> Creates user data if it doesn't exist in Firestore.</p>
+                <p><strong>URL Parameters:</strong> <code>uid</code> (string) - The UID of the user.</p>
+                <p><strong>Response:</strong> A JSON object indicating success or failure.</p>
                 <pre><code>
 Example Response:
 {
-    "id": 1,
-    "name": "Item 1",
-    "description": "Description for item 1"
+    "success": true,
+    "message": "Data Added Successfully!"
 }
                 </code></pre>
             </div>
 
             <div class="route">
-                <h2>3. Create a New Item</h2>
-                <p><strong>Route:</strong> <code>/api/items</code></p>
+                <h2>4. Contact Us</h2>
+                <p><strong>Route:</strong> <code>/contactus</code></p>
                 <p><strong>Method:</strong> POST</p>
-                <p><strong>Description:</strong> Creates a new item.</p>
-                <p><strong>Request Body:</strong> A JSON object containing the new item's details.</p>
+                <p><strong>Description:</strong> Accepts contact form data (email and text) and stores it in Firestore.
+                </p>
+                <p><strong>Request Body:</strong> A JSON object containing email and text.</p>
                 <pre><code>
 Example Request Body:
 {
-    "name": "New Item",
-    "description": "Description for new item"
+    "email": "user@example.com",
+    "text": "This is a contact message."
 }
                 </code></pre>
-                <p><strong>Response:</strong> A JSON object of the created item.</p>
+                <p><strong>Response:</strong> A JSON object indicating success.</p>
                 <pre><code>
 Example Response:
 {
-    "id": 3,
-    "name": "New Item",
-    "description": "Description for new item"
+    "success": true
 }
                 </code></pre>
             </div>
 
             <div class="route">
-                <h2>4. Update an Item</h2>
-                <p><strong>Route:</strong> <code>/api/items/{id}</code></p>
-                <p><strong>Method:</strong> PUT</p>
-                <p><strong>Description:</strong> Updates an existing item by its ID.</p>
-                <p><strong>URL Parameters:</strong> <code>id</code> (integer) - The ID of the item to update.</p>
-                <p><strong>Request Body:</strong> A JSON object containing the updated item's details.</p>
-                <pre><code>
-Example Request Body:
-{
-    "name": "Updated Item",
-    "description": "Updated description for item"
-}
-                </code></pre>
-                <p><strong>Response:</strong> A JSON object of the updated item.</p>
+                <h2>5. Fetch Projects</h2>
+                <p><strong>Route:</strong> <code>/fetchprojects/{uid}</code></p>
+                <p><strong>Method:</strong> GET</p>
+                <p><strong>Description:</strong> Fetches project IDs associated with a user ID from Firestore.</p>
+                <p><strong>URL Parameters:</strong> <code>uid</code> (string) - The UID of the user.</p>
+                <p><strong>Response:</strong> A JSON object containing project IDs.</p>
                 <pre><code>
 Example Response:
 {
-    "id": 1,
-    "name": "Updated Item",
-    "description": "Updated description for item"
+    "success": true,
+    "projects": [{project1}, {project2}]
 }
                 </code></pre>
             </div>
 
             <div class="route">
-                <h2>5. Delete an Item</h2>
-                <p><strong>Route:</strong> <code>/api/items/{id}</code></p>
-                <p><strong>Method:</strong> DELETE</p>
-                <p><strong>Description:</strong> Deletes an item by its ID.</p>
-                <p><strong>URL Parameters:</strong> <code>id</code> (integer) - The ID of the item to delete.</p>
-                <p><strong>Response:</strong> A success message.</p>
+                <h2>6. Change Project Visibility</h2>
+                <p><strong>Route:</strong> <code>/changeprojectvisibility/{pid}/{visibility}</code></p>
+                <p><strong>Method:</strong> GET</p>
+                <p><strong>Description:</strong> Changes the visibility of a project in the Firebase RTDB.</p>
+                <p><strong>URL Parameters:</strong> <code>pid</code> (string) - The project ID.</p>
+                <p><strong>URL Parameters:</strong> <code>visibility</code> (string) - The new visibility status.</p>
+                <p><strong>Response:</strong> A JSON object indicating success or failure.</p>
                 <pre><code>
 Example Response:
 {
-    "message": "Item deleted successfully"
+    "success": true
+}
+                </code></pre>
+            </div>
+
+            <div class="route">
+                <h2>7. Delete Project</h2>
+                <p><strong>Route:</strong> <code>/deleteproject/{pid}</code></p>
+                <p><strong>Method:</strong> GET</p>
+                <p><strong>Description:</strong> Deletes a project from the Firebase RTDB.</p>
+                <p><strong>URL Parameters:</strong> <code>pid</code> (string) - The project ID.</p>
+                <p><strong>Response:</strong> A JSON object indicating success or failure.</p>
+                <pre><code>
+Example Response:
+{
+    "success": true
+}
+                </code></pre>
+            </div>
+
+            <div class="route">
+                <h2>8. Delete Account</h2>
+                <p><strong>Route:</strong> <code>/deleteaccount/{uid}</code></p>
+                <p><strong>Method:</strong> GET</p>
+                <p><strong>Description:</strong> Deletes a user account from Firebase Auth and Firestore.</p>
+                <p><strong>URL Parameters:</strong> <code>uid</code> (string) - The UID of the user.</p>
+                <p><strong>Response:</strong> A JSON object indicating success or failure.</p>
+                <pre><code>
+Example Response:
+{
+    "message": "Account deleted successfully"
+}
+                </code></pre>
+            </div>
+
+            <div class="route">
+                <h2>9. Create Project</h2>
+                <p><strong>Route:</strong> <code>/createproject</code></p>
+                <p><strong>Method:</strong> POST</p>
+                <p><strong>Description:</strong> Creates a new project with an uploaded file and stores the data in
+                    Firebase RTDB and Firestore.</p>
+                <p><strong>Request Body:</strong> Multipart form data containing the file and project details.</p>
+                <p><strong>Response:</strong> A JSON object indicating success and the new project ID.</p>
+                <pre><code>
+Example Response:
+{
+    "success": true,
+    "projectID": "nataraj-12345"
+}
+                </code></pre>
+            </div>
+
+            <div class="route">
+                <h2>10. Update Dance Form</h2>
+                <p><strong>Route:</strong> <code>/updatedanceform</code></p>
+                <p><strong>Method:</strong> POST</p>
+                <p><strong>Description:</strong> Updates the dance form for a project in the Firebase RTDB.</p>
+                <p><strong>Request Body:</strong> A JSON object containing the project ID and dance form.</p>
+                <pre><code>
+Example Request Body:
+{
+    "pid": "nataraj-12345",
+    "dance_form": "Freestyle, Hip Hop"
+}
+                </code></pre>
+                <p><strong>Response:</strong> A JSON object indicating success.</p>
+                <pre><code>
+Example Response:
+{
+    "success": true
+}
+                </code></pre>
+            </div>
+
+            <div class="route">
+                <h2>11. Generate Dance</h2>
+                <p><strong>Route:</strong> <code>/generatedance</code></p>
+                <p><strong>Method:</strong> POST</p>
+                <p><strong>Description:</strong> Generates dance steps for a project using the Gemini API and updates
+                    the project in the Firebase RTDB.</p>
+                <p><strong>Request Body:</strong> A JSON object containing the project ID and any necessary parameters
+                    for the Gemini API.</p>
+                <pre><code>
+Example Request Body:
+{
+    "pid": "nataraj-12345",
+    "parameters": {
+        "style": "Ballet",
+        "duration": 60
+    }
+}
+                </code></pre>
+                <p><strong>Response:</strong> A JSON object indicating success and the generated dance steps.</p>
+                <pre><code>
+Example Response:
+{
+    "success": true,
+    "dance_steps": ["step1", "step2", "step3"]
 }
                 </code></pre>
             </div>
         </div>
     </div>
 </body>
+
 </html>

@@ -18,7 +18,7 @@ limiter = Limiter(
     app=app,
     default_limits=["30 per minute"],
     strategy="fixed-window", # or "moving-window"
-   #  error code is 429
+   #  error code is 429 for timeout
 )
 
 UPLOAD_FOLDER = os.path.join(app.static_folder, 'musicfiles')
@@ -26,6 +26,7 @@ UPLOAD_FOLDER = os.path.join(app.static_folder, 'musicfiles')
 @app.route('/')
 @limiter.limit("1 per second")
 def hello_world():
+    """Returns a HTML Page with all the documentation of the API"""
     return render_template("index.html")
 
 
@@ -38,7 +39,9 @@ def get_blogs():
 
 
 @app.route('/createuserdata/<uid>')
+@limiter.limit("1 per 20 second")
 def create_user_data(uid):
+  """Creates a user with default value on the firestore database"""
   response_model = {"success": False, "message": "NA"}
   doc_exists = check_document_exists("users", uid)
   if not doc_exists:
@@ -57,6 +60,7 @@ def create_user_data(uid):
 @app.route('/contactus', methods=["POST"])
 @limiter.limit("1 per 60 minute")
 def contactus():
+  """Sends a contact request to the admin and pushes the data in firestore"""
   email = request.json["email"]
   text = request.json["text"]
   push_data_contact_us(email, text)
@@ -66,26 +70,31 @@ def contactus():
 @app.route('/fetchprojects/<uid>', methods=["GET"])
 @limiter.limit("60 per 60 minute")
 def fetch_projects(uid):
+  """fetches all the projects associated with a user and sends them as an array of JSON"""
   projects = get_project_ids_from_uid(uid)
   return {"success": True, "projects":projects}
 
 
 @app.route('/changeprojectvisibility/<pid>/<visibility>', methods=["GET"])
-@limiter.limit("60 per 1 minute")
+@limiter.limit("60 per 30 minute")
 def change_visibility(pid, visibility):
+  """Changes the visibility of a project based on user needs"""
   status = change_visibility_rtdb(pid, visibility)
   return {"success": status}
 
 
 @app.route('/deleteproject/<pid>', methods=["GET"])
-@limiter.limit("60 per 1 minute")
+@limiter.limit("60 per 30 minute")
 def delete_project(pid):
+  """Deletes a project from the database forever"""
   status = delete_project_rtdb("nataraj-"+pid)
   return {"success": status}
 
 
 @app.route('/deleteaccount/<uid>', methods=['GET'])
+@limiter.limit("1 per 30 minute")
 def delete_account(uid):
+    """Deletes the user account along with their data"""
     try:
         delete_user_account(uid)
         return jsonify({'message': 'Account deleted successfully'}), 200
@@ -95,8 +104,9 @@ def delete_account(uid):
     
 
 @app.route('/createproject', methods=['POST'])
-@limiter.limit("90 per 1 minute")
+@limiter.limit("10 per 5 minute")
 def create_project():
+   """Creates a new project associated with the user in the RTDB database and link it with the user in firestore database"""
    if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 401
    file = request.files['file']
@@ -131,8 +141,9 @@ def create_project():
 
 
 @app.route('/updatedanceform', methods=["POST"])
-@limiter.limit("100 per 1 minute")
+@limiter.limit("30 per 1 minute")
 def update_dance_form():
+   """update the danceform field of the project json in RTDB database"""
    projectid = request.json["projectID"]
    danceform = request.json["danceform"]
    update_document_rtdb(projectid, {"danceform": danceform, "state": 2})
@@ -140,12 +151,10 @@ def update_dance_form():
 
 
 @app.route('/generatedance', methods=["POST"])
-@limiter.limit("10 per 1 minute")
+@limiter.limit("2 per 1 minute")
 def generate_dance():
+   """Generates the dance steps along with the synced lyrics with the help of Gemini Vertex APIs and stores them appropriately"""
    projectid = request.json["projectID"]
-   # get timestamp based lyrics on backend, save that in project,
-   # generate prompt, and add a loading state in backend with a listener on react
-   # if response is returned, then show project to user
    print(projectid)
    print("here")
    url = get_url_from_projectid(projectid)[0]["song"]
@@ -155,20 +164,6 @@ def generate_dance():
    update_document_rtdb(projectid, {"choreography": dance_steps})
    return {"success": True, "url": "url"}
     
-
-# @app.route('/upload', methods=['POST'])
-# def upload_file():
-#    if 'file' not in request.files:
-#         return jsonify({'error': 'No file part'})
-#    file = request.files['file']
-
-#    if file.filename == '':
-#         return jsonify({'error': 'No selected file'})
-   
-#    return {"hhe": file.filename}
-
-# if __name__ == '__main__':
-#    app.run(host='0.0.0.0', port=5000, debug=True)
 
 
 if __name__ == '__main__':
