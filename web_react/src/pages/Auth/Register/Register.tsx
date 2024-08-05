@@ -46,7 +46,7 @@ const Register = () => {
       console.log("error");
       Swal.fire({
         title: "Error!",
-        text: "Unespected error occurred! Please try again.",
+        text: "Unexpected error occurred! Please try again.",
         confirmButtonColor: "#18191A",
         confirmButtonText: "okay",
       });
@@ -65,7 +65,7 @@ const Register = () => {
 
       Swal.fire({
         title: "Error!",
-        text: "Unespected error occurred! Please try again.",
+        text: "Unexpected error occurred! Please try again.",
         confirmButtonColor: "#18191A",
         confirmButtonText: "okay",
       });

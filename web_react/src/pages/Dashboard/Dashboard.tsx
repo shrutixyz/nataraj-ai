@@ -34,7 +34,7 @@ const Dashboard = () => {
       // setisLoading(false)
       Swal.fire({
         title: "Error!",
-        text: "Unespected error occurred!",
+        text: "Unexpected error occurred!",
         confirmButtonColor: "#18191A",
         confirmButtonText: "okay",
       });

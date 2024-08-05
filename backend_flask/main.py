@@ -74,6 +74,13 @@ def fetch_projects(uid):
   projects = get_project_ids_from_uid(uid)
   return {"success": True, "projects":projects}
 
+@app.route('/fetchproject/<id>', methods=["GET"])
+@limiter.limit("60 per 60 minute")
+def fetch_project(id):
+  """fetches project with given id"""
+  project = get_project_from_id(id)
+  return {"success": True, "project":project}
+
 
 @app.route('/changeprojectvisibility/<pid>/<visibility>', methods=["GET"])
 @limiter.limit("60 per 30 minute")

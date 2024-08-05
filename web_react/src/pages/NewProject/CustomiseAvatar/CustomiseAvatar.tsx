@@ -49,7 +49,7 @@ const CustomiseAvatar = () => {
       // get timestamp based lyrics on backend, save that in project,
       // generate prompt, and add a loading state in backend with a listener on react
       // if response is returned, then show project to user
-      navigate(`/project?id=${projectID}`);
+      navigate(`/project/${projectID}`);
     } catch (error) {
       if (error instanceof Error) {
         Swal.fire({

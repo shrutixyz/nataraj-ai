@@ -34,7 +34,7 @@ function App() {
         <Route path="/selectdanceform" element={<SelectDanceform/>} />
         <Route path="/customiseavatar" element={<CustomiseAvatar/>} />
         <Route path="/loading" element={<Loading/>} />
-        <Route path="/project" element={<Project/>} />
+        <Route path="/project/:projectId" element={<Project/>} />
         <Route path="/tutorials" element={<Tutorials/>} />
         <Route path="/restricted" element={<ConditionalAccess/>} />
         <Route path="/login" element={<Login/>} />

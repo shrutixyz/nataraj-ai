@@ -128,6 +128,12 @@ def get_project_ids_from_uid(uid):
     print(projects)
     return projects
 
+def get_project_from_id(id):
+    # get_projects = firestore_db.collection("users").document(uid).get().to_dict()["projects"]
+    ref = db.reference('projects/'+str(id)).get()
+    print(ref)
+    return ref
+
 
 def change_visibility_rtdb(pid, visibility):
     ref = db.reference('projects/'+'nataraj-'+str(pid)).update({"visibility": visibility})
