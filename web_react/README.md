@@ -1,46 +1,76 @@
-# Getting Started with Create React App
+# Nataraj AI - Web React Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This directory contains the React frontend and Firebase serverless code for the Nataraj AI project. Nataraj AI is an innovative application aimed at enhancing dance choreography using AI, incorporating 3D visualization through Unity plugins. The app is live at [nataraj-ai.web.app](https://nataraj-ai.web.app).
 
-## Available Scripts
+## Directory Structure
 
-In the project directory, you can run:
+- `src/pages`: Contains different routes, each within its own subdirectory.
+- `src/features`: Contains the various components used in the application.
+- `src/assets`: Contains all the assets like images, icons, and stylesheets.
+- `src/utils`: This is where you need to add your Firebase configuration file (`firebase-config.js`) to get the project running locally.
+- `src/store`: Contains the Redux setup for state management.
+- `src/hooks`: Contains custom hooks used throughout the application.
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Ensure you have the following installed on your machine:
+- Node.js (v14.x or later)
+- npm (v6.x or later)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Setup
 
-### `npm test`
+Follow these steps to set up and run the project locally:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/shrutixyz/nataraj-ai.git
+    cd nataraj-ai/web_react
+    ```
 
-### `npm run build`
+2. **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **Add Firebase configuration:**
+    Create a file named `firebase-config.js` in the `src/utls` directory and add your Firebase configuration. It should look something like this:
+    ```javascript
+    const firebaseConfig = {
+        apiKey: "your-api-key",
+        authDomain: "your-auth-domain",
+        projectId: "your-project-id",
+        storageBucket: "your-storage-bucket",
+        messagingSenderId: "your-messaging-sender-id",
+        appId: "your-app-id"
+    };
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    export default firebaseConfig;
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. **Run the application:**
+    ```bash
+    npm start
+    ```
 
-### `npm run eject`
+    This will start the development server and you can view the application at `http://localhost:3000`.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 3D Visualization
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+We use Unity plugins to bring 3D elements into the application. The steps for the model are fetched via the Gemini API and stored in Firebase Realtime Database.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## State Management
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The application uses Redux for state management. You can find the Redux setup in the `src/store` directory, where various slices of state are managed.
 
-## Learn More
+## Custom Hooks
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The `src/hooks` directory contains custom hooks that are utilized throughout the application for various purposes.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Deployment
+
+The application is deployed on Firebase Hosting. You can find the deployment scripts and configuration in the `firebase.json` file at the root of the repository.
+
+## Screenshots
+
+![Features](image-1.png)
+![Dashboard](image.png)
