@@ -1,3 +1,5 @@
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nataraj/controllers/auth/auth_controller.dart';
@@ -10,9 +12,20 @@ import 'package:nataraj/widgets/no_active_projects.dart';
 import 'package:nataraj/widgets/project_tile.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState(){
+    super.initState();
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    Future.microtask(() => context.read<ProjectsController>().fetchProjects(uid));
+  }
   @override
   Widget build(BuildContext context) {
     final authController = Provider.of<AuthController>(context);
@@ -20,11 +33,7 @@ class HomePage extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     });
-    //     WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   if (authController.user != null) {
-    //     Navigator.pushReplacementNamed(context, RoutesString.welcomePageRoute);
-    //   }
-    // });
+
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -81,11 +90,13 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10,),
-                    Expanded(child: ListView.builder(
+                    Expanded(child: 
+                    projectsController.loading?const Center(child: CircularProgressIndicator(color: AppColors.yellow2,),):ListView.builder(
                     itemCount: projectsController.length,
                       itemBuilder: ((context, index) {
-                      return const ProjectTile();
-                    }))),
+                      return ProjectTile(data: projectsController.projects[index],);
+                    }))
+                    ),
                     GradientBorderButton(title: "VIEW PAST PRACTICE REPORTS", onPressed: (){
                       Navigator.pushNamed(context, RoutesString.allReportsPageRoute);
                     }, width: 350)

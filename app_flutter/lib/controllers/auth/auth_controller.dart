@@ -17,7 +17,7 @@ class AuthController with ChangeNotifier {
   String email = "";
   String password = "";
   String loginErrorMessage = "";
-
+ 
   AuthController() {
     _auth.authStateChanges().listen((User? user) {
       _user = UserModel(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:nataraj/controllers/api/shared_preferences_helper.dart';
 import 'package:nataraj/utils/colors.dart';
-import 'package:nataraj/utils/constants.dart';
+import 'package:nataraj/views/reports/single_report_page.dart';
 
 class ReportTile extends StatelessWidget {
-  const ReportTile({super.key});
+  const ReportTile({super.key, required this.report});
+  final DancePracticeReport report;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,8 @@ class ReportTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, RoutesString.singleReportPageRoute);
+          // Navigator.pushNamed(context, RoutesString.singleReportPageRoute);
+          Navigator.push(context, MaterialPageRoute(builder: ((context) => SingleReport(report: report))));
         },
         child: Container(
           width: double.infinity,
@@ -24,25 +27,27 @@ class ReportTile extends StatelessWidget {
                 AppColors.secondaryBg,
                 AppColors.black
               ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
-          child: const Column(
+          child:  Column(
             children: [
               Expanded(
                   child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(),
-                  Padding(
+                  Image.asset("assets/images/modeldummy.png", height: 100,),
+                  // SizedBox(),
+                  const Padding(
                     padding: EdgeInsets.only(top: 20.0),
                     child: VerticalDivider(
                       width: 10,
                       color: Colors.white70,
                     ),
                   ),
-                  SizedBox()
+                  // SizedBox(),
+                   Image.asset("assets/images/modeldummy.png", height: 100,),
                 ],
               )),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -51,15 +56,15 @@ class ReportTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "17:45 IST",
-                          style: TextStyle(fontSize: 15.0),
+                          report.dateTime.toString().split(".")[0],
+                          style: const TextStyle(fontSize: 15.0),
                         ),
-                        Text("song")
+                        // Text("song")
                       ],
                     ),
                     Text(
-                      "MATCH: 85%",
-                      style: TextStyle(
+                      "MATCH: ${report.matchRate}%",
+                      style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: AppColors.pastelGreen),

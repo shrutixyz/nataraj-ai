@@ -12,7 +12,9 @@ def generate_dance_with_lyrics(file):
     mime_type="audio/mpeg",
   )
   # text1 = "tell the size of this file"
-  text1 = """return timestamp based subtitles for this audio in json, along with suitable dance steps, example- {\"0.00\": {\"lyrics\": \"oh oh\"}, {\"step\", \"flicker hands}}"""
+  text1 = """return timestamp based subtitles for this audio in json, along with suitable dance steps, like if a verse of lyrics is played from 0 seconds, then add it with key "0", and then the next verse according to its start time and so on example- {\"0.00\": {\"lyrics\": \"oh oh\"}, {\"step\", \"flicker hands}}"""
+
+  # text1 = """return timestamp based subtitles for this audio in json, along with suitable dance steps, example- {\"0.00\": {\"lyrics\": \"oh oh\"}, {\"step\", \"flicker hands}}"""
 
   model = GenerativeModel(
     "gemini-1.5-flash-001",
@@ -37,5 +39,5 @@ def generate_dance_with_lyrics(file):
 
   return final_response
 
-# print(generate_dance_with_lyrics("gs://nataraj-ai.appspot.com/uploads/modified-Palm%20Skies%20%26%20DEAN%20-%20Will%20You%20Come%20%28Feat.%20Reuben%20Cameron%29%20%5BNCS%20Release%5D.mp3"))
+# print(generate_dance_with_lyrics("gs://nataraj-ai.appspot.com/uploads/modified-89ee24g.mp3"))
 
