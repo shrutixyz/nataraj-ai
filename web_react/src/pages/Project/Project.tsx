@@ -27,7 +27,7 @@ function Project() {
   const [lyricsList, setLyricsList] = useState([""]);
   const [currentLyrics, setcurrentLyrics] = useState("");
   const [isLoading, setisLoading] = useState(true);
-  const [isPlaying, setisPlaying] = useState(true);
+  const [isPlaying, setisPlaying] = useState(false);
   const [isReset, setisReset] = useState(false);
 
 
@@ -159,18 +159,19 @@ function Project() {
     {
       playState = 2;
       setisReset(!isReset);
+      setisPlaying(true);
     } 
     else
     {
       playState = isPlaying ? 0 : 1
+      setisPlaying(!isPlaying);
     } 
-    sendMessage("XBot", "ControlPlayState", playState);
-    setisPlaying(!isPlaying);
+    sendMessage("Michelle@Idle", "ControlPlayState", playState);
   }
 
   function sendStepSequence()
   {
-    sendMessage("XBot", "SetStepSequence", "1_2_3");
+    sendMessage("Michelle@Idle", "SetStepSequence", "1_2_3");
   }
 
   return <>
