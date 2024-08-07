@@ -169,7 +169,15 @@ def generate_dance():
    url = url.replace("https://storage.googleapis.com/nataraj-ai.appspot.com", "gs://nataraj-ai.appspot.com")
    dance_steps = generate_dance_with_lyrics(url)
    update_document_rtdb(projectid, {"choreography": dance_steps})
-   return {"success": True, "url": "url"}
+   return {"success": True, "url": url}
+
+
+@app.route('/getsuggestion', methods=["GET"])
+@limiter.limit("2 per 1 second")
+def get_suggestion():
+   """Generates the dance suggestion using Gemini API to show to the user on mobile application"""
+   suggestion = get_suggestion_gemini()
+   return {"success": True, "suggestion": suggestion}
     
 
 

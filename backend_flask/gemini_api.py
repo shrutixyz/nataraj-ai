@@ -41,3 +41,33 @@ def generate_dance_with_lyrics(file):
 
 # print(generate_dance_with_lyrics("gs://nataraj-ai.appspot.com/uploads/modified-89ee24g.mp3"))
 
+
+
+def get_suggestion_gemini():
+  os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="vertex-key.json"
+  vertexai.init(project="singular-node-429217-j4", location="us-central1")
+
+  text1 = """give a suggestion for performing better at dance within 20 words"""
+
+  model = GenerativeModel(
+    "gemini-1.5-flash-001",
+  )
+  generation_config = {
+      "max_output_tokens": 400,
+      "temperature": 1,
+      "top_p": 0.95,
+  }
+  
+  responses = model.generate_content(
+      [text1],
+      generation_config=generation_config,
+      stream=True,
+      #  add_sleep_after_page = True,
+  )
+  final_response = ""
+  for response in responses:
+    print(response.text, end="")
+    final_response+=response.text
+
+  return final_response
+
