@@ -11,19 +11,51 @@ public class DanceStateController : MonoBehaviour
     // shuffling -> 2, 0
     Animator animator;
     int step = 0;
+    int[] steps;
     int currentStep = 0;
+    int startBot = 0;
     void Start()
     {
         animator = GetComponent<Animator>();
+        Time.timeScale = 0;
+        // SetStepSequence("1_2_3");
+        // ControlPlayState(2);
+    }
+
+    public void ControlPlayState (int playState) {
+    if (playState == 0)
+    {
+        print("pausing game");
+        Time.timeScale = 0;
+    }
+    else if (playState == 2)
+    {
+        Time.timeScale = 1;
+        playNextNonIdleAnimation();
+    }
+    else
+    {
+        print("resuming game");
+        Time.timeScale = 1;
+    }
+  }
+
+    void SetStepSequence(string sequence)
+    {
+        string[] stepsString = sequence.Split(new string[] { "_" }, StringSplitOptions.None);
+        steps = Array.ConvertAll(stepsString, s => int.Parse(s));
+        print("started" + step);
     }
 
     void playNextNonIdleAnimation()
     {
-        print("here");
-        step = ((currentStep) % 3) + 1;
-        currentStep += 1;
-        animator.SetInteger("step", step);
-        print("step: " + step + "current step: " + currentStep);
+        if (steps.Length > 0)
+        {
+            step = steps[(currentStep)%3];
+            currentStep += 1;
+            print("step: " + step);
+            animator.SetInteger("step", step);
+        }
     }
 
     // Update is called once per frame

@@ -8,9 +8,10 @@ import Swal from "sweetalert2";
 import { auth } from "../../utils/firebase";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import loader from "../../assets/loader.svg";
 
 function Project() {
-  const { unityProvider } = useUnityContext({
+  const { unityProvider, sendMessage, isLoaded } = useUnityContext({
     loaderUrl: "../../unity/unityProjects.loader.js",
     dataUrl: "../../unity/webgl.data",
     frameworkUrl: "../../unity/build.framework.js",
@@ -24,7 +25,21 @@ function Project() {
   const [nextTimeStamp, setnextTimeStamp] = useState(0.00);
   const [timeStampList, settimeStampList] = useState([0.00]);
   const [lyricsList, setLyricsList] = useState([""]);
-  const [currentLyrics, setcurrentLyrics] = useState("")
+  const [currentLyrics, setcurrentLyrics] = useState("");
+  const [isLoading, setisLoading] = useState(true);
+  const [isPlaying, setisPlaying] = useState(true);
+  const [isReset, setisReset] = useState(false);
+
+
+  useEffect(function () {
+    if (isLoaded)
+    {
+      sendStepSequence();
+    }  
+  }, [isLoaded]);
+
+
+
 
   const [project, setProject] = useState({
       "avatar": "",
@@ -44,16 +59,48 @@ function Project() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const handleTimeUpdate =  (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
-    
-    if (e.currentTarget.currentTime > nextTimeStamp)
+    console.log("time:", e.currentTarget.currentTime, nextTimeStamp, e.currentTarget.currentTime> nextTimeStamp)
+    if (e.currentTarget.currentTime> nextTimeStamp)
     {
       const idx = timeStampList.indexOf(nextTimeStamp);
-      console.log("time: ", e.currentTarget.currentTime > nextTimeStamp, lyricsList, lyricsList[idx]);
-      setnextTimeStamp(timeStampList[idx+1])
+      if (idx + 1 < timeStampList.length)
+      {
+        setnextTimeStamp(timeStampList[idx+1])
+      }
+      console.log("lyrics: ", idx, lyricsList[idx])
       setcurrentLyrics(lyricsList[idx]);
-    }  
-
+    } 
   }
+
+  const resetNextTimestamp  = (currentTimestamp: number) => {
+    const tempTimestamp = findNextGreatest(timeStampList, currentTimestamp);
+    if (tempTimestamp != -1)
+    {
+      setnextTimeStamp(tempTimestamp)
+    }
+  }
+
+  function findNextGreatest(arr: number[] | any[], num: number) {
+    // Find the index of the given number
+    const index = arr.indexOf(num);
+  
+    // If the number is not found or it's the last element, return -1
+    if (index === -1 || index === arr.length - 1) {
+      return -1;
+    }
+  
+    // Iterate through the array from the next index to find the first greater number
+    for (let i = index + 1; i < arr.length; i++) {
+      if (arr[i] > num) {
+        return arr[i];
+      }
+    }
+  
+    // If no greater number is found, return -1
+    return -1;
+  }
+
+
 
   const extractLyricsJSON = () => {
     const firstIndex = project.choreography.indexOf("{")
@@ -69,7 +116,7 @@ function Project() {
       const lyrics: string[] = Object.keys(lyricsJSON).map(e => lyricsJSON[e].lyrics);
       settimeStampList(timeStamp);
       setLyricsList(lyrics);
-      setnextTimeStamp(timeStampList[1]);
+      setnextTimeStamp(timeStamp[1]);
       setcurrentLyrics(lyrics[0]);
     }
   }
@@ -92,6 +139,7 @@ function Project() {
   useEffect(() => {
     if (project) {
       extractLyricsJSON();
+      setisLoading(false);
     }
   }, [project]);
 
@@ -100,8 +148,38 @@ function Project() {
     fetchProject();
   }, []);
 
+  useEffect(() => {
+    console.log("loading", isLoading);
+  }, [isLoading]);
+
+  function handlePlayPause()
+  {
+    let playState;
+    if (!isReset)
+    {
+      playState = 2;
+      setisReset(!isReset);
+    } 
+    else
+    {
+      playState = isPlaying ? 0 : 1
+    } 
+    sendMessage("XBot", "ControlPlayState", playState);
+    setisPlaying(!isPlaying);
+  }
+
+  function sendStepSequence()
+  {
+    sendMessage("XBot", "SetStepSequence", "1_2_3");
+  }
+
   return <>
     <Nav></Nav>
+    {isLoading? <div className={Styles.loading}>
+        <img src={loader} className={Styles.loader} alt="" />
+        <p>loading your projects</p>
+        </div> :
+    <div>
     <p className={Styles.subtitle}>{project?.projectName}</p>
     <div className={Styles.container}>
         <Unity unityProvider={unityProvider} style={{
@@ -110,8 +188,11 @@ function Project() {
             }}
         />
     </div>
+    <button onClick={handlePlayPause}>Play/Pause</button>
     <audio id="player" onTimeUpdate={e => handleTimeUpdate(e)} src={project.song} controls></audio>
     <p>{currentLyrics}</p>
+
+    </div>}
   </>
 }
 

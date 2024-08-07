@@ -7,9 +7,12 @@ import share from "../../assets/share.svg";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ProjectTile = (props: any) => {
   const endpoint = useSelector((state: any) => state.backend.endpoint);
+  const navigate = useNavigate();
+
   const shareFunc = () => {
     if(props.data.private){
         Swal.fire({
@@ -53,6 +56,10 @@ const ProjectTile = (props: any) => {
     // implement further code
   }
 
+  const handleNavigation = () => {
+    navigate(`/project/nataraj-${props.data.projectID}`)
+  }
+
   const deleteProject =async()=>{
     try {
       Swal.fire({
@@ -83,7 +90,7 @@ const ProjectTile = (props: any) => {
   }
   return (
     <>
-      <div className={Styles.parentdiv}>
+      <div onClick={handleNavigation} className={Styles.parentdiv}>
         <img src={model} alt="" className={Styles.model}/>
         <div className={Styles.bottomrow}>
           <div className={Styles.text}>
