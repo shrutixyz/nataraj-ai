@@ -19,7 +19,7 @@ So, this is a gist of what Nataraj is able to do. There are many more small feat
 Flutter, Web/Chrome, ARCore, Firebase, Google Cloud, Unity, React, Figma
 
 ## App Architecture
-![Software Architecture](architecture.png)
+![Software Architecture](architecture.svg)
 
 
 ## Figma Design
