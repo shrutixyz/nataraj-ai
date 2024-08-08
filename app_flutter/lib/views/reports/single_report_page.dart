@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:nataraj/utils/colors.dart';
 import 'package:nataraj/utils/constants.dart';
 import 'package:nataraj/widgets/gradient_border_button.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:video_player/video_player.dart';
 
 
 class SingleReport extends StatefulWidget {
@@ -36,16 +39,34 @@ String suggestion = "";
       });
     }
   }
+  late VideoPlayerController _controller;
+String pathh = "";
+  setPath()async{
+    final directory = await getExternalStorageDirectory();
+    setState(() {
+      pathh = directory!.path;
+    });
+    return directory!.path;
+  }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    
+    log( "pathh is"+ widget.report.videourl);
+    setPath();
+    log("new path ${pathh}");
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.report.videourl), videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
+      ..initialize().then((_) {
+        setState(() {});
+      });
+      _controller.setVolume(0);
   }
 
   final player = AudioPlayer();
   Future<void> playAudio()async{
-    await player.play(UrlSource(widget.report.musicUrl));
+    // await player.play(UrlSource(widget.report.musicUrl));
+    await player.play(UrlSource("https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-zayn.mp3"));
+    
   }
 
   @override
@@ -99,24 +120,27 @@ String suggestion = "";
                       width: double.infinity,
                       height: 150,
                       color: AppColors.secondaryBg,
+                      child: VideoPlayer(_controller),
                     ),
                     const Expanded(
                       flex: 2,
                       child: SizedBox(),
                     ),
-                    Container(
-                      width: 300,
-                      height: 2,
-                      color: Colors.white,
-                    ),
+                    // Container(
+                    //   width: 300,
+                    //   height: 2,
+                    //   color: Colors.white,
+                    // ),
                     const Expanded(
                       flex: 1,
                       child: SizedBox(),
                     ),
                      Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [IconButton(onPressed: ()async{
                         playAudio();
-                      }, icon: const Icon(Icons.play_arrow))],
+                        _controller.play();
+                      }, icon: const Icon(Icons.play_arrow, size: 48,))],
                     ),
                     // const Text("sometimes all I think about is you"),
                     const Expanded(
@@ -154,7 +178,7 @@ String suggestion = "";
                       flex: 2,
                       child: SizedBox(),
                     ),
-                    Text("✨ $suggestion"),const SizedBox(height: 30,),
+                    Text("✨ $suggestion", textAlign: TextAlign.center,),const SizedBox(height: 30,),
                     GradientBorderButton(
                         title: "GET GEMINI AI SUGGESTIONS",
                         onPressed: ()async {
