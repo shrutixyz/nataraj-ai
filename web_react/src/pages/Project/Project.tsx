@@ -26,7 +26,7 @@ function Project() {
   const [timeStampList, settimeStampList] = useState([0.00]);
   const [lyricsList, setLyricsList] = useState([""]);
   const [currentLyrics, setcurrentLyrics] = useState("");
-  const [isLoading, setisLoading] = useState(true);
+  const [isAPILoading, setisAPILoading] = useState(true);
   const [isPlaying, setisPlaying] = useState(false);
   const [isReset, setisReset] = useState(false);
 
@@ -139,7 +139,7 @@ function Project() {
   useEffect(() => {
     if (project) {
       extractLyricsJSON();
-      setisLoading(false);
+      setisAPILoading(false);
     }
   }, [project]);
 
@@ -149,8 +149,8 @@ function Project() {
   }, []);
 
   useEffect(() => {
-    console.log("loading", isLoading);
-  }, [isLoading]);
+    console.log("loading", isAPILoading);
+  }, [isAPILoading]);
 
   function handlePlayPause()
   {
@@ -171,12 +171,12 @@ function Project() {
 
   function sendStepSequence()
   {
-    sendMessage("Michelle@Idle", "SetStepSequence", "1_2_3");
+    sendMessage("Michelle@Idle", "SetStepSequence", "1_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19_20");
   }
 
   return <>
     <Nav></Nav>
-    {isLoading? <div className={Styles.loading}>
+    {isAPILoading && isLoaded? <div className={Styles.loading}>
         <img src={loader} className={Styles.loader} alt="" />
         <p>loading your projects</p>
         </div> :
