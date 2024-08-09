@@ -5,20 +5,19 @@ using UnityEngine;
 
 public class DanceStateController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    // flair-> 0, 2
-    // hip hop -> -2, 0
-    // shuffling -> 2, 0
     Animator animator;
     int step = 0;
     int[] steps;
+    public float rotationSpeed = 10.0f;
+    float mouseXTotal = 0;
     int currentStep = 0;
-    int startBot = 0;
+
+    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         Time.timeScale = 0;
-        // SetStepSequence("1_2_3");
+        // SetStepSequence("1_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19_20");
         // ControlPlayState(2);
     }
 
@@ -31,6 +30,7 @@ public class DanceStateController : MonoBehaviour
     else if (playState == 2)
     {
         Time.timeScale = 1;
+        currentStep = 0;
         playNextNonIdleAnimation();
     }
     else
@@ -47,11 +47,18 @@ public class DanceStateController : MonoBehaviour
         print("started" + step);
     }
 
+    void ResetOrientation()
+    {
+        print("called reset");
+        transform.Rotate(Vector3.up, mouseXTotal, Space.World);
+        mouseXTotal = 0;
+    }
+
     void playNextNonIdleAnimation()
     {
         if (steps.Length > 0)
         {
-            step = steps[(currentStep)%3];
+            step = steps[(currentStep)%(steps.Length)];
             currentStep += 1;
             print("step: " + step);
             animator.SetInteger("step", step);
@@ -61,27 +68,18 @@ public class DanceStateController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool shufflePressed = Input.GetKey("1");
-        bool flairPressed = Input.GetKey("3");
-        bool hipHopPressed = Input.GetKey("2");
-
-        if (shufflePressed)
+        if (Input.GetMouseButton(0))
         {
-            step = 1;
-        } 
-        else if (flairPressed)
-        {
-            step = 3;
-        }
-        else if (hipHopPressed)
-        {
-            step = 2;
+            float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
+            transform.Rotate(Vector3.up, -mouseX, Space.World);
+            mouseXTotal += mouseX;
         }
 
-        if (shufflePressed || flairPressed || hipHopPressed)
+        bool isResetOrientation = Input.GetKey("1");
+        if (isResetOrientation)
         {
-            animator.SetInteger("step", step);
+            ResetOrientation();
         }
-    
+
     }
 }
