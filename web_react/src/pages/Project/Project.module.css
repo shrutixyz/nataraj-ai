@@ -35,3 +35,31 @@
       transform: rotate(360deg);
     }
   }
+
+  .ProgressBar {
+    position: relative;
+    width: 600px;
+    height: 3em;
+    background-color: black;
+    border-radius: 1.5em;
+    color: white;
+}
+
+.ProgressBarContainer {
+  position: relative;
+  width: 600px;
+
+}
+/*progress styling*/
+.ProgressBarInner{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: .5em;
+    top: .5em;
+    bottom: .5em;
+    background-color: green;
+    border-radius: 1em;
+    padding: 1em 2px;
+    height: 0.5rem;
+}

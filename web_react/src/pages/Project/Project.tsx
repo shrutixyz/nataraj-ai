@@ -33,6 +33,8 @@ function Project() {
   const [isReset, setisReset] = useState(true);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setduration] = useState(0);
+  const [widthProgressBar, setwidthProgressBar] = useState(0.0);
 
   useEffect(function () {
     if (isLoaded)
@@ -61,7 +63,6 @@ function Project() {
 
   
   const handleTimeUpdate =  () => {
-    console.log("audio: ", currentTime)
     if ((currentTime> nextTimeStamp))
     {
       console.log("time:", currentTime, nextTimeStamp, currentTime> nextTimeStamp)
@@ -72,6 +73,14 @@ function Project() {
       }
       setcurrentLyrics(lyricsList[idx]);
     } 
+    // update progress bar
+    const width = currentTime / duration;
+    
+    console.log("width: ",currentTime, duration, currentTime/duration)
+    if (duration != 0)
+    {
+      setwidthProgressBar(width * 90);
+    }
   }
 
   const resetNextTimestamp  = (currentTimestamp: number) => {
@@ -173,17 +182,24 @@ function Project() {
 
       const updateCurrentTime = () => {
         setCurrentTime(tempAudio.currentTime);
-    };
+      };
+
+      const updateDuration = () => {
+        setduration(tempAudio.duration);
+      };
 
       // attach event listener
       tempAudio.addEventListener('timeupdate', updateCurrentTime);
+      tempAudio.addEventListener('loadedmetadata', updateDuration);
 
       // Cleanup event listener and pause audio when component unmounts or URL changes
-    //   return () => {
-    //     tempAudio.removeEventListener('timeupdate', updateCurrentTime);
-    //     tempAudio.pause();
-    //     setCurrentTime(0); // Reset the time
-    // };
+      return () => {
+        tempAudio.removeEventListener('timeupdate', updateCurrentTime);
+        tempAudio.removeEventListener('loadedmetadata', updateCurrentTime);
+
+        tempAudio.pause();
+        setCurrentTime(0); // Reset the time
+    };
     }
   }, [project]);
 
@@ -245,8 +261,13 @@ function Project() {
     </div>
     <button disabled={!isUnityLoaded} onClick={handlePlayPause}>Play/Pause</button>
     <button disabled={!isUnityLoaded} onClick={handleReset}>Reset</button>
+    <div className={Styles.ProgressBarContainer}>
+      <div className={Styles.ProgressBar}></div>
+      <p>{widthProgressBar}</p>
+      <div className={Styles.ProgressBarInner}  style={{width: `${widthProgressBar}%`}}></div>
+    </div>
+    
 
-    {/* <audio id="player" onTimeUpdate={e => handleTimeUpdate(e)} src={project.song} controls></audio> */}
     <p>{currentLyrics}</p>
 
     </div>}
