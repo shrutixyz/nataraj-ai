@@ -27,19 +27,21 @@ function Project() {
   const [lyricsList, setLyricsList] = useState([""]);
   const [currentLyrics, setcurrentLyrics] = useState("");
   const [isAPILoading, setisAPILoading] = useState(true);
-  const [isPlaying, setisPlaying] = useState(false);
-  const [isReset, setisReset] = useState(false);
+  const [isUnityLoaded, setisUnityLoaded] = useState(false);
 
+  const [isPlaying, setisPlaying] = useState(false);
+  const [isReset, setisReset] = useState(true);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(function () {
     if (isLoaded)
     {
+      console.log("unity", isLoaded);
       sendStepSequence();
+      setisUnityLoaded(isLoaded);
     }  
   }, [isLoaded]);
-
-
-
 
   const [project, setProject] = useState({
       "avatar": "",
@@ -56,18 +58,18 @@ function Project() {
       "visibility": ""
   });
   const { projectId } = useParams();
-  const audioRef = useRef<HTMLAudioElement>(null);
 
-  const handleTimeUpdate =  (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
-    console.log("time:", e.currentTarget.currentTime, nextTimeStamp, e.currentTarget.currentTime> nextTimeStamp)
-    if (e.currentTarget.currentTime> nextTimeStamp)
+  
+  const handleTimeUpdate =  () => {
+    console.log("audio: ", currentTime)
+    if ((currentTime> nextTimeStamp))
     {
+      console.log("time:", currentTime, nextTimeStamp, currentTime> nextTimeStamp)
       const idx = timeStampList.indexOf(nextTimeStamp);
       if (idx + 1 < timeStampList.length)
       {
         setnextTimeStamp(timeStampList[idx+1])
       }
-      console.log("lyrics: ", idx, lyricsList[idx])
       setcurrentLyrics(lyricsList[idx]);
     } 
   }
@@ -78,6 +80,18 @@ function Project() {
     {
       setnextTimeStamp(tempTimestamp)
     }
+  }
+
+  const handleReset = () => {
+    if (audio)
+    {
+      const playState = 2;
+      setisPlaying(true);
+      audio.currentTime = 0;
+      audio.play()
+      sendMessage("Michelle@Idle", "ControlPlayState", playState);
+    }  
+
   }
 
   function findNextGreatest(arr: number[] | any[], num: number) {
@@ -105,7 +119,6 @@ function Project() {
   const extractLyricsJSON = () => {
     const firstIndex = project.choreography.indexOf("{")
     const lastIndex = project.choreography.lastIndexOf("}")
-    // console.log(project.choreography.substring(firstIndex, lastIndex+1));
     const jsonString = project.choreography.substring(firstIndex, lastIndex+1);
     if (jsonString)
     {
@@ -123,9 +136,24 @@ function Project() {
 
   const fetchProject = async () => {
     try {
-      const res = await axios.get(`${endpoint}/fetchproject/${projectId}`);
-      setProject(res.data["project"])
-
+      // const res = await axios.get(`${endpoint}/fetchproject/${projectId}`);
+      const proj = {
+        "avatar": "",
+        "choreography": "```json\n{\n  \"0.00\": {\"lyrics\": \"We could leave the Christmas lights up till January\", \"step\": \"Step right, step left, arms out to the side\"},\n  \"4.33\": {\"lyrics\": \"This is our place, we made the rules\", \"step\": \"Arms up, clap, clap, step right\"},\n  \"8.75\": {\"lyrics\": \"And there's a dazzling haze, a recent\", \"step\": \"Spin, point right, point left\"}\n}\n```",
+        "danceform": "Freestyle, ",
+        "duration": 16.966,
+        "loading": 0,
+        "owner": "CPJ1kLB2Bud9CQWMcepUVnH84xE2",
+        "projectID": "7io40rh",
+        "projectName": "luminous orangutan",
+        "song": "https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-7io40rh.mp3",
+        "state": 2,
+        "title": "Taylor Swift - Lover (Lyrics).mp3",
+        "visibility": "private"
+    }
+    setProject(proj)
+      // setProject(res.data["project"])
+      
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -140,17 +168,36 @@ function Project() {
     if (project) {
       extractLyricsJSON();
       setisAPILoading(false);
+      let tempAudio = new Audio(project.song);
+      setAudio(tempAudio);
+
+      const updateCurrentTime = () => {
+        setCurrentTime(tempAudio.currentTime);
+    };
+
+      // attach event listener
+      tempAudio.addEventListener('timeupdate', updateCurrentTime);
+
+      // Cleanup event listener and pause audio when component unmounts or URL changes
+    //   return () => {
+    //     tempAudio.removeEventListener('timeupdate', updateCurrentTime);
+    //     tempAudio.pause();
+    //     setCurrentTime(0); // Reset the time
+    // };
     }
   }, [project]);
 
   useEffect(() => {
-    console.log("project id: ", projectId);
     fetchProject();
   }, []);
 
   useEffect(() => {
-    console.log("loading", isAPILoading);
-  }, [isAPILoading]);
+    console.log("loading", isAPILoading, !isLoaded, isAPILoading || !isLoaded);
+  }, [isAPILoading, isLoaded]);
+
+  useEffect(() => {
+    handleTimeUpdate();
+  }, [currentTime]);
 
   function handlePlayPause()
   {
@@ -160,11 +207,18 @@ function Project() {
       playState = 2;
       setisReset(!isReset);
       setisPlaying(true);
+      audio?.play();
     } 
     else
     {
       playState = isPlaying ? 0 : 1
       setisPlaying(!isPlaying);
+      if(playState)
+      {
+        audio?.play();
+      } else {
+        audio?.pause();
+      }
     } 
     sendMessage("Michelle@Idle", "ControlPlayState", playState);
   }
@@ -176,7 +230,7 @@ function Project() {
 
   return <>
     <Nav></Nav>
-    {isAPILoading && isLoaded? <div className={Styles.loading}>
+    {isAPILoading? <div className={Styles.loading}>
         <img src={loader} className={Styles.loader} alt="" />
         <p>loading your projects</p>
         </div> :
@@ -189,8 +243,10 @@ function Project() {
             }}
         />
     </div>
-    <button onClick={handlePlayPause}>Play/Pause</button>
-    <audio id="player" onTimeUpdate={e => handleTimeUpdate(e)} src={project.song} controls></audio>
+    <button disabled={!isUnityLoaded} onClick={handlePlayPause}>Play/Pause</button>
+    <button disabled={!isUnityLoaded} onClick={handleReset}>Reset</button>
+
+    {/* <audio id="player" onTimeUpdate={e => handleTimeUpdate(e)} src={project.song} controls></audio> */}
     <p>{currentLyrics}</p>
 
     </div>}
