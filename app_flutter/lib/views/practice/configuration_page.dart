@@ -17,6 +17,7 @@ class ConfigurationPage extends StatelessWidget {
     dateTime: DateTime.now(),
     matchRate: 85.5,
     musicUrl: 'https://example.com/music.mp3',
+    videourl: ""
   );
 
   SharedPreferencesHelper prefsHelper = SharedPreferencesHelper();
