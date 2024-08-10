@@ -19,13 +19,10 @@ const Tutorials = () => {
       <div className={Styles.videos}>
       <p className={Styles.videoheading}>SUPER EASY TO USE, AND THESE TUTORIALS WOULD ONLY MAKE IT EASIER</p>
 <div className={Styles.videoss}>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_cZa_7KaQ3c?si=VPra_3EU43OkAokF" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_cZa_7KaQ3c?si=VPra_3EU43OkAokF" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_cZa_7KaQ3c?si=VPra_3EU43OkAokF" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_cZa_7KaQ3c?si=VPra_3EU43OkAokF" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_cZa_7KaQ3c?si=VPra_3EU43OkAokF" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_cZa_7KaQ3c?si=VPra_3EU43OkAokF" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yu3CEHt1rzY" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FAzqUNZbol0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8kFTocK3euM" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LzsX1ulS0s0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
 
 </div>
       </div>

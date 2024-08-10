@@ -11,6 +11,7 @@ import 'package:nataraj/widgets/gradient_border_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 
 class SingleReport extends StatefulWidget {
@@ -23,10 +24,16 @@ class SingleReport extends StatefulWidget {
 
 class _SingleReportState extends State<SingleReport> {
   final baseUrl = "https://singular-node-429217-j4.uc.r.appspot.com";
-
+bool isLoading = false;
 String suggestion = "";
    Future<void> getSuggestions() async {
+    setState(() {
+      isLoading = true;
+    });
     final response = await http.get(Uri.parse("$baseUrl/getsuggestion"));
+    setState(() {
+      isLoading = false;
+    });
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       setState(() {
@@ -49,6 +56,9 @@ String pathh = "";
     return directory!.path;
   }
 
+  bool _isplaying = false;
+  late WebViewController webviewcontroller;
+
   @override
   void initState() {
     super.initState();
@@ -60,12 +70,51 @@ String pathh = "";
         setState(() {});
       });
       _controller.setVolume(0);
+      player.setSource(UrlSource("https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-zayn.mp3"));
+
+      // player.play(UrlSource("https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-zayn.mp3"));
+  webviewcontroller = WebViewController()
+  ..setJavaScriptMode(JavaScriptMode.unrestricted)
+  ..setBackgroundColor(const Color(0x00000000))
+  ..enableZoom(true)
+  ..setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
+  // ..setOnConsoleMessage((message) { 
+  //   if(message.message.contains("started")){
+
+  //   }
+  // })
+  ..setNavigationDelegate(
+    NavigationDelegate(
+      onProgress: (int progress) {
+        // Update loading bar.
+      },
+      onPageStarted: (String url) {},
+      onPageFinished: (String url) {},
+      onHttpError: (HttpResponseError error) {},
+      onWebResourceError: (WebResourceError error) {},
+      // onNavigationRequest: (NavigationRequest request) {
+      //   if (request.url.startsWith('https://www.youtube.com/')) {
+      //     return NavigationDecision.prevent;
+      //   }
+      //   return NavigationDecision.navigate;
+      // },
+    ),
+  )
+  ..loadRequest(Uri.parse('https://nataraj-ai.web.app/project/nataraj-q9y7tgo'));
+  
   }
 
   final player = AudioPlayer();
   Future<void> playAudio()async{
     // await player.play(UrlSource(widget.report.musicUrl));
-    await player.play(UrlSource("https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-zayn.mp3"));
+  if(_isplaying){
+    player.pause();
+  }
+  else{
+    player.resume();
+        // await player.play(UrlSource("https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-zayn.mp3"));
+
+  }
     
   }
 
@@ -103,15 +152,16 @@ String pathh = "";
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    // const Expanded(
-                    //   flex: 1,
-                    //   child: SizedBox(),
-                    // ),
-                    // Container(
-                    //   width: double.infinity,
-                    //   height: 150,
-                    //   color: AppColors.secondaryBg,
-                    // ),
+                    const Expanded(
+                      flex: 1,
+                      child: SizedBox(),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 150,
+                      color: AppColors.secondaryBg,
+                      child: WebViewWidget(controller: webviewcontroller,),
+                    ),
                     const Expanded(
                       flex: 2,
                       child: SizedBox(),
@@ -139,8 +189,19 @@ String pathh = "";
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [IconButton(onPressed: ()async{
                         playAudio();
-                        _controller.play();
-                      }, icon: const Icon(Icons.play_arrow, size: 48,))],
+                        if(_isplaying){
+                          _controller.pause();
+                          setState(() {
+                            _isplaying = false;
+                          });
+                        }
+                        else{
+                          _controller.play();
+                          setState(() {
+                            _isplaying = true;
+                          });
+                        }
+                      }, icon: _isplaying?const Icon(Icons.pause, size: 48,):const Icon(Icons.play_arrow, size: 48,))],
                     ),
                     // const Text("sometimes all I think about is you"),
                     const Expanded(
@@ -178,9 +239,9 @@ String pathh = "";
                       flex: 2,
                       child: SizedBox(),
                     ),
-                    Text("✨ $suggestion", textAlign: TextAlign.center,),const SizedBox(height: 30,),
+                    Text(isLoading?"loading...":"✨ $suggestion", textAlign: TextAlign.center,),const SizedBox(height: 30,),
                     GradientBorderButton(
-                        title: "GET GEMINI AI SUGGESTIONS",
+                        title: "GET GEMINI AI INSPIRATIONS",
                         onPressed: ()async {
                           getSuggestions();
                         },
