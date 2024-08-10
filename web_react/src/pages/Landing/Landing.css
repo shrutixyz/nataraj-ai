@@ -224,6 +224,10 @@
   }
   
   .right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40vw;
     animation-name: slide-right; 
     animation-duration: 1s;
     animation-fill-mode: forwards;
@@ -304,4 +308,14 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+  }
+
+  .splineviewer{
+    height: 20rem;
+    /* background-color: blue; */
+  }
+
+
+  .right-model{
+    height: 40rem;
   }

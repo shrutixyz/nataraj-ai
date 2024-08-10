@@ -188,15 +188,29 @@ Future<void> saveFileToExternalStorage(String cacheFilePath, String externalStor
 
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     });
     return Scaffold(
       body: isCameraInitialized
-          ? AspectRatio(
-              aspectRatio: controller.value.aspectRatio,
-              child: CameraPreview(controller),
-            )
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+              Container(
+                width: 0.40*w,
+                child: AspectRatio(
+                  aspectRatio: controller.value.aspectRatio,
+                  child: CameraPreview(controller),
+                ),
+              ),
+              VerticalDivider(width: 2, color: Colors.white,),
+               Container(width: 0.40*w,
+               height: (1/controller.value.aspectRatio)*0.4*w,
+               color: Colors.black,
+               ),
+            ],)
           : Center(child: CircularProgressIndicator()),
     );
   }
