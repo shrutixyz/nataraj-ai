@@ -91,11 +91,11 @@ const SelectAudio = () => {
   };
 
   const handleFileUpload = (evt: any) => {
-    setisLoading(true)
+   
     console.log(evt);
     const file = evt.target.files[0];
     setAudioFile(file);
-    console.log(file)
+    console.log(file);
     setAudioURL(URL.createObjectURL(file));
     console.log("url is ", audioUrl);
     setFilename(file.name);
@@ -109,52 +109,55 @@ const SelectAudio = () => {
     setRandThumbnail(thumbnail);
     const lastPart = audioUrl.substring(audioUrl.lastIndexOf("/") + 1);
     setBlob(lastPart);
-    setisLoading(false)
   };
 
   const handleSubmit = async () => {
-    if(end-start>60000 || audioFile==null){
+    if (end - start > 60000 || audioFile == null) {
       Swal.fire({
         title: "Duration Exceeding",
         text: "Please trim a part under 1 minute and then try again!",
         confirmButtonColor: "#18191A",
         confirmButtonText: "okay",
       });
-    }
-    else{
+    } else {
       try {
         // send audiofile and request to python which would then..
         const data = {
           // file: audioFile,
-          "start": start,
-          "end": end,
-          "uid": auth.currentUser?.uid,
-          "title": audioFile?.name,
-          "projectName": projectName
+          start: start,
+          end: end,
+          uid: auth.currentUser?.uid,
+          title: audioFile?.name,
+          projectName: projectName,
         };
 
-        const formdata = new FormData()
-        formdata.append("file", audioFile as Blob)
+        const formdata = new FormData();
+        formdata.append("file", audioFile as Blob);
         formdata.append("start", start.toString());
         formdata.append("end", end.toString());
-        formdata.append("uid", auth.currentUser?auth.currentUser.uid.toString():"");
+        formdata.append(
+          "uid",
+          auth.currentUser ? auth.currentUser.uid.toString() : ""
+        );
         formdata.append("title", audioFile.name);
         formdata.append("projectName", projectName);
+        setisLoading(true);
+        const response = await axios.post(
+          `${endpoint}/createproject`,
+          formdata
+        );
+        // setisLoading(false);
 
-
-
-        const response = await axios.post(`${endpoint}/createproject`, formdata);
-  
         // trim file, upload file to storage
         // create Project and set level on realtime db
         // link project to user on firestore db
-  
+
         // set project state in redux
         dispatch(updateCheckpoint(1));
         dispatch(setProjectID(response.data["projectID"]));
-  
+
         navigate("/selectdanceform");
-      } catch (err:any) {
+      } catch (err: any) {
         Swal.fire({
           title: "Error!",
           text: err.toString(),
@@ -163,154 +166,176 @@ const SelectAudio = () => {
         });
       }
     }
-    
   };
 
-  const setFilefromNCS = async (file:any) => {
+  const [selectmusic, setSelectmusic] = useState(false);
+
+  const setFilefromNCS = async (file: any) => {
     try {
+      setSelectmusic(true);
       const response = await fetch(file.url);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const blob = await response.blob();
       const fileObject = new File([blob], file.title, { type: blob.type });
       console.log(fileObject);
-      
+
       setAudioFile(fileObject);
       setAudioURL(URL.createObjectURL(fileObject));
       console.log("url is ", URL.createObjectURL(fileObject));
-      
+
       setFilename(file.title);
       const thumbnails = [
         thumbnail1,
         thumbnail2,
         thumbnail3,
         thumbnail4,
-        thumbnail5
+        thumbnail5,
       ];
-      const thumbnail = thumbnails[Math.floor(Math.random() * thumbnails.length)];
+      const thumbnail =
+        thumbnails[Math.floor(Math.random() * thumbnails.length)];
       setRandThumbnail(thumbnail);
+      setSelectmusic(false);
     } catch (error: any) {
       console.error(error);
       alert(error.toString());
+      setSelectmusic(false);
     }
   };
 
-  const set30 = () =>{
-    
-    setEnd(start+30000)
-    changeSelected(0)
-  }
+  const set30 = () => {
+    setEnd(start + 30000);
+    changeSelected(0);
+  };
 
-  const set60 = () =>{
-    
-    setEnd(start+60000)
-    changeSelected(1)
-  }
+  const set60 = () => {
+    setEnd(start + 60000);
+    changeSelected(1);
+  };
 
-  const setCustom = () =>{
-    
-    changeSelected(2)
-  }
+  const setCustom = () => {
+    changeSelected(2);
+  };
   return (
     <>
       {back == true ? (
         <div>
           <Nav />
-          {
-            isLoading?<div className={Styles.loading}>
-            <img src={loader} className={Styles.loader} alt="" />
-            <p>setting audio...</p>
-          </div> :
+          {isLoading ? (
+            <div className={Styles.loading}>
+              <img src={loader} className={Styles.loader} alt="" />
+              <p>setting audio...</p>
+            </div>
+          ) : (
             <div className={Styles.mainbody}>
-            <p className={Styles.title}>DASHBOARD</p>
-            {editing ? (
-              <div className={Styles.projectName}>
+              <p className={Styles.title}>DASHBOARD</p>
+              {editing ? (
+                <div className={Styles.projectName}>
+                  <input
+                    type="text"
+                    value={projectName}
+                    className={Styles.editinput}
+                    onChange={(evt) => {
+                      setProjectName(evt.target.value);
+                      dispatch(updateProjectName(evt.target.value));
+                    }}
+                  />
+                  <img
+                    src={tick}
+                    alt=""
+                    className={Styles.edit}
+                    onClick={() => setEditing(false)}
+                  />
+                </div>
+              ) : (
+                <div className={Styles.projectName}>
+                  <p className={Styles.subtitle}>Project: {projectName}</p>
+                  <img
+                    src={edit}
+                    alt=""
+                    className={Styles.edit}
+                    onClick={() => setEditing(true)}
+                  />
+                </div>
+              )}
+              <br />
+              <p className={Styles.step}>STEP 1: CHOOSE THE MUSIC</p>
+              <div className={Styles.buttons}>
+                <ButtonCustom
+                  title="UPLOAD FROM FILES"
+                  width="20"
+                  height="3"
+                  onClick={handleClick}
+                />
                 <input
-                  type="text"
-                  value={projectName}
-                  className={Styles.editinput}
-                  onChange={(evt) => {
-                    setProjectName(evt.target.value);
-                    dispatch(updateProjectName(evt.target.value));
-                  }}
-                />
-                <img
-                  src={tick}
-                  alt=""
-                  className={Styles.edit}
-                  onClick={() => setEditing(false)}
+                  ref={inputRef}
+                  type="file"
+                  accept="audio/*"
+                  onChange={handleFileUpload}
+                  style={{ display: "none" }}
                 />
               </div>
-            ) : (
-              <div className={Styles.projectName}>
-                <p className={Styles.subtitle}>Project: {projectName}</p>
-                <img
-                  src={edit}
-                  alt=""
-                  className={Styles.edit}
-                  onClick={() => setEditing(true)}
-                />
+              <br />
+              <p className={Styles.subheading}>
+                DON'T HAVE ANY MUSIC IN MIND? CHOOSE FROM OUR LIBRARY
+              </p>
+              <div className={Styles.libraryparent}>
+                <div className={Styles.library}>
+                  {localSongs.map((item, index) => {
+                    return (
+                      <Songtile
+                        data={item}
+                        index={index}
+                        onClick={() => {
+                          setFilefromNCS(item);
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+                <div className={Styles.selectedaudio}>
+                  {selectmusic ? (
+                    <img src={loader} className={Styles.loader} alt="" />
+                  ) : (
+                    <>
+                      <img
+                        src={randThumbnail}
+                        className={Styles.thumbnail}
+                        alt=""
+                      />
+                      <b>
+                        <center>
+                          <p>{filename}</p>
+                        </center>
+                      </b>
+                    </>
+                  )}
+                </div>
               </div>
-            )}
-            <br />
-            <p className={Styles.step}>STEP 1: CHOOSE THE MUSIC</p>
-            <div className={Styles.buttons}>
-              <ButtonCustom
-                title="UPLOAD FROM FILES"
+              <br />
+              <br />
+              <GradientButton
+                title="NEXT"
                 width="25"
-                height="4"
-                onClick={handleClick}
-              />
-              <input
-                ref={inputRef}
-                type="file"
-                accept="audio/*"
-                onChange={handleFileUpload}
-                style={{ display: "none" }}
+                height="3"
+                fontsize="1"
+                onClick={() => {
+                  if (filename == "") {
+                    Swal.fire({
+                      title: "No file detected",
+                      text: "Please select a music file and then try again!",
+                      confirmButtonColor: "#18191A",
+                      confirmButtonText: "okay",
+                    });
+                  } else {
+                    setBack(false);
+                  }
+                }}
               />
             </div>
-            <br />
-            <p className={Styles.subheading}>
-              DON'T HAVE ANY MUSIC IN MIND? CHOOSE FROM OUR LIBRARY
-            </p>
-            <div className={Styles.libraryparent}>
-              <div className={Styles.library}>
-                {
-                 localSongs.map((item, index) => {
-                  return <Songtile data={item} index={index} onClick={()=>{setFilefromNCS(item)}}/>
-                })
-                }
-              </div>
-              <div className={Styles.selectedaudio}>
-                <img src={randThumbnail} className={Styles.thumbnail} alt="" />
-                <b>
-                  <center><p>{filename}</p></center>
-                </b>
-              </div>
-            </div>
-            <br />
-            <br />
-            <GradientButton
-              title="NEXT"
-              width="25"
-              height="3"
-              onClick={() => {if(filename==""){
-                Swal.fire({
-                  title: "No file detected",
-                  text: "Please select a music file and then try again!",
-                  confirmButtonColor: "#18191A",
-                  confirmButtonText: "okay",
-                });
-              }
-            else{
-              setBack(false)
-            }
-            }}
-            />
-          </div>
-          }
+          )}
         </div>
       ) : (
         <div className={Styles.trimaudio}>
@@ -327,7 +352,13 @@ const SelectAudio = () => {
               file={audioFile}
               start={start}
               end={end}
-              onChange={(e)=>{setStart(e.start); setEnd(e.end); if((end-start)%30!=0){setCustom()}}}
+              onChange={(e) => {
+                setStart(e.start);
+                setEnd(e.end);
+                if ((end - start) % 30 != 0) {
+                  setCustom();
+                }
+              }}
               className={Styles.mirtdiv}
               options={{
                 waveformColor: "#FFBA09",
@@ -335,19 +366,28 @@ const SelectAudio = () => {
                 fineTuningScale: 1,
               }}
             />
-          <h4>Total Length: {(end-start)/1000} seconds</h4>
+            <h4>Total Length: {(end - start) / 1000} seconds</h4>
             <div className={Styles.timeoptions}>
-              <div onClick={()=>{set30()}}
+              <div
+                onClick={() => {
+                  set30();
+                }}
                 className={selected == 0 ? Styles.selected : Styles.unselected}
               >
                 <p>30 seconds</p>
               </div>
-              <div onClick={()=>{set60()}}
+              <div
+                onClick={() => {
+                  set60();
+                }}
                 className={selected == 1 ? Styles.selected : Styles.unselected}
               >
                 <p>1 minute</p>
               </div>
-              <div onClick={()=>{setCustom()}}
+              <div
+                onClick={() => {
+                  setCustom();
+                }}
                 className={selected == 2 ? Styles.selected : Styles.unselected}
               >
                 <p>custom</p>
@@ -365,6 +405,7 @@ const SelectAudio = () => {
                 title="NEXT"
                 width="25"
                 height="3"
+                fontsize="1"
                 onClick={() => handleSubmit()}
               />
             </div>

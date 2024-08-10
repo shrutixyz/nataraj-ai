@@ -24,7 +24,7 @@ const Nav = () => {
   return (
     <div className="nav-container">
       <div className="logo-container" onClick={() => navigate("/")}>
-        <img src={logofull} alt="nataraj-ai logo" />
+        <img src={logofull} className="logofull" alt="nataraj-ai logo" />
       </div>
       <div className="navlinks-container">
         <NavLink
@@ -50,7 +50,7 @@ const Nav = () => {
           }
         >
           <p className="animated-underline">Dashboard</p>
-        </NavLink>
+        </NavLink> 
         <NavLink
           to="/tutorials"
           className={({ isActive }) =>
@@ -73,14 +73,14 @@ const Nav = () => {
           <GradientButton
             title="SIGN OUT"
             onClick={() => {signOut()}}
-            height="3"
-            width="10"
+            height="2"
+            width="8"
           />
           <GradientButton
             title="YOUR PROFILE"
             onClick={() => navigate("/profile")}
-            height="3"
-            width="10"
+            height="2"
+            width="8"
           />
         </div>
       ) : (
@@ -88,8 +88,8 @@ const Nav = () => {
           <GradientButton
             title="SIGN UP NOW"
             onClick={() => navigate("/signup")}
-            height="3"
-            width="15"
+            height="2"
+            width="12"
           />
         </div>
       )}

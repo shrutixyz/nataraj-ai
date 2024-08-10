@@ -21,8 +21,8 @@ limiter = Limiter(
    #  error code is 429 for timeout
 )
 
-UPLOAD_FOLDER = os.path.join(app.static_folder, 'musicfiles')
-
+# UPLOAD_FOLDER = os.path.join(app.static_folder, 'musicfiles')
+# UPLOAD_FOLDER = os.path.join("/tmp/", 'musicfiles')
 @app.route('/')
 @limiter.limit("1 per second")
 def hello_world():
@@ -113,22 +113,31 @@ def delete_account(uid):
 @app.route('/createproject', methods=['POST'])
 @limiter.limit("10 per 5 minute")
 def create_project():
+   print("starting")
    """Creates a new project associated with the user in the RTDB database and link it with the user in firestore database"""
    if 'file' not in request.files:
+        print("file not available")
         return jsonify({'error': 'No file part'}), 401
    file = request.files['file']
+   print("got file")
    length_of_randstring = 15 - len("nataraj-")
    randstring = ''.join(random.choices(string.ascii_lowercase + string.digits, k=length_of_randstring))
-   
-   filepath = os.path.join(UPLOAD_FOLDER, file.filename)
-   outputpath = os.path.join(UPLOAD_FOLDER, f"modified-{str(randstring)}.{str(file.filename.split('.')[-1])}")
+   print("getting filepath")
+   filepath = os.path.join("/tmp/", file.filename)
+   print("getting output path")
+   outputpath = os.path.join("/tmp/", f"modified-{str(randstring)}.{str(file.filename.split('.')[-1])}")
    start = int(request.form.get("start"))/1000
    end = int(request.form.get("end"))/1000
+   print(f"{start} {end}")
    # return {"start": request.form.get('start')}
+   
+   print("saving file")
    file.save(filepath)
+   print("trimming audio")
    trim_audio_soundfile(filepath, start, end, outputpath)
+   print("uploading audio")
    url = upload_blob(outputpath, f"modified-{str(randstring)}.{str(file.filename.split('.')[-1])}")
-
+   print(url)
    data = {
       "owner": request.form.get("uid"),
       "visibility": "private",
@@ -142,7 +151,9 @@ def create_project():
       "projectID": randstring,
       "projectName": request.form.get("projectName")
    }
+   print("creating doc on rtdb")
    create_document_rtdb(f"nataraj-{randstring}", data)
+   print("appending to firestore")
    append_to_firestore(request.form.get("uid"), f"nataraj-{randstring}")
    return {"success": True, "projectID": f"nataraj-{randstring}"}, 200
 

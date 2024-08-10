@@ -17,7 +17,7 @@
 }
 
 .hero-section p {
-    font-size: 1.25rem;
+    font-size: 1rem;
     letter-spacing: 0.1rem;
 }
 
@@ -126,7 +126,7 @@
 }
 
 .android-app-section{
-    height: 40vh;
+    height: 60vh;
     width: 100%;
     display: flex;
     align-items: center;
@@ -135,28 +135,32 @@
 }
 
 .googleplayimg{
-    width: 20rem;
-    height: 6rem;
+    width: auto;
+    height: 4rem;
     cursor: pointer;
 }
 
 .downloadapp{
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 800;
 }
 
 .android-app-top{
+  margin-top: 4rem;
     display: flex;
     gap: 4rem;
     align-items: center;
     justify-content: center;
+    margin-bottom: 4rem;
 }
 
 .android-app-bottom{
+  /* margin-top: 4rem; */
     display: flex;
     gap: 1rem;
     align-items: baseline;
     justify-content: center;
+    margin-bottom: 4rem;
 }
 
 .geminiimg{
@@ -256,22 +260,22 @@
   }
   
   .featureblob.hovered {
-    height: 15rem;
-    width: 15rem;
+    height: 10rem;
+    width: 10rem;
     background-color: #3F3D3D;
 
   }
 
   .featureimg{
     z-index: 1;
-    max-height: 5rem;
-    min-height: 5rem;
-    max-width: 8rem;
+    max-height: 3rem;
+    min-height: 3rem;
+    max-width: 6rem;
     
   }
 
   .featuretext{
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     z-index: 1;
   }
 
@@ -295,5 +299,15 @@
 
 
   .right-model{
-    height: 40rem;
+    height: 25rem;
+  }
+
+
+
+  .createthebeat{
+    width: 40rem
+  }
+
+  .subtitlep{
+    font-size: 0.2rem;
   }

@@ -132,6 +132,7 @@ const Login = () => {
             title="LOGIN"
             height="4"
             width="25"
+            fontsize="1"
             onClick={() => emailSignIn(email, password)}
           />
         </div>

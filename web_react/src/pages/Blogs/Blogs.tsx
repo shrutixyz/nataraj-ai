@@ -34,14 +34,16 @@ const Blogs = () => {
   const [blogss, setBlogss] = useState({ "": "" });
 
   useEffect(() => {
-    setLoading(true);
+    
     getBlogs();
-    setLoading(false);
+    
   }, []);
 
   async function getBlogs() {
     try {
+      setLoading(true);
       const res = await axios.get(`${endpoint}/blogs`);
+      setLoading(false);
       console.log(res.data);
       setBlogss(res.data);
     } catch (error) {

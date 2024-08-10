@@ -36,7 +36,7 @@ const Dashboard = () => {
   };
 
   const handleNewProject = () =>{
-    if(projects.length>3){
+    if(projects.length>5){
       Swal.fire({
         title: "Error!",
         text: "With free tier, you can have 3 projects at max! Please delete an existing project or contact us for revised quota",

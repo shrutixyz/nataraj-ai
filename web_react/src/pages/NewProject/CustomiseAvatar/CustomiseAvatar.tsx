@@ -77,7 +77,7 @@ const CustomiseAvatar = () => {
           <p className={Styles.step}>STEP 4: CUSTOMIZE YOUR DANCING AVATAR</p>
           <br />
           <br />
-          <img src={later} alt="" width={"500rem"} />
+          <img src={later} alt="" width={"400rem"} />
           <div className={Styles.navbuttons}>
             <ButtonCustom
               title="BACK"
@@ -97,6 +97,7 @@ const CustomiseAvatar = () => {
               title="NEXT"
               width="25"
               height="3"
+              fontsize="1"
               onClick={() => handleSubmit()}
             />
           </div>

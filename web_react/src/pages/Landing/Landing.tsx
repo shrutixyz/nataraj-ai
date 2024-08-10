@@ -51,13 +51,13 @@ const Landing = () => {
 
       <section className="hero-section">
         <div className="left">
-          <img src={createthebeat} alt="" />
-          <p>NATARAJ AI IS YOUR ALL IN ONE AI POWERED DANCE CHOREOGRAPHER</p>
+          <img src={createthebeat} className="createthebeat" alt="" />
+          <p className="subtitlep">NATARAJ AI IS YOUR ALL IN ONE AI POWERED DANCE CHOREOGRAPHER</p>
           <GradientButton
             title="GET STARTED"
-            width="50"
-            height="4"
-            fontsize="1.25"
+            width="40"
+            height="3.5"
+            fontsize="1"
             onClick={() => navigate("/login")}
           />
           <br />
@@ -107,8 +107,8 @@ const Landing = () => {
 
       <section className="hero-section3">
         <div className="herosection2title">
-          <img src={delight} width={"500rem"} />
-          <p>
+          <img src={delight} width={"400rem"} />
+          <p style={{"fontSize": "0.9rem"}}>
             PACKED WITH FEATURES, NATARAJ AI IS SPECIAL BECAUSE IT OFFERS
             OPTIONS THAT NO ONE ELSE DOES
           </p>
@@ -203,7 +203,7 @@ const Landing = () => {
         <div className="android-app-top">
           <p className="downloadapp">
             DOWNLOAD<br></br>ANDROID APP
-          </p>
+          </p> 
           <img
             src={googleplay}
             alt=""

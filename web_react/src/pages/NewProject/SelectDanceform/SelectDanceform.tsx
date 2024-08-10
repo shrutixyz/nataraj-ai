@@ -161,6 +161,7 @@ const SelectDanceform = () => {
             title="NEXT"
             width="25"
             height="3"
+            fontsize="1"
             onClick={() => handleSubmit()}
           />
         </div>

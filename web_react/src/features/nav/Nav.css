@@ -12,11 +12,11 @@
     align-self: center;
     text-align: center;
     cursor: pointer;
-}
+} 
 
-.logo-container img{
-    margin-left: 0.5rem;
-    width: 10rem;
+.logofull{
+  height: 3rem;
+  margin-left: 0.5rem;
 }
 
 
@@ -59,6 +59,7 @@
     position: relative;
     display: inline-block;
     text-decoration: none;
+    font-size: 1rem;
 }
 
 .animated-underline::after {

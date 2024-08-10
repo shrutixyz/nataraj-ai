@@ -91,7 +91,7 @@ const Footer = () => {
         ></textarea>
         <GradientButton
           title="SUBMIT"
-          height="4"
+          height="3"
           width="20"
           onClick={handleSubmit}
         />
@@ -114,7 +114,7 @@ const Footer = () => {
         </a>
         <a href="https://in.linkedin.com/in/aakzsh">AAKASH SHRIVASTAVA</a>
       </div>
-    </div>
+    </div> 
   );
 };
 

@@ -48,7 +48,7 @@ const Songtile = (props:any) =>{
     }
     return <>
         <div className={Styles.maindiv} title={attributes[props.index]}>
-            <div className={Styles.left}>
+            <div className={Styles.left}> 
             <b><p>{props.index+1}.</p></b>
             <p style={{"opacity": "0.8"}}>{props.data.title}</p>
             </div>

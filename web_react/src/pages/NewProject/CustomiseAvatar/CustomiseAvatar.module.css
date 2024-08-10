@@ -1,13 +1,11 @@
 .title{
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 800;
 }
 
 .subtitle{
-    font-size: 2rem;
-    margin-top: -2rem;
+    font-size: 1.5rem;
 }
-
 .noprojectscontainer{
     width: 100%;
     height: 60vh;
@@ -24,7 +22,7 @@
 
 .step{
     font-weight: 700;
-    font-size: 1.7rem;
+    font-size: 1.2rem;
     color: #FFBA09;
 }
 

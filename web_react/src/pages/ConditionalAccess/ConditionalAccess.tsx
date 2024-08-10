@@ -29,6 +29,7 @@ const ConditionalAccess = () => {
           title="LOGIN NOW"
           width="40"
           height="5"
+          fontsize="1.1"
           onClick={() => navigate("/")}
         />
       </div>

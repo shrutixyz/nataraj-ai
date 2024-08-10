@@ -147,6 +147,7 @@ const Register = () => {
             title="SIGNUP"
             height="4"
             width="25"
+            fontsize="1"
             onClick={() => proceedLogin()}
           />
         </div>

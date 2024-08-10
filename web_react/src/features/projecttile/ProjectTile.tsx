@@ -26,7 +26,7 @@ const ProjectTile = (props: any) => {
 
         Swal.fire({
             title: "Success!",
-            text: "Here's the link for your project: https://nataraj.web.app/project?id="+props.data.projectID,
+            text: "Here's the link for your project: https://nataraj.web.app/project/nataraj-"+props.data.projectID,
             confirmButtonColor: "#18191A",
             confirmButtonText: "okay",
           });
@@ -88,17 +88,17 @@ const ProjectTile = (props: any) => {
   }
   return (
     <>
-      <div onClick={handleNavigation} className={Styles.parentdiv}>
-        <img src={model} alt="" className={Styles.model}/>
+      <div className={Styles.parentdiv}>
+        <img src={model} onClick={handleNavigation}  alt="" className={Styles.model}/>
         <div className={Styles.bottomrow}>
-          <div className={Styles.text}>
+          <div className={Styles.text}  onClick={handleNavigation} >
             <p>
               <b>{props.data.projectName}</b>
             </p>
             <p>{props.data.duration.toString().substring(0, 5)} seconds</p>
           </div>
           <div className={Styles.icons}>
-            {props.data.visibility=="private" ? (
+            {props.data.visibility!="private" ? (
               <img src={eye} alt="" onClick={changeVisibility} />
             ) : (
               <img src={eyeoff} alt="" onClick={changeVisibility}/>
