@@ -16,13 +16,9 @@
 
 .logo-container img{
     margin-left: 0.5rem;
-    /* margin-top: 1rem; */
     width: 10rem;
 }
 
-/* .logo-container img {
-    scale: 0.7;
-} */
 
 .logo-container p {
     align-self: center;
@@ -52,13 +48,6 @@
     color: var(--font-color);
 }
 
-/* .sign-up-container button {
-    padding: 0.5rem 1.5rem;
-    background-color: transparent;
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-    border-radius: 0.25rem;
-} */
 
 .sign-up-container{
   display: flex;
@@ -69,7 +58,6 @@
 .animated-underline {
     position: relative;
     display: inline-block;
-    /* color: var(--accent-color); */
     text-decoration: none;
 }
 

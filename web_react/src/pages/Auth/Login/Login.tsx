@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../../store/store";
 import Swal from "sweetalert2";
 import loader from "../../../assets/loader.svg";
- 
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -81,7 +81,6 @@ const Login = () => {
         confirmButtonText: "okay",
       });
     }
-    
   };
   return (
     <>
@@ -90,7 +89,7 @@ const Login = () => {
         <div className={Styles.loading}>
           <img src={loader} className={Styles.loader} alt="" />
           <p>logging you in</p>
-        </div> 
+        </div>
       ) : (
         <div className={Styles.mainbody}>
           <h1 className={Styles.title}>LOGIN</h1>

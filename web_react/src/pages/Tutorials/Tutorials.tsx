@@ -8,25 +8,52 @@ const Tutorials = () => {
     <>
       <Nav />
       <div className={Styles.info}>
-        <h1 className={Styles.title}>
-        Tutorials
-        </h1>
+        <h1 className={Styles.title}>Tutorials</h1>
         <p className={Styles.subtitle}>
           LET'S LEARN HOW TO USE NATARAJ AI AND GET THE BEST OF OUT IT!
         </p>
       </div>
 
       <div className={Styles.videos}>
-      <p className={Styles.videoheading}>SUPER EASY TO USE, AND THESE TUTORIALS WOULD ONLY MAKE IT EASIER</p>
-<div className={Styles.videoss}>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/yu3CEHt1rzY" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/FAzqUNZbol0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/8kFTocK3euM" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/LzsX1ulS0s0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-
-</div>
+        <p className={Styles.videoheading}>
+          SUPER EASY TO USE, AND THESE TUTORIALS WOULD ONLY MAKE IT EASIER
+        </p>
+        <div className={Styles.videoss}>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/yu3CEHt1rzY"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/FAzqUNZbol0"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/8kFTocK3euM"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/LzsX1ulS0s0"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+        </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

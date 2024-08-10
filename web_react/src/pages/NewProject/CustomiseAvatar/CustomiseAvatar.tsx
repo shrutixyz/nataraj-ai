@@ -27,20 +27,11 @@ const CustomiseAvatar = () => {
   }, [isLoggedIn]);
 
   const handleSubmit = async () => {
-    // set avatar => later
     try {
       setisLoading(true);
 
-      // const data = {
-      //   projectID: projectID,
-      // };
-
-      // const response = await axios.post(`${endpoint}/generatedance`, data);
-
       const data = {
-        // projectID: "nataraj-35ppegl",
         projectID: projectID
-        // danceform: forms,
       };
       console.log(projectID);
       const response = await axios.post(`${endpoint}/generatedance`, data);

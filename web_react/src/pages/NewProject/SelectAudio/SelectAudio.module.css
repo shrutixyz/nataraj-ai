@@ -5,7 +5,6 @@
 
 .subtitle{
     font-size: 2rem;
-    /* margin-top: -2rem; */
 }
 
 .noprojectscontainer{
@@ -69,16 +68,11 @@
 }
 
 .mirtdiv{
-    /* width: 100vw; */
-    /* --mirt-playhead-width: 100vw */
     --mirt-height: 3rem;
     --mirt-playhead-width: 0.35rem;
     --mirt-button-width: 3rem;
     --mirt-background-color: transparent;
-    /* --mirt-playhead-width: 2rem */
-    /* --mirt-handle-width: 0.3rem; */
     --mirt-button-hover-color	: #FFBA09;
-    /* --mirt-width: 30rem */
 }
 
 .selected{
@@ -86,7 +80,6 @@
     width: 20rem;
     height: 3rem;
     border-radius: 0.5rem;
-    /* background-color: pink; */
     background-color: #2B2C2D;
     display: flex;
     align-items: center;
@@ -104,7 +97,6 @@
     width: 20rem;
     height: 3rem;
     border-radius: 0.5rem;
-    /* background-color: pink; */
     border: 2px solid #FFBA09;
     display: flex;
     align-items: center;
@@ -134,23 +126,6 @@
     gap: 2rem;
 }
 
-/* 
-.trimaudio{
-    background-color: pink;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}  */
-
-/* .mainbody{
-    background-color: pink;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-} */
-
 
 .navbuttons{
     position: fixed;
@@ -174,8 +149,6 @@
 .loader {
     width: 60px;
     height: 60px;
-    /* background-color: blue; */
-    /* border-radius: 50%; */
     animation: rotate 2s infinite linear;
   }
   

@@ -60,7 +60,6 @@ const Footer = () => {
 
   const handleSubmit = async () => {
     if (!isValidEmail(email) || text.length === 0) {
-      // alert("Please fill the email and text correctly");
       Swal.fire({
         title: "Please fill the email and text correctly",
         confirmButtonColor: "#FFBA09",

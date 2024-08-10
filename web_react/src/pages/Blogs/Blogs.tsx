@@ -14,7 +14,6 @@ const Blogs = () => {
 
   function formatDate(dateString: string): string {
     dateString = dateString.split(".")[0];
-    // Extract day, month, and year from the string
     const day = dateString.substring(0, 2);
     const month = dateString.substring(2, 4);
     const year = "20" + dateString.substring(4);
@@ -57,7 +56,6 @@ const Blogs = () => {
   return (
     <>
       <Nav />
-
       <div className={Styles.info}>
         <h1 className={Styles.title}>Blogs</h1>
         {loading ? (
@@ -73,7 +71,6 @@ const Blogs = () => {
           ))
         )}
       </div>
-
       <Footer />
     </>
   );

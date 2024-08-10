@@ -26,8 +26,6 @@
     display: grid;
     gap: 3vw;
     grid-template-columns: repeat(3, 1fr);
-    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px; */
 }
 
 .header{
@@ -49,8 +47,6 @@
 .loader {
     width: 60px;
     height: 60px;
-    /* background-color: blue; */
-    /* border-radius: 50%; */
     animation: rotate 2s infinite linear;
   }
   

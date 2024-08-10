@@ -53,7 +53,6 @@ const ProjectTile = (props: any) => {
         confirmButtonText: "okay",
       });
     }
-    // implement further code
   }
 
   const handleNavigation = () => {
@@ -86,7 +85,6 @@ const ProjectTile = (props: any) => {
         confirmButtonText: "okay",
       });
     }
-    // implement further code
   }
   return (
     <>

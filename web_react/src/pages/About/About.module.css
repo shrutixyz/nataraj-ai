@@ -1,158 +1,150 @@
-.title{
-    font-size: 8rem;
-    font-weight: 900;
+.title {
+  font-size: 8rem;
+  font-weight: 900;
 }
 
-.subtitle{
-    font-size: 1.5rem;
-    margin-top: -3rem;
-    width: 50vw;
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: -3rem;
+  width: 50vw;
 }
 
-.info{
-    min-height: 60vh;
+.info {
+  min-height: 60vh;
 }
 
-.heading{
-    margin-top: 4rem;
-    font-size: 1.3;
-    font-weight: bold;
+.heading {
+  margin-top: 4rem;
+  font-size: 1.3;
+  font-weight: bold;
 }
 
-.poctext{
-    opacity: 0.7;
-    width: 80vw;
-    font-size: 1.1rem;
-    line-height: 2rem;
-    margin-bottom: 10rem;
+.poctext {
+  opacity: 0.7;
+  width: 80vw;
+  font-size: 1.1rem;
+  line-height: 2rem;
+  margin-bottom: 10rem;
 }
 
-.faqs{
-    min-height: 60vh;
-    background-color: #D9D9D910;
-    margin-left: -1.5rem;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem;
+.faqs {
+  min-height: 60vh;
+  background-color: #d9d9d910;
+  margin-left: -1.5rem;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
 }
 
-.line{
-    height: 100%;
-    padding-top: 12rem;
-    padding-bottom: 12rem;
-    background-color: #ffffff30;
-    width: 2px;
+.line {
+  height: 100%;
+  padding-top: 12rem;
+  padding-bottom: 12rem;
+  background-color: #ffffff30;
+  width: 2px;
 }
 
-
-.faqtext{
-    width: 30vw;
-    /* height: 10rem; */
-    /* background-color: pink; */
+.faqtext {
+  width: 30vw;
 }
 
-.question{
-    font-size: 1.4rem;
+.question {
+  font-size: 1.4rem;
 }
 
-.answer{
-    margin-bottom: 3rem;
-    margin-top: -1rem;
+.answer {
+  margin-bottom: 3rem;
+  margin-top: -1rem;
 }
 
-.unsure{
-    height: 70vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+.unsure {
+  height: 70vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.unsureheading{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    
+.unsureheading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.linkparent{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem;
-    width: 100%;
+.linkparent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  width: 100%;
 }
 
-.link1{
-    height: 20rem;
-    width: 20rem;
-    border: 3px solid #8FB5FF;
-    background-color: transparent;
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    text-align: center;
-    color: #8FB5FF;
-    transition: 0.5s ease;
-    font-weight: bold;
-    cursor: pointer;
+.link1 {
+  height: 20rem;
+  width: 20rem;
+  border: 3px solid #8fb5ff;
+  background-color: transparent;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  text-align: center;
+  color: #8fb5ff;
+  transition: 0.5s ease;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.link1:hover{
-    background-color: #8FB5FF;
-    color: #18191A;
+.link1:hover {
+  background-color: #8fb5ff;
+  color: #18191a;
 }
 
-
-.link2{
-    height: 20rem;
-    width: 20rem;
-    border: 3px solid #C08FFF;
-    background-color: transparent;
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    text-align: center;
-    color: #C08FFF;
-    transition: 0.5s ease;
-    font-weight: bold;
-    cursor: pointer;
+.link2 {
+  height: 20rem;
+  width: 20rem;
+  border: 3px solid #c08fff;
+  background-color: transparent;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  text-align: center;
+  color: #c08fff;
+  transition: 0.5s ease;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.link2:hover{
-    background-color: #C08FFF;
-    color: #18191A;
+.link2:hover {
+  background-color: #c08fff;
+  color: #18191a;
 }
 
-
-.link3{
-    height: 20rem;
-    width: 20rem;
-    border: 3px solid #FFBA09;
-    background-color: transparent;
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    text-align: center;
-    color: #FFBA09;
-    transition: 0.5s ease;
-    font-weight: bold;
-    cursor: pointer;
+.link3 {
+  height: 20rem;
+  width: 20rem;
+  border: 3px solid #ffba09;
+  background-color: transparent;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  text-align: center;
+  color: #ffba09;
+  transition: 0.5s ease;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.link3:hover{
-    background-color: #FFBA09;
-    color: #18191A;
+.link3:hover {
+  background-color: #ffba09;
+  color: #18191a;
 }
-
-

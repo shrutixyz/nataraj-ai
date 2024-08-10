@@ -18,7 +18,6 @@ import feature5 from "../../assets/feature5.svg";
 import feature6 from "../../assets/feature6.svg";
 import model from "../../assets/modeldummy.png";
 
-
 const Landing = () => {
   const navigate = useNavigate();
   const [isHovered1, setIsHovered1] = useState(false);
@@ -48,7 +47,6 @@ const Landing = () => {
   };
   return (
     <>
-      {/* <Threed_model/> */}
       <Nav />
 
       <section className="hero-section">
@@ -81,9 +79,6 @@ const Landing = () => {
 
         <div className="right">
           <img src={model} className="right-model" alt="" />
-          {/* <img src={hero} alt="" /> */}
-          {/* <Model/> */}
-          {/* <Spline scene="https://prod.spline.design/P4FKku1EhgLcJEma/scene.splinecode" className="splineviewer" /> */}
         </div>
       </section>
 
@@ -109,8 +104,6 @@ const Landing = () => {
           </video>
         </div>
       </section>
-
-      
 
       <section className="hero-section3">
         <div className="herosection2title">

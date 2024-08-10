@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import Styles from "./AudioRND.module.css";
 import ReactAudioPlayer from "react-audio-player";
-import Mirt from 'react-mirt';
-import 'react-mirt/dist/css/react-mirt.css';
-
-
+import Mirt from "react-mirt";
+import "react-mirt/dist/css/react-mirt.css";
 
 const AudioRND = () => {
   const [isFFmpegLoaded, setIsFFmpegLoaded] = useState(false);
@@ -26,11 +24,7 @@ const AudioRND = () => {
     fileInputRef.current.click();
   };
 
-
-
-  const handleTrim = async () => {
-   
-  };
+  const handleTrim = async () => {};
 
   return (
     <>
@@ -70,7 +64,7 @@ const AudioRND = () => {
                 className={Styles.triminput}
                 onChange={(evt) => setEnd(evt.target.value)}
               />
-              
+
               <button onClick={handleTrim} className={Styles.button}>
                 Trim
               </button>
@@ -78,15 +72,18 @@ const AudioRND = () => {
           </div>
         )}
 
-<Mirt file={audioFile} style={{"width": "30rem"}} end={end*1000} start={start*1000} />
+        <Mirt
+          file={audioFile}
+          style={{ width: "30rem" }}
+          end={end * 1000}
+          start={start * 1000}
+        />
 
-        {
-          trimmedUrl&& (
-              <div>
-                  <h1>got audio</h1>
-              </div>
-          )
-        }
+        {trimmedUrl && (
+          <div>
+            <h1>got audio</h1>
+          </div>
+        )}
       </div>
     </>
   );

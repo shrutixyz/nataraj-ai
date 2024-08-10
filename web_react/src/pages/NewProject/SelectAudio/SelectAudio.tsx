@@ -257,8 +257,6 @@ const SelectAudio = () => {
             <br />
             <p className={Styles.step}>STEP 1: CHOOSE THE MUSIC</p>
             <div className={Styles.buttons}>
-              {/* <ButtonCustom title="SELECT FROM SPOTIFY" width="25" height="4" />
-            <p>OR</p> */}
               <ButtonCustom
                 title="UPLOAD FROM FILES"
                 width="25"
@@ -327,7 +325,6 @@ const SelectAudio = () => {
             <br />
             <Mirt
               file={audioFile}
-              // style={{ width: "30rem" }}
               start={start}
               end={end}
               onChange={(e)=>{setStart(e.start); setEnd(e.end); if((end-start)%30!=0){setCustom()}}}

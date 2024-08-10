@@ -27,12 +27,4 @@
 
 .player{
     width: 100rem;
-    /* height: 6rem; */
-    /* background-color: pink;
-    border-radius: 5rem; */
 }
-
-/* &::-webkit-media-controls-enclosure {
-    border-radius: 5px;
-    background-color: green;
-} */

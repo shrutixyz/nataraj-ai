@@ -12,7 +12,6 @@ import 'react-mirt/dist/css/react-mirt.css';
 const TrimAudio = () => {
   const navigate = useNavigate()
   const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
-  // const dispatch = useDispatch();
   const [audioUrl, setAudioURL] = useState("")
 
   useEffect(()=>{
@@ -33,23 +32,6 @@ const TrimAudio = () => {
       <>
         <h1>NOTE: using selectaudio instead</h1>
       </>
-        // <>
-        // <Nav/>
-        // <div className={Styles.mainbody}>
-        //   <p className={Styles.title}>DASHBOARD</p> 
-        //   <p className={Styles.subtitle}>Untitled Project</p>
-        //   <br />
-        //   <p className={Styles.step}>STEP 2: KEEP THE PART YOU WANT</p>
-
-          
-        //   <br /><br />
-        //   {/* <Mirt file={audioUrl} style={{"width": "30rem"}} end={end*1000} start={start*1000} /> */}
-        //   <div className={Styles.navbuttons}>
-        //   <ButtonCustom title="BACK" color="red" width="25" height="3" onClick={()=>navigate('/selectaudio')} />
-        //   <GradientButton title="NEXT" width="25" height="3" onClick={()=>navigate('/selectdanceform')} />
-        //   </div>
-        // </div>
-        // </>
     )
 }
 

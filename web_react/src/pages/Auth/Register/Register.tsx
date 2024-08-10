@@ -36,9 +36,9 @@ const Register = () => {
   }, [isLoggedIn]);
 
   const googleSignin = async () => {
-    setisLoading(true)
+    setisLoading(true);
     const res = await handleGoogleSignIn(endpoint);
-    setisLoading(false)
+    setisLoading(false);
     if (res !== null) {
       dispatch(login());
       navigate("/dashboard");
@@ -54,9 +54,9 @@ const Register = () => {
   };
 
   const githubSignin = async () => {
-    setisLoading(true)
+    setisLoading(true);
     const res = await handleGithubSignIn(endpoint);
-    setisLoading(false)
+    setisLoading(false);
     if (res !== null) {
       dispatch(login());
       navigate("/dashboard");

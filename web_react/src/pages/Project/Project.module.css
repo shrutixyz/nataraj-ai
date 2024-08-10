@@ -22,8 +22,6 @@
 .loader {
   width: 60px;
   height: 60px;
-  /* background-color: blue; */
-  /* border-radius: 50%; */
   animation: rotate 2s infinite linear;
 }
 
@@ -61,7 +59,6 @@
   align-items: center;
 }
 
-/*progress styling*/
 .ProgressBarInner {
   display: flex;
   align-items: center;
@@ -95,12 +92,15 @@
   right: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
 }
 
 .playStoreContainer p {
   line-height: 0.01;
   font-style: italic;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .playStoreContainer p, .playStoreContainer img {
@@ -113,4 +113,29 @@
   height: 4.5rem;
   cursor: pointer;
   /* height: 3rem; */
+}
+
+.currentlyrics{
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.lyricbox{
+  margin-top: 2rem;
+  height: 5rem;
+  width: 60vw;
+  background-color: #6A6A6A30;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.quote{
+  height: 2.5rem;
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
 }

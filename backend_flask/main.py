@@ -68,7 +68,7 @@ def contactus():
 
 
 @app.route('/fetchprojects/<uid>', methods=["GET"])
-@limiter.limit("60 per 60 minute")
+@limiter.limit("60 per 1 minute")
 def fetch_projects(uid):
   """fetches all the projects associated with a user and sends them as an array of JSON"""
   projects = get_project_ids_from_uid(uid)

@@ -54,11 +54,6 @@
     height: 20rem;
 }
 
-/* .basicdetails{
-    font-size: 1.5rem;
-    line-height: -10rem;
-} */
-
 
 
 .leftcopy{
@@ -82,8 +77,6 @@
 .loader {
     width: 60px;
     height: 60px;
-    /* background-color: blue; */
-    /* border-radius: 50%; */
     animation: rotate 2s infinite linear;
   }
   

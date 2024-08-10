@@ -15,12 +15,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
   const endpoint = useSelector((state: any) => state.backend.endpoint);
-  // const dispatch = useDispatch();
   const [projects, setProjects] = useState([
-    // { name: "Untitled Project1", private: false, duration: 30, id: "12345" },
-    // { name: "Untitled Project1", private: true, duration: 30 },
-    // { name: "Untitled Project1", private: true, duration: 30 },
-    // { name: "Untitled Project1", private: true, duration: 30 },
   ]);
   const [isLoading, setisLoading] = useState(true);
   const uid = auth.currentUser?.uid;
@@ -31,7 +26,6 @@ const Dashboard = () => {
       setProjects(res.data["projects"])
       setisLoading(false)
     } catch (error) {
-      // setisLoading(false)
       Swal.fire({
         title: "Error!",
         text: "Unexpected error occurred!",

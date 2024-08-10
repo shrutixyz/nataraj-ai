@@ -4,12 +4,10 @@ import GradientButton from "../../features/gradientbutton/GradientButton";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import Nav from "../../features/nav/Nav";
 
 const ConditionalAccess = () => {
   const navigate = useNavigate()
   const isLoggedIn = useSelector((state:any) => state.auth.isLoggedIn);
-  // const dispatch = useDispatch();
 
   useEffect(()=>{
     console.log(isLoggedIn)
