@@ -100,7 +100,7 @@ String pathh = "";
       // },
     ),
   )
-  ..loadRequest(Uri.parse('https://nataraj-ai.web.app/project/nataraj-q9y7tgo'));
+  ..loadRequest(Uri.parse('https://nataraj-ai.web.app/standalone/nataraj-q9y7tgo'));
   
   }
 

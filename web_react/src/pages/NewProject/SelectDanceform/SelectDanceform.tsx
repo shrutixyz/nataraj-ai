@@ -155,7 +155,7 @@ const SelectDanceform = () => {
             color="red"
             width="25"
             height="3"
-            onClick={() => navigate("/trimaudio")}
+            onClick={() => navigate("/selectaudio")}
           />
           <GradientButton
             title="NEXT"

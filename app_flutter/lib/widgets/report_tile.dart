@@ -62,13 +62,13 @@ class ReportTile extends StatelessWidget {
                         // Text("song")
                       ],
                     ),
-                    Text(
-                      "MATCH: ${report.matchRate}%",
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.pastelGreen),
-                    )
+                    // Text(
+                    //   "MATCH: ${report.matchRate}%",
+                    //   style: const TextStyle(
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: AppColors.pastelGreen),
+                    // )
                   ],
                 ),
               )

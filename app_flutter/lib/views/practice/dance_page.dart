@@ -9,6 +9,7 @@ import 'package:nataraj/controllers/api/shared_preferences_helper.dart';
 import 'package:nataraj/views/home/home_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class DancePage extends StatefulWidget {
   const DancePage({super.key, required this.project});
@@ -46,11 +47,9 @@ class _DancePageState extends State<DancePage> {
       await Permission.storage.request();
     }
   }
+  late WebViewController webviewcontroller;
 
-  @override
-  void initState() {
-    super.initState();
-    requestPermissions();
+  initDance(){
     setCameras().then((value) {
       controller = CameraController(value[0], ResolutionPreset.high, enableAudio: true);
       controller.initialize().then((_) {
@@ -63,6 +62,12 @@ class _DancePageState extends State<DancePage> {
         })
       });
     });
+  }
+  @override
+  void initState() {
+    super.initState();
+    requestPermissions();
+    
     
     // isCameraInitialized?:log("not init");
     // startRecording();
@@ -71,7 +76,46 @@ class _DancePageState extends State<DancePage> {
       stopRecording();
     });
    
+     webviewcontroller = WebViewController()
+  ..setJavaScriptMode(JavaScriptMode.unrestricted)
+  ..setBackgroundColor(const Color(0x00000000))
+  ..enableZoom(true)
+  ..setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
+  ..setOnConsoleMessage((message) {
+    if(message.message.contains("resuming")){
+      log("starting dance now");
+        initDance();
+    }
+  })
+  // ..setOnConsoleMessage((message) { 
+  //   if(message.message.contains("started")){
+
+  //   }
+  // })
+  ..setNavigationDelegate(
+    NavigationDelegate(
+      onProgress: (int progress) {
+        // Update loading bar.
+      },
+      onPageStarted: (String url) {},
+      onPageFinished: (String url) {},
+      onHttpError: (HttpResponseError error) {},
+      onWebResourceError: (WebResourceError error) {},
+      // onNavigationRequest: (NavigationRequest request) {
+      //   if (request.url.startsWith('https://www.youtube.com/')) {
+      //     return NavigationDecision.prevent;
+      //   }
+      //   return NavigationDecision.navigate;
+      // },
+    ),
+  )
+  ..loadRequest(Uri.parse('https://nataraj-ai.web.app/standalone/nataraj-q9y7tgo'));
+  
+
   }
+
+
+
 
   Future<List<CameraDescription>> setCameras() async {
     var camera = await availableCameras();
@@ -209,6 +253,7 @@ Future<void> saveFileToExternalStorage(String cacheFilePath, String externalStor
                Container(width: 0.40*w,
                height: (1/controller.value.aspectRatio)*0.4*w,
                color: Colors.black,
+               child:  WebViewWidget(controller: webviewcontroller,),
                ),
             ],)
           : Center(child: CircularProgressIndicator()),

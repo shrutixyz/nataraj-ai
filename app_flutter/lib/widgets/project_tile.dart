@@ -33,7 +33,7 @@ class ProjectTile extends StatelessWidget {
                         data["projectName"],
                         style: const TextStyle(fontSize: 15.0),
                       ),
-                      Text("Duration: ${data["duration"]}s")
+                      Text("Duration: ${data["duration"].toString().substring(0, 4)}s")
                     ],
                   ),
                   CustomGradientBorderButton(

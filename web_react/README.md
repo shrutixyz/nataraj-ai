@@ -9,7 +9,6 @@ This directory contains the React frontend and Firebase serverless code for the 
 - `src/assets`: Contains all the assets like images, icons, and stylesheets.
 - `src/utils`: This is where you need to add your Firebase configuration file (`firebase-config.js`) to get the project running locally.
 - `src/store`: Contains the Redux setup for state management.
-- `src/hooks`: Contains custom hooks used throughout the application.
 
 ## Prerequisites
 

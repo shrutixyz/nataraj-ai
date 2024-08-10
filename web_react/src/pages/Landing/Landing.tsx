@@ -97,7 +97,7 @@ const Landing = () => {
         <div className="svganimation">
           <video autoPlay loop muted style={{ width: "100%", height: "100%" }}>
             <source
-              src="https://firebasestorage.googleapis.com/v0/b/nataraj-ai.appspot.com/o/landing.mp4?alt=media&token=8d660569-593d-45d4-abc8-89d060a1eab6"
+              src="https://firebasestorage.googleapis.com/v0/b/nataraj-ai.appspot.com/o/landing.mp4?alt=media&token=8e888f8c-3038-46f8-afbe-20e8f85509a1"
               type="video/mp4"
             />
             Your browser does not support the video tag.

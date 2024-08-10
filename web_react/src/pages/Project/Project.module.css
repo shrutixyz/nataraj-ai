@@ -99,7 +99,7 @@
 .playStoreContainer p {
   line-height: 0.01;
   font-style: italic;
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-align: center;
 }
 
@@ -109,8 +109,8 @@
 }
 
 .googleplayimg{
-  width: 15rem;
-  height: 4.5rem;
+  width: 10rem;
+  height: auto;
   cursor: pointer;
   /* height: 3rem; */
 }
@@ -118,7 +118,10 @@
 .currentlyrics{
   font-style: italic;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+  padding-left: 4rem;
+  padding-right: 4rem;
 }
 
 .lyricbox{

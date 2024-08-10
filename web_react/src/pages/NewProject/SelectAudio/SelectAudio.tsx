@@ -32,6 +32,7 @@ const SelectAudio = () => {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
   const endpoint = useSelector((state: any) => state.backend.endpoint);
+  const checkpoint = useSelector((state: any) => state.project.checkpoint);
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [audioUrl, setAudioURL] = useState("");
   const [filename, setFilename] = useState("");
@@ -40,10 +41,11 @@ const SelectAudio = () => {
   const [end, setEnd] = useState(30);
   const [editing, setEditing] = useState(false);
   const [back, setBack] = useState(true);
-  const [selected, changeSelected] = useState(0);
+  const [selected, changeSelected] = useState(2);
   const dispatch = useDispatch();
   const [projectName, setProjectName] = useState("");
   const [isLoading, setisLoading] = useState(false);
+  const [point, setpoint] = useState(1);
   const [randThumbnail, setRandThumbnail] = useState<string | undefined>(
     undefined
   );
@@ -91,7 +93,6 @@ const SelectAudio = () => {
   };
 
   const handleFileUpload = (evt: any) => {
-   
     console.log(evt);
     const file = evt.target.files[0];
     setAudioFile(file);
@@ -141,7 +142,9 @@ const SelectAudio = () => {
         );
         formdata.append("title", audioFile.name);
         formdata.append("projectName", projectName);
-        setisLoading(true);
+        // setisLoading(true);
+        setpoint(0);
+        // setpoint(0);
         const response = await axios.post(
           `${endpoint}/createproject`,
           formdata
@@ -337,6 +340,14 @@ const SelectAudio = () => {
             </div>
           )}
         </div>
+      ) : isLoading ? (
+        <>
+        <Nav />
+        <div className={Styles.loading}>
+          <img src={loader} className={Styles.loader} alt="" />
+          <p>setting audio...</p>
+        </div>
+        </>
       ) : (
         <div className={Styles.trimaudio}>
           <Nav />
@@ -401,13 +412,20 @@ const SelectAudio = () => {
                 height="3"
                 onClick={() => setBack(true)}
               />
-              <GradientButton
-                title="NEXT"
-                width="25"
-                height="3"
-                fontsize="1"
-                onClick={() => handleSubmit()}
-              />
+              {isLoading ? (
+                <div></div>
+              ) : (
+                <GradientButton
+                  title="NEXT"
+                  width="25"
+                  height="3"
+                  fontsize="1"
+                  onClick={() => {
+                    handleSubmit();
+                    setisLoading(true);
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>

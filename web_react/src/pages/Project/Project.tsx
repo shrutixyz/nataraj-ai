@@ -130,9 +130,9 @@ function Project() {
     try {
       const res = await axios.get(`${endpoint}/fetchproject/${projectId}`);
       setProject(res.data["project"]);
-
+      const uidd = await auth.currentUser?.uid;
       if (res.data["project"]["visibility"] === "private") {
-        const valid = res.data["project"]["owner"] === uid;
+        const valid = res.data["project"]["owner"] === uidd;
         if (!valid) {
           Swal.fire({
             title: "Error!",
@@ -225,7 +225,7 @@ function Project() {
               unityProvider={unityProvider}
               style={{
                 width: "80vw",
-                height: "60vh",
+                height: "50vh",
               }}
             />
           </div>
