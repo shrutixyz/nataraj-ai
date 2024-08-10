@@ -9,6 +9,7 @@ import { auth } from "../../utils/firebase";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import loader from "../../assets/loader.svg";
+import { timeStamp } from "console";
 
 function Project() {
   const { unityProvider, sendMessage, isLoaded } = useUnityContext({
@@ -35,15 +36,25 @@ function Project() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setduration] = useState(0);
   const [widthProgressBar, setwidthProgressBar] = useState(0.0);
+  const [isEnded, setIsEnded] = useState(false);
+
+  const [stepSequence, setstepSequence] = useState("1_2_3_4");
 
   useEffect(function () {
-    if (isLoaded)
+    if (isLoaded && !isAPILoading)
     {
       console.log("unity", isLoaded);
       sendStepSequence();
       setisUnityLoaded(isLoaded);
     }  
   }, [isLoaded]);
+
+  useEffect(function() {
+    if (isEnded){
+      console.log("ended");
+      handleReset(false);
+    }
+  }, [isEnded])
 
   const [project, setProject] = useState({
       "avatar": "",
@@ -91,14 +102,30 @@ function Project() {
     }
   }
 
-  const handleReset = () => {
+  const handleReset = (startPlaying: boolean) => {
+    console.log("inside reset");
     if (audio)
     {
-      const playState = 2;
-      setisPlaying(true);
-      audio.currentTime = 0;
-      audio.play()
-      sendMessage("Michelle@Idle", "ControlPlayState", playState);
+      if (startPlaying)
+      {
+        const playState = 2;
+        setisPlaying(true);
+        audio.currentTime = 0;
+        audio.play()
+        sendMessage("Michelle@Idle", "ControlPlayState", playState);
+      }
+      else
+      {
+        setisPlaying(false);
+        audio.currentTime = 0;
+        audio.pause();
+        sendMessage("Michelle@Idle", "ControlPlayState", 2);
+        sendMessage("Michelle@Idle", "ControlPlayState", 0);
+      }
+
+      // reset lyrics sync
+      setnextTimeStamp(timeStampList[1]);
+      setcurrentLyrics(lyricsList[0]);
     }  
 
   }
@@ -136,32 +163,36 @@ function Project() {
   
       // populate lyrics list
       const lyrics: string[] = Object.keys(lyricsJSON).map(e => lyricsJSON[e].lyrics);
+      const stepsList: Float32List = Object.keys(lyricsJSON).map(e => lyricsJSON[e].steps);
+
+      
       settimeStampList(timeStamp);
       setLyricsList(lyrics);
       setnextTimeStamp(timeStamp[1]);
       setcurrentLyrics(lyrics[0]);
+      setstepSequence(stepsList.join("_"));
     }
   }
 
   const fetchProject = async () => {
     try {
-      // const res = await axios.get(`${endpoint}/fetchproject/${projectId}`);
-      const proj = {
-        "avatar": "",
-        "choreography": "```json\n{\n  \"0.00\": {\"lyrics\": \"We could leave the Christmas lights up till January\", \"step\": \"Step right, step left, arms out to the side\"},\n  \"4.33\": {\"lyrics\": \"This is our place, we made the rules\", \"step\": \"Arms up, clap, clap, step right\"},\n  \"8.75\": {\"lyrics\": \"And there's a dazzling haze, a recent\", \"step\": \"Spin, point right, point left\"}\n}\n```",
-        "danceform": "Freestyle, ",
-        "duration": 16.966,
-        "loading": 0,
-        "owner": "CPJ1kLB2Bud9CQWMcepUVnH84xE2",
-        "projectID": "7io40rh",
-        "projectName": "luminous orangutan",
-        "song": "https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-7io40rh.mp3",
-        "state": 2,
-        "title": "Taylor Swift - Lover (Lyrics).mp3",
-        "visibility": "private"
-    }
-    setProject(proj)
-      // setProject(res.data["project"])
+      const res = await axios.get(`${endpoint}/fetchproject/${projectId}`);
+      // const proj = {
+      //   "avatar": "",
+      //   "choreography": "```json\n{\n  \"0.00\": {\n    \"steps\": \"18\",\n    \"lyrics\": \"Cuz the players gonna play play play play play and the haters gonna hate hate hate hate hate baby\"\n  },\n  \"2.25\": {\n    \"steps\": \"1\",\n    \"lyrics\": \"I'm just gonna shake shake shake shake shake Shake it off shake it off\"\n  },\n  \"5.10\": {\n    \"steps\": \"16\",\n    \"lyrics\": \"Heartbreak is gonna break break break break break and my big tears gonna fake fake fake fake fake baby I'm just gonna shake shake shake shake shake shake it off shake it off\"\n  },\n  \"7.00\": {\n    \"steps\": \"14\",\n    \"lyrics\": \"I never miss a beat\"\n  }\n}\n```",
+      //   "danceform": "Freestyle, ",
+      //   "duration": 25.842999999999996,
+      //   "loading": 0,
+      //   "owner": "CPJ1kLB2Bud9CQWMcepUVnH84xE2",
+      //   "projectID": "ksvf4un",
+      //   "projectName": "astonishing warrior",
+      //   "song": "https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-ksvf4un.mp3",
+      //   "state": 2,
+      //   "title": "Taylor Swift - Shake It Off (Taylor's Version) (Lyric Video).mp3",
+      //   "visibility": "private"
+      // }
+    // setProject(proj)
+    setProject(res.data["project"])
       
     } catch (error) {
       Swal.fire({
@@ -188,9 +219,14 @@ function Project() {
         setduration(tempAudio.duration);
       };
 
+      const handleEnded = () => {
+        setIsEnded(true);
+      };
+
       // attach event listener
       tempAudio.addEventListener('timeupdate', updateCurrentTime);
       tempAudio.addEventListener('loadedmetadata', updateDuration);
+      tempAudio.addEventListener('ended', handleEnded);
 
       // Cleanup event listener and pause audio when component unmounts or URL changes
       return () => {
@@ -241,7 +277,7 @@ function Project() {
 
   function sendStepSequence()
   {
-    sendMessage("Michelle@Idle", "SetStepSequence", "1_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19_20");
+    sendMessage("Michelle@Idle", "SetStepSequence", stepSequence);
   }
 
   return <>
@@ -260,7 +296,7 @@ function Project() {
         />
     </div>
     <button disabled={!isUnityLoaded} onClick={handlePlayPause}>Play/Pause</button>
-    <button disabled={!isUnityLoaded} onClick={handleReset}>Reset</button>
+    <button disabled={!isUnityLoaded} onClick={() => handleReset(true)}>Reset</button>
     <div className={Styles.ProgressBarContainer}>
       <div className={Styles.ProgressBar}></div>
       <p>{widthProgressBar}</p>
