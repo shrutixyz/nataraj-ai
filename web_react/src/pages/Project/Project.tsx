@@ -10,6 +10,10 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import loader from "../../assets/loader.svg";
 import { timeStamp } from "console";
+import playIcon from '../../assets/play.svg';
+import pauseIcon from '../../assets/pause.svg';
+import resetIcon from '../../assets/reset.svg';
+
 
 function Project() {
   const { unityProvider, sendMessage, isLoaded } = useUnityContext({
@@ -176,23 +180,23 @@ function Project() {
 
   const fetchProject = async () => {
     try {
-      const res = await axios.get(`${endpoint}/fetchproject/${projectId}`);
-      // const proj = {
-      //   "avatar": "",
-      //   "choreography": "```json\n{\n  \"0.00\": {\n    \"steps\": \"18\",\n    \"lyrics\": \"Cuz the players gonna play play play play play and the haters gonna hate hate hate hate hate baby\"\n  },\n  \"2.25\": {\n    \"steps\": \"1\",\n    \"lyrics\": \"I'm just gonna shake shake shake shake shake Shake it off shake it off\"\n  },\n  \"5.10\": {\n    \"steps\": \"16\",\n    \"lyrics\": \"Heartbreak is gonna break break break break break and my big tears gonna fake fake fake fake fake baby I'm just gonna shake shake shake shake shake shake it off shake it off\"\n  },\n  \"7.00\": {\n    \"steps\": \"14\",\n    \"lyrics\": \"I never miss a beat\"\n  }\n}\n```",
-      //   "danceform": "Freestyle, ",
-      //   "duration": 25.842999999999996,
-      //   "loading": 0,
-      //   "owner": "CPJ1kLB2Bud9CQWMcepUVnH84xE2",
-      //   "projectID": "ksvf4un",
-      //   "projectName": "astonishing warrior",
-      //   "song": "https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-ksvf4un.mp3",
-      //   "state": 2,
-      //   "title": "Taylor Swift - Shake It Off (Taylor's Version) (Lyric Video).mp3",
-      //   "visibility": "private"
-      // }
-    // setProject(proj)
-    setProject(res.data["project"])
+      // const res = await axios.get(`${endpoint}/fetchproject/${projectId}`);
+      const proj = {
+        "avatar": "",
+        "choreography": "```json\n{\n  \"0.00\": {\n    \"steps\": \"18\",\n    \"lyrics\": \"Cuz the players gonna play play play play play and the haters gonna hate hate hate hate hate baby\"\n  },\n  \"2.25\": {\n    \"steps\": \"1\",\n    \"lyrics\": \"I'm just gonna shake shake shake shake shake Shake it off shake it off\"\n  },\n  \"5.10\": {\n    \"steps\": \"16\",\n    \"lyrics\": \"Heartbreak is gonna break break break break break and my big tears gonna fake fake fake fake fake baby I'm just gonna shake shake shake shake shake shake it off shake it off\"\n  },\n  \"7.00\": {\n    \"steps\": \"14\",\n    \"lyrics\": \"I never miss a beat\"\n  }\n}\n```",
+        "danceform": "Freestyle, ",
+        "duration": 25.842999999999996,
+        "loading": 0,
+        "owner": "CPJ1kLB2Bud9CQWMcepUVnH84xE2",
+        "projectID": "ksvf4un",
+        "projectName": "astonishing warrior",
+        "song": "https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-ksvf4un.mp3",
+        "state": 2,
+        "title": "Taylor Swift - Shake It Off (Taylor's Version) (Lyric Video).mp3",
+        "visibility": "private"
+      }
+    setProject(proj)
+    // setProject(res.data["project"])
       
     } catch (error) {
       Swal.fire({
@@ -295,16 +299,27 @@ function Project() {
             }}
         />
     </div>
-    <button disabled={!isUnityLoaded} onClick={handlePlayPause}>Play/Pause</button>
-    <button disabled={!isUnityLoaded} onClick={() => handleReset(true)}>Reset</button>
-    <div className={Styles.ProgressBarContainer}>
-      <div className={Styles.ProgressBar}></div>
-      <p>{widthProgressBar}</p>
-      <div className={Styles.ProgressBarInner}  style={{width: `${widthProgressBar}%`}}></div>
+    <br />
+    <div className={Styles.bottomContainer}>
+      <div className={Styles.ProgressBarContainer}>
+        <div className={Styles.ProgressBar}></div>
+        <div className={Styles.ProgressBarInner}  style={{width: `${widthProgressBar}%`}}></div>
+        <br />
+        <div className={Styles.buttonsContainer}>
+          {isPlaying ?
+            <button className={Styles.playPauseBtn} disabled={!isUnityLoaded}>
+              <img  className="pauseBtn" onClick={handlePlayPause} src={pauseIcon} alt="" /> :
+            </button>:
+            <button className={Styles.playPauseBtn} disabled={!isUnityLoaded}>
+              <img  className="playBtn" onClick={handlePlayPause} src={playIcon} alt="" /> :
+            </button>}
+            <button disabled={!isUnityLoaded} className={Styles.playPauseBtn}>
+              <img src={resetIcon} onClick={() => handleReset(true)} alt="" />
+            </button>
+        </div>
+      </div>
+      <p>{currentLyrics}</p>
     </div>
-    
-
-    <p>{currentLyrics}</p>
 
     </div>}
   </>
