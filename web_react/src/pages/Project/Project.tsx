@@ -55,10 +55,14 @@ function Project() {
 
   useEffect(function() {
     if (isEnded){
-      console.log("ended");
       handleReset(false);
-    }
+      setisReset(true);
+    } 
   }, [isEnded])
+
+  useEffect(function() {
+    console.log("currentLyrics: ", currentLyrics);
+  }, [currentLyrics])
 
   const [project, setProject] = useState({
       "avatar": "",
@@ -78,7 +82,8 @@ function Project() {
 
   
   const handleTimeUpdate =  () => {
-    if ((currentTime> nextTimeStamp))
+    console.log("onreset", currentTime, nextTimeStamp)
+    if ((currentTime> nextTimeStamp && currentTime != 0))
     {
       console.log("time:", currentTime, nextTimeStamp, currentTime> nextTimeStamp)
       const idx = timeStampList.indexOf(nextTimeStamp);
@@ -108,6 +113,11 @@ function Project() {
 
   const handleReset = (startPlaying: boolean) => {
     console.log("inside reset");
+    // reset lyrics sync
+    console.log("reset lyrics", timeStampList[1], lyricsList[0]);
+    setnextTimeStamp(timeStampList[1]);
+    setcurrentLyrics(lyricsList[0]);
+    setIsEnded(false);
     if (audio)
     {
       if (startPlaying)
@@ -120,16 +130,13 @@ function Project() {
       }
       else
       {
+        const playState = 3;
         setisPlaying(false);
         audio.currentTime = 0;
         audio.pause();
-        sendMessage("Michelle@Idle", "ControlPlayState", 2);
-        sendMessage("Michelle@Idle", "ControlPlayState", 0);
+        sendMessage("Michelle@Idle", "ControlPlayState", playState);
       }
 
-      // reset lyrics sync
-      setnextTimeStamp(timeStampList[1]);
-      setcurrentLyrics(lyricsList[0]);
     }  
 
   }
@@ -180,23 +187,23 @@ function Project() {
 
   const fetchProject = async () => {
     try {
-      // const res = await axios.get(`${endpoint}/fetchproject/${projectId}`);
-      const proj = {
-        "avatar": "",
-        "choreography": "```json\n{\n  \"0.00\": {\n    \"steps\": \"18\",\n    \"lyrics\": \"Cuz the players gonna play play play play play and the haters gonna hate hate hate hate hate baby\"\n  },\n  \"2.25\": {\n    \"steps\": \"1\",\n    \"lyrics\": \"I'm just gonna shake shake shake shake shake Shake it off shake it off\"\n  },\n  \"5.10\": {\n    \"steps\": \"16\",\n    \"lyrics\": \"Heartbreak is gonna break break break break break and my big tears gonna fake fake fake fake fake baby I'm just gonna shake shake shake shake shake shake it off shake it off\"\n  },\n  \"7.00\": {\n    \"steps\": \"14\",\n    \"lyrics\": \"I never miss a beat\"\n  }\n}\n```",
-        "danceform": "Freestyle, ",
-        "duration": 25.842999999999996,
-        "loading": 0,
-        "owner": "CPJ1kLB2Bud9CQWMcepUVnH84xE2",
-        "projectID": "ksvf4un",
-        "projectName": "astonishing warrior",
-        "song": "https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-ksvf4un.mp3",
-        "state": 2,
-        "title": "Taylor Swift - Shake It Off (Taylor's Version) (Lyric Video).mp3",
-        "visibility": "private"
-      }
-    setProject(proj)
-    // setProject(res.data["project"])
+      const res = await axios.get(`${endpoint}/fetchproject/${projectId}`);
+    //   const proj = {
+    //     "avatar": "",
+    //     "choreography": "```json\n{\n  \"0.00\": {\n    \"steps\": \"18\",\n    \"lyrics\": \"Cuz the players gonna play play play play play and the haters gonna hate hate hate hate hate baby\"\n  },\n  \"2.25\": {\n    \"steps\": \"1\",\n    \"lyrics\": \"I'm just gonna shake shake shake shake shake Shake it off shake it off\"\n  },\n  \"5.10\": {\n    \"steps\": \"16\",\n    \"lyrics\": \"Heartbreak is gonna break break break break break and my big tears gonna fake fake fake fake fake baby I'm just gonna shake shake shake shake shake shake it off shake it off\"\n  },\n  \"7.00\": {\n    \"steps\": \"14\",\n    \"lyrics\": \"I never miss a beat\"\n  }\n}\n```",
+    //     "danceform": "Freestyle, ",
+    //     "duration": 25.842999999999996,
+    //     "loading": 0,
+    //     "owner": "CPJ1kLB2Bud9CQWMcepUVnH84xE2",
+    //     "projectID": "ksvf4un",
+    //     "projectName": "astonishing warrior",
+    //     "song": "https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-ksvf4un.mp3",
+    //     "state": 2,
+    //     "title": "Taylor Swift - Shake It Off (Taylor's Version) (Lyric Video).mp3",
+    //     "visibility": "private"
+    //   }
+    // setProject(proj)
+    setProject(res.data["project"])
       
     } catch (error) {
       Swal.fire({
@@ -253,6 +260,11 @@ function Project() {
 
   useEffect(() => {
     handleTimeUpdate();
+    if (currentTime == 0)
+    {
+      setcurrentLyrics(lyricsList[0]);
+      setnextTimeStamp(timeStampList[1]);
+    }
   }, [currentTime]);
 
   function handlePlayPause()

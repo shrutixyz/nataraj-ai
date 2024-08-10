@@ -16,8 +16,6 @@ import feature3 from "../../assets/feature3.svg";
 import feature4 from "../../assets/feature4.svg";
 import feature5 from "../../assets/feature5.svg";
 import feature6 from "../../assets/feature6.svg";
-import Model from "../../assets/Scene";
-import Spline from '@splinetool/react-spline';
 import model from "../../assets/modeldummy.png";
 
 
