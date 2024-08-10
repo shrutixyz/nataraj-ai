@@ -13,7 +13,7 @@ import { timeStamp } from "console";
 import playIcon from '../../assets/play.svg';
 import pauseIcon from '../../assets/pause.svg';
 import resetIcon from '../../assets/reset.svg';
-
+import googleplay from "../../assets/googleplay.png";
 
 function Project() {
   const { unityProvider, sendMessage, isLoaded } = useUnityContext({
@@ -307,7 +307,7 @@ function Project() {
     <div className={Styles.container}>
         <Unity unityProvider={unityProvider} style={{
             width: '50vw',
-            height: '50vh',
+            height: '40vh',
             }}
         />
     </div>
@@ -332,6 +332,7 @@ function Project() {
       </div>
       <p>{currentLyrics}</p>
     </div>
+            className={Styles.googleplayimg} />
 
     </div>}
   </>
