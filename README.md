@@ -1,7 +1,11 @@
 ## Nataraj AI
 Nataraj is an Artificial Intelligence powered dance choreographer, in 3D!
-Live at https://nataraj-ai.web.app
+
+Web application live at https://nataraj-ai.web.app
+
 API live at https://singular-node-429217-j4.uc.r.appspot.com/
+
+Mobile application live at https://play.google.com/store/apps/details?id=co.zanie.nataraj
 
 ## App description
 As a dancer or enthusiast, have you ever found yourself out of ideas for new choreography? Say no more! With AI, the possibilities of creativity are endless. We proudly present Nataraj AI, a platform to revolutionize dance creativity.
