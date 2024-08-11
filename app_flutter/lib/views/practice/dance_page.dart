@@ -8,6 +8,7 @@ import 'package:nataraj/controllers/api/shared_preferences_helper.dart';
 import 'package:nataraj/utils/colors.dart';
 import 'package:nataraj/views/home/home_page.dart';
 import 'package:nataraj/views/practice/helper/pose_estimation_helper.dart';
+import 'package:nataraj/views/practice/models/body_part.dart';
 import 'package:nataraj/views/practice/models/person.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -21,14 +22,17 @@ class DancePage extends StatefulWidget {
   State<DancePage> createState() => _DancePageState();
 }
 
-class _DancePageState extends State<DancePage> {
+class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
   var score = 0.0;
   final player = AudioPlayer();
-  late CameraController controller;
-  List<CameraDescription> cameras = [];
-  bool isRecording = false;
+  List<CameraDescription> _cameras = [];
+  CameraController? _cameraController;
+  bool _isProcessing = false;
+  Person? _person;
+  late PoseEstimationHelper _poseEstimationHelper;
+  late CameraDescription _cameraDescription;
+    bool isRecording = false;
   late String videoPath;
-  bool isCameraInitialized = false;
 
   Future<void> playAudio() async {
     await player.play(UrlSource(
@@ -37,37 +41,54 @@ class _DancePageState extends State<DancePage> {
 
   late WebViewController webviewcontroller;
 
-  bool _isProcessing = false;
-  Person? _person;
-  late PoseEstimationHelper _poseEstimationHelper;
-
   _initHelper() async {
+    _initCamera();
     _poseEstimationHelper = PoseEstimationHelper();
     await _poseEstimationHelper.initHelper();
   }
 
-  initDance() async {
-    await _initHelper();
-    setCameras().then((value) {
-      controller =
-          CameraController(value[0], ResolutionPreset.high, enableAudio: true);
-      controller.initialize().then((value) {
-        controller.startImageStream(_imageAnalysis);
-        if (mounted) {
-          setState(() {});
-        }
-        setState(() {
-          isCameraInitialized = true;
-        });
-      }).then((value) => {
-            playAudio().then((value) => {startRecording()})
-          });
+  _initCamera() {
+    _cameraDescription = _cameras.firstWhere(
+        (element) => element.lensDirection == CameraLensDirection.back);
+    _cameraController = CameraController(
+        _cameraDescription, ResolutionPreset.low,
+        enableAudio: false,
+        imageFormatGroup: Platform.isIOS
+            ? ImageFormatGroup.bgra8888
+            : ImageFormatGroup.yuv420);
+    _cameraController!.initialize().then((value) {
+      _cameraController!.startImageStream(_imageAnalysis);
+      if (mounted) {
+        setState(() {});
+      }
     });
+  }
+
+  initDance() async {
+    // await _initHelper();
+    await playAudio();
+    await startRecording();
+    // setCameras().then((value) {
+    //   _cameraController =
+    //       CameraController(value[0], ResolutionPreset.high, enableAudio: true);
+    //   _cameraController!.initialize().then((value) {
+    //     _cameraController!.startImageStream(_imageAnalysis);
+    //     if (mounted) {
+    //       setState(() {});
+    //     }
+    //   }).then((value) => {
+    //         playAudio().then((value) => {startRecording()})
+    //       });
+    // });
   }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await setCameras();
+      await _initHelper();
+    });
     player.onPlayerComplete.listen((event) {
       log("player is done playing");
       stopRecording();
@@ -97,24 +118,25 @@ class _DancePageState extends State<DancePage> {
         ),
       )
       ..loadRequest(
-          Uri.parse('https://nataraj-ai.web.app/standalone/${widget.project["projectID"]}'));
+          Uri.parse('https://nataraj-ai.web.app/standalone/nataraj-${widget.project["projectID"]}'));
   }
 
   Future<List<CameraDescription>> setCameras() async {
     var camera = await availableCameras();
     setState(() {
-      cameras = camera;
+      _cameras = camera;
     });
     log(camera.toString());
     return camera;
   }
 
   Future<void> startRecording() async {
-    if (!controller.value.isInitialized) {
+   
+    if (!_cameraController!.value.isInitialized) {
       return;
     }
 
-    if (controller.value.isRecordingVideo) {
+    if (_cameraController!.value.isRecordingVideo) {
       return;
     }
 
@@ -123,7 +145,7 @@ class _DancePageState extends State<DancePage> {
       log("directory is: $directory");
       videoPath =
           '${directory!.path}/${DateTime.now().millisecondsSinceEpoch}.mp4';
-      await controller.startVideoRecording();
+      await _cameraController!.startVideoRecording();
       setState(() {
         isRecording = true;
       });
@@ -158,24 +180,24 @@ class _DancePageState extends State<DancePage> {
     if (_isProcessing) {
       return;
     }
-    _isProcessing = true;
+      _isProcessing = true;
     final persons = await _poseEstimationHelper.estimatePoses(cameraImage);
-    _isProcessing = false;
+      _isProcessing = false;
     if (mounted) {
       setState(() {
+        score = persons.score;
         _person = persons;
-        score = _person!.score;
       });
     }
   }
 
   Future<void> stopRecording() async {
-    if (!controller.value.isRecordingVideo) {
+    if (!_cameraController!.value.isRecordingVideo) {
       log("not playingg");
       return;
     }
     try {
-      var file = await controller.stopVideoRecording();
+      var file = await _cameraController!.stopVideoRecording();
       log(file.path);
       await file.saveTo(videoPath);
       setState(() {
@@ -208,20 +230,21 @@ class _DancePageState extends State<DancePage> {
 
   @override
   void dispose() {
-    controller.dispose();
+    _cameraController!.dispose();
     _poseEstimationHelper.close();
     player.dispose();
     super.dispose();
   }
 
+  @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.paused:
-        controller.stopImageStream();
+        _cameraController!.stopImageStream();
         break;
       case AppLifecycleState.resumed:
-        if (!controller.value.isStreamingImages) {
-          await controller.startImageStream(_imageAnalysis);
+        if (!_cameraController!.value.isStreamingImages) {
+          await _cameraController!.startImageStream(_imageAnalysis);
         }
         break;
       default:
@@ -231,7 +254,10 @@ class _DancePageState extends State<DancePage> {
   Widget resultWidget(context) {
     return Stack(
       children: [
-        CameraPreview(controller),
+        CameraPreview(_cameraController!),
+        _person!=null?CustomPaint(
+                painter: OverlayView(scale: 1)..updatePerson(_person!),
+              ):Container(),
       ],
     );
   }
@@ -243,19 +269,19 @@ class _DancePageState extends State<DancePage> {
       SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     });
     return Scaffold(
-      body: isCameraInitialized
+      body: _cameraController!=null && isRecording==true
           ? Stack(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
+                   Container(
                       width: 0.40 * w,
-                      child: AspectRatio(
-                        aspectRatio: controller.value.aspectRatio,
-                        child: resultWidget(context),
-                      ),
+                      // height: (1 / _cameraController!.value.aspectRatio) * 0.4 * w,
+                      height: 200,
+                      color: Colors.black,
+                      child: resultWidget(context),
                     ),
                     const VerticalDivider(
                       width: 1,
@@ -263,7 +289,8 @@ class _DancePageState extends State<DancePage> {
                     ),
                     Container(
                       width: 0.40 * w,
-                      height: (1 / controller.value.aspectRatio) * 0.4 * w,
+                      // height: (1 / _cameraController!.value.aspectRatio) * 0.4 * w,
+                      height: 200,
                       color: Colors.black,
                       child: WebViewWidget(
                         controller: webviewcontroller,
@@ -276,7 +303,7 @@ class _DancePageState extends State<DancePage> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Posenet Score: ${(score * 1000).round() / 10}%",
+                      "Posenet Score: ${(_person!.score*100).toStringAsFixed(2) }",
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),
@@ -306,5 +333,77 @@ class _DancePageState extends State<DancePage> {
               ],
             )),
     );
+  }
+}
+
+
+
+class OverlayView extends CustomPainter {
+  OverlayView({required double scale}) : _scale = scale;
+  static const _minConfidence = 0.2;
+  static const _bodyJoints = [
+    [BodyPart.nose, BodyPart.leftEye],
+    [BodyPart.nose, BodyPart.rightEye],
+    [BodyPart.leftEye, BodyPart.leftEar],
+    [BodyPart.rightEye, BodyPart.rightEar],
+    [BodyPart.nose, BodyPart.leftShoulder],
+    [BodyPart.nose, BodyPart.rightShoulder],
+    [BodyPart.leftShoulder, BodyPart.leftElbow],
+    [BodyPart.leftElbow, BodyPart.leftWrist],
+    [BodyPart.rightShoulder, BodyPart.rightElbow],
+    [BodyPart.rightElbow, BodyPart.rightWrist],
+    [BodyPart.leftShoulder, BodyPart.rightShoulder],
+    [BodyPart.leftShoulder, BodyPart.leftHip],
+    [BodyPart.rightShoulder, BodyPart.rightHip],
+    [BodyPart.leftHip, BodyPart.rightHip],
+    [BodyPart.leftHip, BodyPart.leftKnee],
+    [BodyPart.leftKnee, BodyPart.leftAnkle],
+    [BodyPart.rightHip, BodyPart.rightKnee],
+    [BodyPart.rightKnee, BodyPart.rightAnkle]
+  ];
+  final double _scale;
+  Person? _persons;
+
+  final Paint _strokePaint = Paint()
+    ..color = Colors.red
+    ..strokeWidth = 5
+    ..style = PaintingStyle.stroke;
+
+  final Paint _circlePaint = Paint()
+    ..color = Colors.red
+    ..strokeWidth = 3
+    ..style = PaintingStyle.fill;
+
+  updatePerson(Person persons) {
+    _persons = persons;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (_persons == null) return;
+    // draw circles
+    if (_persons!.score > _minConfidence) {
+      _persons?.keyPoints.forEach((element) {
+        canvas.drawCircle(
+            Offset(
+                element.coordinate.dx * _scale, element.coordinate.dy * _scale),
+            5,
+            _circlePaint);
+      });
+      for (var index in _bodyJoints) {
+        final pointA = _persons?.keyPoints[index[0].index].coordinate;
+        final pointB = _persons?.keyPoints[index[1].index].coordinate;
+        // drawLine
+        if (pointA != null && pointB != null) {
+          canvas.drawLine(Offset(pointA.dx * _scale, pointA.dy * _scale),
+              Offset(pointB.dx * _scale, pointB.dy * _scale), _strokePaint);
+        }
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant OverlayView oldDelegate) {
+    return oldDelegate._persons != _persons;
   }
 }
