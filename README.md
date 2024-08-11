@@ -1,7 +1,7 @@
 ## Nataraj AI
 Nataraj is an Artificial Intelligence powered dance choreographer, in 3D!
 Live at https://nataraj-ai.web.app
-
+API live at https://singular-node-429217-j4.uc.r.appspot.com/
 
 ## App description
 As a dancer or enthusiast, have you ever found yourself out of ideas for new choreography? Say no more! With AI, the possibilities of creativity are endless. We proudly present Nataraj AI, a platform to revolutionize dance creativity.
@@ -82,6 +82,10 @@ Contains all the code for the backend and gemini api methods in python.
 Contains all the code for the mobile application part of the project, which also makes use of firebase and gemini.
 
 [Checkout the documentation](./app_flutter/README.md)
+
+
+### 3. unity_scripts
+Contains all the code for the unity engine integration, having the model with all the animation classes and synchronisation code for the same.
 
 
 ## Relevant Screenshots
