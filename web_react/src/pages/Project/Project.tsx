@@ -45,10 +45,56 @@ function Project() {
   const [widthProgressBar, setWidthProgressBar] = useState(0.0);
   const [isEnded, setIsEnded] = useState(false);
   const [stepSequence, setstepSequence] = useState("1_2_3_5");
+  const [step, setStep] = useState("nothing");
+  const danceMoves = [
+    "Do a hooting/cheering gesture",
+    "Perform the Maraschino step",
+    "Do a flare",
+    "Make a right turn",
+    "Swing your body left and right",
+    "Swing your body front and back",
+    "Turn left",
+    "Jump",
+    "Look around",
+    "Do a moonwalk",
+    "Swing your right hand",
+    "Do the Rumba dance",
+    "Perform the Salsa dance",
+    "Do a shuffle move",
+    "Do the Chicken dance",
+    "Perform the Shake it off step",
+    "Do the Hip Hop walk",
+    "Walk",
+    "Wave your hands",
+    "Nod your head"
+  ]
+  
 
 
   useEffect(() => {
     fetchProject();
+  }, []);
+
+  useEffect(() => {
+    // Store the original console.log function
+    const originalConsoleLog = console.log;
+
+    // Override console.log
+    console.log = function (message, ...optionalParams) {
+      // Call the original console.log with all arguments
+      originalConsoleLog.apply(console, [message, ...optionalParams]);
+
+      // Check if the message contains "step"
+      if (typeof message === "string" && message.includes("step")) {
+        setStep(danceMoves[Number(message.split(" ")[1])-1]);
+        console.log("it is ", danceMoves[Number(message.split(" ")[1])-1])
+      }
+    };
+
+    // Cleanup on component unmount
+    return () => {
+      console.log = originalConsoleLog;
+    };
   }, []);
 
   useEffect(() => {
@@ -283,7 +329,9 @@ function Project() {
               <p className={Styles.currentlyrics}>{currentLyrics}</p>
             </div>
           </div>
-
+<div className={Styles.step}>
+<p>{step}</p>
+</div>
           <div className={Styles.playStoreContainer}>
             <center>
               <p>Practice it on Android App</p>
