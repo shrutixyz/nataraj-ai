@@ -20,28 +20,38 @@ class ProjectTile extends StatelessWidget {
         ),
         child: Column(
           children: [
-             Expanded(child: Center(child: Image.asset("assets/images/modeldummy.png", height: 70,),)),
+            Expanded(
+                child: Center(
+              child: Image.asset(
+                "assets/images/modeldummy.png",
+                height: 70,
+              ),
+            )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         data["projectName"],
                         style: const TextStyle(fontSize: 15.0),
                       ),
-                      Text("Duration: ${data["duration"].toString().substring(0, 4)}s")
+                      Text(
+                          "Duration: ${data["duration"].toString().substring(0, 4)}s")
                     ],
                   ),
                   CustomGradientBorderButton(
                     title: "Practice it",
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: ((context) => ConfigurationPage(project: data)))
-                      );                  
-                          // Navigator.pushNamedAndRemoveUntil(context, RoutesString.configurationPageRoute, (route) => false);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) =>
+                                  ConfigurationPage(project: data))));
+                      // Navigator.pushNamedAndRemoveUntil(context, RoutesString.configurationPageRoute, (route) => false);
                     },
                     width: 150,
                     height: 30,

@@ -13,32 +13,33 @@ class ConfigurationPage extends StatelessWidget {
 
   Future<void> addNewReport() async {
     log("starting");
-  DancePracticeReport report = DancePracticeReport(
-    dateTime: DateTime.now(),
-    matchRate: 85.5,
-    musicUrl: 'https://example.com/music.mp3',
-    videourl: ""
-  );
+    DancePracticeReport report = DancePracticeReport(
+        dateTime: DateTime.now(),
+        matchRate: 85.5,
+        musicUrl: 'https://example.com/music.mp3',
+        videourl: "",
+        projectID: "",
+        );
 
-  SharedPreferencesHelper prefsHelper = SharedPreferencesHelper();
-  await prefsHelper.addReport(report);
-  log('Report added');
-}
-
-Future<void> getAllReports() async {
-  SharedPreferencesHelper prefsHelper = SharedPreferencesHelper();
-  List<DancePracticeReport> reports = await prefsHelper.getReports();
-
-  for (var report in reports) {
-    log('DateTime: ${report.dateTime}, Match Rate: ${report.matchRate}, Music URL: ${report.musicUrl}');
+    SharedPreferencesHelper prefsHelper = SharedPreferencesHelper();
+    await prefsHelper.addReport(report);
+    log('Report added');
   }
-}
 
-Future<void> deleteReport(int index) async {
-  SharedPreferencesHelper prefsHelper = SharedPreferencesHelper();
-  await prefsHelper.deleteReport(index);
-  log('Report deleted');
-}
+  Future<void> getAllReports() async {
+    SharedPreferencesHelper prefsHelper = SharedPreferencesHelper();
+    List<DancePracticeReport> reports = await prefsHelper.getReports();
+
+    for (var report in reports) {
+      log('DateTime: ${report.dateTime}, Match Rate: ${report.matchRate}, Music URL: ${report.musicUrl}');
+    }
+  }
+
+  Future<void> deleteReport(int index) async {
+    SharedPreferencesHelper prefsHelper = SharedPreferencesHelper();
+    await prefsHelper.deleteReport(index);
+    log('Report deleted');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,31 +70,33 @@ Future<void> deleteReport(int index) async {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                       Image.asset("assets/images/modeldummy.png", height: 180,),
-                        const SizedBox(height: 20,),
-                        const Text("YOUR AVATAR", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900),)
+                        Image.asset(
+                          "assets/images/modeldummy.png",
+                          height: 180,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Text(
+                          "YOUR AVATAR",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w900),
+                        )
                       ],
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // const Text("SELECT ASSESS VIEW", style: TextStyle(fontSize: 18),),
-                        // const SizedBox(height: 20,),
-                        // Row(
-                        //   children: [
-                        //     Container(height: 150, width: 150, color: AppColors.yellow2,),
-                        //     const SizedBox(width: 30,),
-                        //     Container(height: 150, width: 150, color: AppColors.yellow2,)
-                        //   ],
-                        // ),
-                        // const SizedBox(height: 20,),
-                        GradientBorderButton(title: "LET'S BEGIN",onPressed: () async{
-                          Navigator.push(context, MaterialPageRoute(builder: ((context) => DancePage(project: project))));
-                            //  await  addNewReport();
-                            // await getAllReports();
-                            // log("hhee");
-                                  // Navigator.pushNamedAndRemoveUntil(context, RoutesString.generatingReportPageRoute, (route) => false);
-                                }, width: 330)
+                        GradientBorderButton(
+                            title: "LET'S BEGIN",
+                            onPressed: () async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          DancePage(project: project))));
+                            },
+                            width: 330)
                       ],
                     )
                   ],

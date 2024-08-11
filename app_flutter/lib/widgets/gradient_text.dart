@@ -12,20 +12,19 @@ class GradientText extends StatelessWidget {
     return ShaderMask(
       shaderCallback: (bounds) {
         return const LinearGradient(
-              colors: [
-                AppColors.yellow2,
-                AppColors.yellow1,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height));
+          colors: [
+            AppColors.yellow2,
+            AppColors.yellow1,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height));
       },
       child: Text(
         text,
-        style: style.copyWith(color: Colors.white,
-      
+        style: style.copyWith(
+          color: Colors.white,
         ),
-        
       ),
     );
   }

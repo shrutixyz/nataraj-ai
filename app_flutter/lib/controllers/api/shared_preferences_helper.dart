@@ -9,12 +9,14 @@ class DancePracticeReport {
   double matchRate;
   String musicUrl;
   String videourl;
+  String projectID;
 
   DancePracticeReport({
     required this.dateTime,
     required this.matchRate,
     required this.musicUrl,
-    required this.videourl
+    required this.videourl,
+    required this.projectID
   });
 
   Map<String, dynamic> toJson() {
@@ -22,7 +24,8 @@ class DancePracticeReport {
       'dateTime': dateTime.toIso8601String(),
       'matchRate': matchRate,
       'musicUrl': musicUrl,
-      'videourl':videourl.toString()
+      'videourl':videourl.toString(),
+      'projectID':projectID.toString()
     };
   }
 
@@ -31,7 +34,8 @@ class DancePracticeReport {
       dateTime: DateTime.parse(json['dateTime']),
       matchRate: json['matchRate'],
       musicUrl: json['musicUrl'],
-      videourl: json['videourl']
+      videourl: json['videourl'],
+      projectID: json['projectID']
     );
   }
 }

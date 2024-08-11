@@ -7,7 +7,6 @@ class GeneratingReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     });

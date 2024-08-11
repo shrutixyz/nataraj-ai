@@ -14,7 +14,10 @@ class ReportTile extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           // Navigator.pushNamed(context, RoutesString.singleReportPageRoute);
-          Navigator.push(context, MaterialPageRoute(builder: ((context) => SingleReport(report: report))));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: ((context) => SingleReport(report: report))));
         },
         child: Container(
           width: double.infinity,
@@ -27,13 +30,16 @@ class ReportTile extends StatelessWidget {
                 AppColors.secondaryBg,
                 AppColors.black
               ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
-          child:  Column(
+          child: Column(
             children: [
               Expanded(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Image.asset("assets/images/modeldummy.png", height: 100,),
+                  Image.asset(
+                    "assets/images/modeldummy.png",
+                    height: 100,
+                  ),
                   // SizedBox(),
                   const Padding(
                     padding: EdgeInsets.only(top: 20.0),
@@ -43,7 +49,10 @@ class ReportTile extends StatelessWidget {
                     ),
                   ),
                   // SizedBox(),
-                   Image.asset("assets/images/modeldummy.png", height: 100,),
+                  Image.asset(
+                    "assets/images/modeldummy.png",
+                    height: 100,
+                  ),
                 ],
               )),
               Padding(

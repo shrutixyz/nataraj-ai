@@ -62,7 +62,7 @@ String pathh = "";
   @override
   void initState() {
     super.initState();
-    log( "pathh is"+ widget.report.videourl);
+    log( "pathh is: ${widget.report.videourl}");
     setPath();
     log("new path ${pathh}");
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.report.videourl), videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
@@ -70,7 +70,7 @@ String pathh = "";
         setState(() {});
       });
       _controller.setVolume(0);
-      player.setSource(UrlSource("https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-zayn.mp3"));
+      player.setSource(UrlSource(widget.report.musicUrl));
 
       // player.play(UrlSource("https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-zayn.mp3"));
   webviewcontroller = WebViewController()
@@ -78,11 +78,6 @@ String pathh = "";
   ..setBackgroundColor(const Color(0x00000000))
   ..enableZoom(true)
   ..setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
-  // ..setOnConsoleMessage((message) { 
-  //   if(message.message.contains("started")){
-
-  //   }
-  // })
   ..setNavigationDelegate(
     NavigationDelegate(
       onProgress: (int progress) {
@@ -92,27 +87,19 @@ String pathh = "";
       onPageFinished: (String url) {},
       onHttpError: (HttpResponseError error) {},
       onWebResourceError: (WebResourceError error) {},
-      // onNavigationRequest: (NavigationRequest request) {
-      //   if (request.url.startsWith('https://www.youtube.com/')) {
-      //     return NavigationDecision.prevent;
-      //   }
-      //   return NavigationDecision.navigate;
-      // },
     ),
   )
-  ..loadRequest(Uri.parse('https://nataraj-ai.web.app/standalone/nataraj-q9y7tgo'));
+  ..loadRequest(Uri.parse('https://nataraj-ai.web.app/standalone/${widget.report.projectID}'));
   
   }
 
   final player = AudioPlayer();
   Future<void> playAudio()async{
-    // await player.play(UrlSource(widget.report.musicUrl));
   if(_isplaying){
     player.pause();
   }
   else{
     player.resume();
-        // await player.play(UrlSource("https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-zayn.mp3"));
 
   }
     
@@ -123,7 +110,6 @@ String pathh = "";
     WidgetsBinding.instance.addPostFrameCallback((_) {
       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     });
-    // final projectsController = Provider.of<ProjectsController>(context);
     return Scaffold(
       body: SafeArea(
           child: SizedBox(
@@ -176,11 +162,6 @@ String pathh = "";
                       flex: 2,
                       child: SizedBox(),
                     ),
-                    // Container(
-                    //   width: 300,
-                    //   height: 2,
-                    //   color: Colors.white,
-                    // ),
                     const Expanded(
                       flex: 1,
                       child: SizedBox(),
@@ -208,11 +189,6 @@ String pathh = "";
                       flex: 2,
                       child: SizedBox(),
                     ),
-                    // Image.asset(
-                    //   AssetSrcs.logofull,
-                    //   scale: 4,
-                    // ),
-                    
                     const Expanded(
                       flex: 2,
                       child: SizedBox(),

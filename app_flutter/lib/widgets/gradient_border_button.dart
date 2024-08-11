@@ -17,26 +17,26 @@ class GradientBorderButton extends StatelessWidget {
         height: 50,
         width: width,
         decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
             gradient: LinearGradient(
-          colors: [
-            AppColors.yellow2,
-            AppColors.yellow1,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        )),
+              colors: [
+                AppColors.yellow2,
+                AppColors.yellow1,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            )),
         child: Center(
           child: MaterialButton(
-              onPressed: onPressed,
-              height: 46,
-              minWidth: width - 4,
-              color: AppColors.background,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              child:  GradientText(
-                  text: title,
-                  style: const TextStyle(fontSize: 15)),
-            ),
+            onPressed: onPressed,
+            height: 46,
+            minWidth: width - 4,
+            color: AppColors.background,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child:
+                GradientText(text: title, style: const TextStyle(fontSize: 15)),
+          ),
         ));
   }
 }
