@@ -193,13 +193,13 @@ String pathh = "";
                       flex: 2,
                       child: SizedBox(),
                     ),
-                    Text(
-                      "TOTAL MATCH: ${widget.report.matchRate}%",
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.pastelGreen),
-                    ),
+                    // Text(
+                    //   "TOTAL MATCH: ${widget.report.matchRate}%",
+                    //   style: const TextStyle(
+                    //       fontSize: 20,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: AppColors.pastelGreen),
+                    // ),
                     const Expanded(
                       flex: 1,
                       child: SizedBox(),

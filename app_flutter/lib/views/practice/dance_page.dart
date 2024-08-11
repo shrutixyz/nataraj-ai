@@ -32,7 +32,7 @@ class _DancePageState extends State<DancePage> {
 
   Future<void> playAudio() async {
     await player.play(UrlSource(
-        "https://storage.googleapis.com/nataraj-ai.appspot.com/uploads/modified-8ul8msi.mp3"));
+        widget.project["song"]));
   }
 
   late WebViewController webviewcontroller;
@@ -97,7 +97,7 @@ class _DancePageState extends State<DancePage> {
         ),
       )
       ..loadRequest(
-          Uri.parse('https://nataraj-ai.web.app/standalone/nataraj-q9y7tgo'));
+          Uri.parse('https://nataraj-ai.web.app/standalone/${widget.project["projectID"]}'));
   }
 
   Future<List<CameraDescription>> setCameras() async {
