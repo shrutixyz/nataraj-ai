@@ -66,7 +66,16 @@ function Project() {
     "Do the Hip Hop walk",
     "Walk",
     "Wave your hands",
-    "Nod your head"
+    "Nod your head",
+    "Kick and move right/left",
+    "Do a dancing handstand",
+    "Dribble",
+    "Walk like on a catwalk",
+    "Jump happily",
+    "Point backwards with finger",
+    "Bow down and greet",
+    "Do a robotic breakdance move",
+    "Hop back"
   ]
   
 

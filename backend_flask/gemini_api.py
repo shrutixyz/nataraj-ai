@@ -26,6 +26,15 @@ dance_steps = """
 18: Walking - 0.29s
 19: Wave hands- 1.04s
 20: head nod - 2.08s
+21: Kick and move right/left - 2.02
+22: Dancing handstand - 4.80
+23: Dribble - 5.30
+24: Catwalk - 1.05
+25: Happy jump - 1.27
+26: Pointing backwards with finger - 3.15
+27: Bow down and greet - 3.00
+28: Robotic breakdance move - 15.40
+29: Hop back - 5.10
 """
 
 def generate_dance_with_lyrics(file):
