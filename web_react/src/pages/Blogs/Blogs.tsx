@@ -68,7 +68,7 @@ const Blogs = () => {
               <b>
                 <h3>{formatDate(key)}</h3>
               </b>
-              <Markdown skipHtml={false}>{value}</Markdown>
+              <Markdown className={Styles.markdown} skipHtml={false}>{value}</Markdown>
             </div>
           ))
         )}

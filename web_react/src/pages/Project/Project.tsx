@@ -86,7 +86,7 @@ function Project() {
 
       // Check if the message contains "step"
       if (typeof message === "string" && message.includes("step")) {
-        setStep(danceMoves[Number(message.split(" ")[1])-1]);
+        setStep(`Next step: ${danceMoves[Number(message.split(" ")[1])-1]}`);
         console.log("it is ", danceMoves[Number(message.split(" ")[1])-1])
       }
     };
