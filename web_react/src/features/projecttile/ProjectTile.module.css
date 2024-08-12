@@ -18,6 +18,7 @@
 
 .text{
     margin-left: 2rem;
+    cursor: pointer;
 }
 
 .icons{
@@ -29,4 +30,5 @@
 
 .model{
     height: 10rem;
+    cursor: pointer;
 }

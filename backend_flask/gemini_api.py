@@ -15,7 +15,7 @@ dance_steps = """
 7: Turn left - 1.06s
 8: Jump - 2.17s
 9: Looking - 4.0s
-10: Moonwalk - 1.00s
+10: back walk - 1.00s
 11: right hand swing - 3.10s
 12: Rumba Dance - 2.10s
 13: Salsa Dance - 2.10s
@@ -23,7 +23,7 @@ dance_steps = """
 15: Chicken dance - 3.17s
 16: Shake it off step - 5.10s
 17: Hip Hop walk - 0.29s
-18: Walking 0.29s
+18: Walking - 0.29s
 19: Wave hands- 1.04s
 20: head nod - 2.08s
 """

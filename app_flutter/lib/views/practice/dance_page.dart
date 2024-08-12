@@ -31,12 +31,11 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
   Person? _person;
   late PoseEstimationHelper _poseEstimationHelper;
   late CameraDescription _cameraDescription;
-    bool isRecording = false;
+  bool isRecording = false;
   late String videoPath;
 
   Future<void> playAudio() async {
-    await player.play(UrlSource(
-        widget.project["song"]));
+    await player.play(UrlSource(widget.project["song"]));
   }
 
   late WebViewController webviewcontroller;
@@ -64,6 +63,7 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
     });
   }
 
+  String logmsg = "Loading up your project...";
   initDance() async {
     // await _initHelper();
     await playAudio();
@@ -101,6 +101,9 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
       ..setUserAgent(
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
       ..setOnConsoleMessage((message) {
+        setState(() {
+          logmsg = message.message;
+        });
         if (message.message.contains("resuming")) {
           log("starting dance now");
           initDance();
@@ -117,8 +120,8 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
           onWebResourceError: (WebResourceError error) {},
         ),
       )
-      ..loadRequest(
-          Uri.parse('https://nataraj-ai.web.app/standalone/nataraj-${widget.project["projectID"]}'));
+      ..loadRequest(Uri.parse(
+          'https://nataraj-ai.web.app/standalone/nataraj-${widget.project["projectID"]}'));
   }
 
   Future<List<CameraDescription>> setCameras() async {
@@ -131,7 +134,6 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
   }
 
   Future<void> startRecording() async {
-   
     if (!_cameraController!.value.isInitialized) {
       return;
     }
@@ -180,9 +182,9 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
     if (_isProcessing) {
       return;
     }
-      _isProcessing = true;
+    _isProcessing = true;
     final persons = await _poseEstimationHelper.estimatePoses(cameraImage);
-      _isProcessing = false;
+    _isProcessing = false;
     if (mounted) {
       setState(() {
         score = persons.score;
@@ -208,11 +210,9 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
       DancePracticeReport report = DancePracticeReport(
           dateTime: DateTime.now(),
           matchRate: 85,
-          musicUrl:
-              widget.project["song"],
+          musicUrl: widget.project["song"],
           videourl: videoPath,
-          projectID: "nataraj-${widget.project["projectID"]}"
-          );
+          projectID: "nataraj-${widget.project["projectID"]}");
       SharedPreferencesHelper prefsHelper = SharedPreferencesHelper();
       await prefsHelper.addReport(report);
       log('Report added: $report');
@@ -255,9 +255,11 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
     return Stack(
       children: [
         CameraPreview(_cameraController!),
-        _person!=null?CustomPaint(
+        _person != null
+            ? CustomPaint(
                 painter: OverlayView(scale: 1)..updatePerson(_person!),
-              ):Container(),
+              )
+            : Container(),
       ],
     );
   }
@@ -269,14 +271,14 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
       SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     });
     return Scaffold(
-      body: _cameraController!=null && isRecording==true
+      body: _cameraController != null && isRecording == true
           ? Stack(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                   Container(
+                    Container(
                       width: 0.40 * w,
                       // height: (1 / _cameraController!.value.aspectRatio) * 0.4 * w,
                       height: 200,
@@ -303,7 +305,7 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      "Posenet Score: ${(_person!.score*100).toStringAsFixed(2) }",
+                      "Posenet Score: ${(_person?.score ?? 0 * 100).toStringAsFixed(2)}",
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),
@@ -311,32 +313,37 @@ class _DancePageState extends State<DancePage> with WidgetsBindingObserver {
                 )
               ],
             )
-          : const Center(
+          : Center(
               child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircularProgressIndicator(
+                const CircularProgressIndicator(
                   color: AppColors.yellow2,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  "Loading up your project...",
-                  style: TextStyle(
+                 Text(
+                  logmsg
+                  ,
+                  style: const TextStyle(
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold,
                     fontSize: 15.0,
                   ),
                   textAlign: TextAlign.center,
-                )
+                ),
+                // Center(
+                //   child: Text(
+                //     logmsg,
+                //     style: const TextStyle(fontSize: 18.0, color: Colors.red),
+                //   ),
+                // )
               ],
             )),
     );
   }
 }
-
-
 
 class OverlayView extends CustomPainter {
   OverlayView({required double scale}) : _scale = scale;
