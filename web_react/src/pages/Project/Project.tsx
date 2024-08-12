@@ -154,7 +154,7 @@ function Project() {
     }
 
     if (duration !== 0) {
-      setWidthProgressBar((currentTime / duration) * 90);
+      setWidthProgressBar((currentTime / duration) * 97.5);
     }
   }
 
